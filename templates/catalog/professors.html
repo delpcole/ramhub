@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Professors · RamHub{% endblock %}
+
+{% block content %}
+  {% include "partials/page_header.html" with title="Professors" subtitle="Every instructor, rated by students on clarity, helpfulness, and fairness." %}
+  {% include "partials/empty_state.html" with icon="users" headline="The professor directory is not seeded yet" description="After the faculty import, each instructor gets a page showing their courses, their rating summary, and student reviews of how they teach." action_label="Read the import plan" %}
+{% endblock %}

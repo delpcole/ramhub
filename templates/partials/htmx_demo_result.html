@@ -1,0 +1,16 @@
+{% comment %}
+Returned by config.views.styleguide_htmx_demo and swapped into the style guide.
+An HTMX endpoint returns an HTML fragment like this one — not JSON.
+{% endcomment %}
+<div class="card card-pad flex items-start gap-3" role="status">
+  <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+    {% include "partials/icons/sparkles.html" %}
+  </span>
+  <div>
+    <p class="font-medium text-neutral-900">Swapped from the server</p>
+    <p class="text-meta text-neutral-500">
+      This fragment was rendered by Django at {{ loaded_at|date:"H:i:s" }} and
+      swapped in by HTMX without a page reload.
+    </p>
+  </div>
+</div>

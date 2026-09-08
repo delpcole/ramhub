@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}About · RamHub{% endblock %}
+
+{% block content %}
+  {% include "partials/page_header.html" with title="About RamHub" subtitle="A student-built knowledge base about courses and professors at Farmingdale State College." %}
+
+  <div class="card card-pad max-w-2xl space-y-4">
+    <p>
+      Students who took a course two semesters ago know things the catalog never
+      tells you — which professor to take, how heavy the workload really is, what
+      the exams are like. That knowledge normally lives in group chats and then
+      disappears. RamHub collects it, ties it to the real course and the real
+      professor, and keeps it for the students who come next.
+    </p>
+    <p>
+      Access is limited to verified Farmingdale State College students. Around the
+      course and professor directories sit a community feed, campus-info tabs, a
+      personal filing cabinet for saving what matters, and an assistant that
+      answers questions with links to its sources.
+    </p>
+    <p class="text-neutral-500">
+      RamHub is a semester-long capstone project built by a team of six students.
+      It is not an official Farmingdale State College website.
+    </p>
+  </div>
+{% endblock %}

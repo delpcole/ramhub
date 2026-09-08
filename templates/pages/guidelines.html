@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Community Guidelines · RamHub{% endblock %}
+
+{% block content %}
+  {% include "partials/page_header.html" with title="Community Guidelines" subtitle="RamHub only works if it stays useful and fair. These are the rules." %}
+
+  <div class="card card-pad max-w-2xl space-y-5">
+    <div>
+      <h2 class="text-h3">Review the class, not the person</h2>
+      <p class="mt-1 text-neutral-600">
+        Write about the course, the workload, the teaching, and the grading.
+        Comments about someone's appearance, personal life, or character are
+        removed.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-h3">Say what you actually experienced</h2>
+      <p class="mt-1 text-neutral-600">
+        Rate courses you took and professors you had. Tag the semester so readers
+        know how current your advice is.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-h3">No academic dishonesty</h2>
+      <p class="mt-1 text-neutral-600">
+        Study strategy is welcome. Exam questions, answer keys, and anything that
+        violates the college's academic integrity policy are not.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-h3">Keep it a community</h2>
+      <p class="mt-1 text-neutral-600">
+        No harassment, no slurs, no spam, no impersonation. Report anything that
+        crosses the line and a moderator will look at it.
+      </p>
+    </div>
+    <p class="border-t border-neutral-200 pt-4 text-meta text-neutral-500">
+      Moderators can hide or remove content and warn or suspend accounts. These
+      guidelines are a draft — the community lead finalizes them before launch.
+    </p>
+  </div>
+{% endblock %}

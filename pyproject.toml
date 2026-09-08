@@ -1,0 +1,40 @@
+# Dependencies live in requirements.txt (see README).
+# This file configures the dev tooling only — it is not a package definition.
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+extend-exclude = ["venv", "*/migrations/*", "node_modules"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort — import order
+    "UP",   # pyupgrade — modern Python syntax
+    "B",    # flake8-bugbear — likely bugs
+    "DJ",   # flake8-django — Django-specific checks
+    "C4",   # comprehensions
+    "SIM",  # simplify
+]
+ignore = [
+    "E501",  # line length is enforced by the formatter, not the linter
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Settings modules legitimately use star-imports and long literals.
+"config/settings/*.py" = ["F403", "F405"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["apps", "config"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.dev"
+python_files = ["test_*.py", "*_test.py"]
+testpaths = ["apps", "tests"]
+addopts = "-q --strict-markers"

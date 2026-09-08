@@ -1,0 +1,263 @@
+@import "tailwindcss";
+
+/* Django templates live outside this file's folder, so point Tailwind at them. */
+@source "../../templates";
+@source "../../apps";
+
+/* ==========================================================================
+   RamHub design tokens
+   --------------------------------------------------------------------------
+   The default Tailwind color and type scales are cleared on purpose. If a
+   utility you want does not exist, add a token here rather than hardcoding a
+   value in a template. Every token below is also emitted as a CSS custom
+   property (e.g. var(--color-accent-600)).
+   ========================================================================== */
+@theme {
+  /* --- Reset the stock scales so only our tokens are available ----------- */
+  --color-*: initial;
+  --text-*: initial;
+  --font-*: initial;
+  --radius-*: initial;
+
+  /* --- Type ------------------------------------------------------------- */
+  /* One family. Swap this single token if the design lead picks a webfont. */
+  --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Four sizes plus a body size. Body line-height is generous because advice
+     posts are read, not skimmed; headings are tight so rows stay dense. */
+  --text-meta: 0.78125rem;  /* 12.5px — labels, timestamps, table meta */
+  --text-meta--line-height: 1.45;
+  --text-body: 0.9375rem;   /* 15px — body copy and UI default */
+  --text-body--line-height: 1.65;
+  --text-h3: 1.125rem;      /* 18px — card and section titles */
+  --text-h3--line-height: 1.4;
+  --text-h2: 1.375rem;      /* 22px — subsection headings */
+  --text-h2--line-height: 1.3;
+  --text-h1: 1.75rem;       /* 28px — page titles */
+  --text-h1--line-height: 1.25;
+
+  /* --- Neutrals (carry everything that is not an action) ----------------- */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --color-neutral-50: #f8f9fa;
+  --color-neutral-100: #f1f3f5;
+  --color-neutral-200: #e6e8eb;  /* dividers, row separators (decorative) */
+  --color-neutral-300: #d3d7dc;  /* resting borders on large surfaces */
+  --color-neutral-400: #858d98;  /* form control borders — 3.35:1 white, 3.17:1 page bg */
+  --color-neutral-500: #666e7a;  /* muted text — AA on white, neutral-50 and neutral-100 */
+  --color-neutral-600: #545c68;
+  --color-neutral-700: #3d444e;
+  --color-neutral-800: #272c34;  /* body text — 14.0:1 on white */
+  --color-neutral-900: #171a1f;  /* headings */
+  --color-neutral-950: #0d0f12;
+
+  /* --- Accent: Farmingdale green. Actions and emphasis only. ------------- */
+  --color-accent-50: #eaf6ef;
+  --color-accent-100: #d0ebda;
+  --color-accent-200: #a3d7b8;
+  --color-accent-300: #6fbd91;
+  --color-accent-400: #3f9e6d;
+  --color-accent-500: #1d8253;
+  --color-accent-600: #00693e;  /* primary action — 6.8:1 with white */
+  --color-accent-700: #005432;  /* hover — 9.1:1 with white */
+  --color-accent-800: #044027;  /* active — 11.9:1 with white */
+  --color-accent-900: #06331f;
+  --color-accent-950: #021a10;
+
+  /* --- Danger: error states only. Not a second brand color. -------------- */
+  --color-danger-50: #fdf2f2;
+  --color-danger-100: #fbe3e3;
+  --color-danger-200: #f5c2c2;
+  --color-danger-500: #c02626;
+  --color-danger-600: #a81f1f;  /* error text — 7.0:1 on white */
+  --color-danger-700: #8a1a1a;
+
+  /* --- Radius ----------------------------------------------------------- */
+  --radius-sm: 4px;
+  --radius-md: 6px;   /* default: buttons, inputs, cards */
+  --radius-lg: 10px;
+  --radius-full: 9999px;
+
+  /* --- Spacing ---------------------------------------------------------- */
+  /* 4px base. Dense layouts use 2/3 (8/12px); page rhythm uses 4/6 (16/24px). */
+  --spacing: 0.25rem;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-white text-body text-neutral-800 font-sans antialiased;
+  }
+
+  h1, h2, h3 {
+    @apply text-neutral-900 font-semibold tracking-tight;
+  }
+
+  /* One focus treatment everywhere, visible on light and accent surfaces. */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent-600;
+  }
+
+  /* Only remove the ring for mouse users, never for keyboard users. */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+/* ==========================================================================
+   Shared components
+   Anything used on more than one page belongs here or in a template partial.
+   ========================================================================== */
+@layer components {
+
+  /* --- Buttons ---------------------------------------------------------- */
+  /* Shared base. Templates use a single variant class, e.g. `btn-primary`. */
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-ghost,
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border
+           px-3 py-1.5 text-body font-medium
+           transition-colors duration-100
+           disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-primary {
+    @apply border-transparent bg-accent-600 text-white
+           hover:bg-accent-700 active:bg-accent-800
+           disabled:bg-neutral-300 disabled:text-neutral-600;
+  }
+
+  .btn-secondary {
+    @apply border-neutral-300 bg-white text-neutral-800
+           hover:bg-neutral-50 hover:border-neutral-400
+           active:bg-neutral-100
+           disabled:bg-neutral-50 disabled:text-neutral-400;
+  }
+
+  .btn-ghost {
+    @apply border-transparent bg-transparent text-neutral-600
+           hover:bg-neutral-100 hover:text-neutral-900
+           active:bg-neutral-200
+           disabled:text-neutral-400;
+  }
+
+  .btn-danger {
+    @apply border-transparent bg-danger-600 text-white
+           hover:bg-danger-700 active:bg-danger-700
+           disabled:bg-neutral-300 disabled:text-neutral-600;
+  }
+
+  .btn-sm { @apply px-2 py-1 text-meta; }
+
+  /* --- Forms ------------------------------------------------------------ */
+  .field-label {
+    @apply block text-meta font-medium text-neutral-700 mb-1;
+  }
+
+  .field-input,
+  .field-input-error {
+    @apply block w-full rounded-md border bg-white
+           px-3 py-1.5 text-body text-neutral-900
+           placeholder:text-neutral-500
+           disabled:bg-neutral-100 disabled:text-neutral-500
+           disabled:border-neutral-300 disabled:cursor-not-allowed;
+  }
+
+  .field-input {
+    @apply border-neutral-400 hover:border-neutral-500 focus:border-accent-600;
+  }
+
+  .field-input-error {
+    @apply border-danger-600 hover:border-danger-700 focus:border-danger-700;
+  }
+
+  .field-hint  { @apply mt-1 text-meta text-neutral-500; }
+  .field-error { @apply mt-1 text-meta text-danger-600; }
+
+  /* --- Surfaces --------------------------------------------------------- */
+  .card {
+    @apply rounded-md border border-neutral-200 bg-white;
+  }
+
+  .card-pad { @apply p-4; }
+
+  /* A dense, scannable directory row — the Courses/Professors list unit. */
+  .row-link {
+    @apply flex items-center gap-4 border-b border-neutral-200 px-4 py-3
+           transition-colors hover:bg-neutral-50;
+  }
+
+  /* --- Badges ----------------------------------------------------------- */
+  .badge,
+  .badge-neutral,
+  .badge-accent,
+  .badge-danger {
+    @apply inline-flex items-center rounded-full px-2 py-0.5
+           text-meta font-medium whitespace-nowrap;
+  }
+
+  .badge-neutral { @apply bg-neutral-100 text-neutral-700; }
+  .badge-accent  { @apply bg-accent-50 text-accent-700; }
+  .badge-danger  { @apply bg-danger-50 text-danger-700; }
+
+  /* --- Navigation ------------------------------------------------------- */
+  .nav-tab,
+  .nav-tab-active {
+    @apply relative inline-flex items-center px-3 py-2 text-body font-medium
+           transition-colors rounded-md;
+  }
+
+  .nav-tab {
+    @apply text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100;
+  }
+
+  /* Active tab: color is not the only cue — an underline carries it too. */
+  .nav-tab-active {
+    @apply text-accent-700 hover:text-accent-700 hover:bg-accent-50
+           after:absolute after:inset-x-2 after:-bottom-px after:h-0.5
+           after:rounded-full after:bg-accent-600 after:content-[''];
+  }
+
+  .nav-tab-mobile,
+  .nav-tab-mobile-active {
+    @apply block rounded-md px-3 py-2 text-body font-medium;
+  }
+
+  .nav-tab-mobile {
+    @apply text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900;
+  }
+
+  .nav-tab-mobile-active {
+    @apply bg-accent-50 text-accent-700
+           border-l-2 border-accent-600 rounded-l-none;
+  }
+
+  /* --- Ratings: the visual anchor on rows and detail headers ------------- */
+  .rating-value {
+    @apply font-mono text-body font-semibold tabular-nums text-neutral-900;
+  }
+
+  /* --- HTMX loading state ----------------------------------------------- */
+  /* htmx toggles .htmx-request on the indicator during a request. */
+  .htmx-indicator {
+    @apply invisible opacity-0 transition-opacity duration-150;
+  }
+
+  .htmx-request .htmx-indicator,
+  .htmx-indicator.htmx-request {
+    @apply visible opacity-100;
+  }
+}

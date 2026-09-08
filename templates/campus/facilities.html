@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Facilities · RamHub{% endblock %}
+
+{% block content %}
+  {% include "partials/page_header.html" with title="Facilities" subtitle="Buildings, labs, study spaces, the library, the gym, and dining — hours and what is actually inside." %}
+  {% include "partials/empty_state.html" with icon="building" headline="No facilities listed yet" description="Buildings and their hours will be imported from the official pages, with student notes about which floors are quiet and what stays open late." action_label="" %}
+{% endblock %}

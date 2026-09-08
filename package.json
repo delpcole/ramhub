@@ -1,0 +1,13 @@
+{
+  "name": "ramhub",
+  "private": true,
+  "description": "Tailwind build for the RamHub Django templates.",
+  "scripts": {
+    "tailwind:watch": "tailwindcss -i ./static/src/input.css -o ./static/css/site.css --watch",
+    "tailwind:build": "tailwindcss -i ./static/src/input.css -o ./static/css/site.css --minify"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}

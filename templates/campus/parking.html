@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Parking · RamHub{% endblock %}
+
+{% block content %}
+  {% include "partials/page_header.html" with title="Parking" subtitle="The lots, the permits, the rules — plus the timing tips that actually matter." %}
+  {% include "partials/empty_state.html" with icon="car" headline="No lots listed yet" description="Each lot will show its permit types, location, and rules, alongside student notes about when it fills up and which exit is faster." action_label="" %}
+{% endblock %}

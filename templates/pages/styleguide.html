@@ -1,0 +1,480 @@
+{% extends "base.html" %}
+
+{% block title %}Style guide · RamHub{% endblock %}
+
+{% block content %}
+  {% include "partials/page_header.html" with title="Style guide" subtitle="Every design token and shared UI pattern in RamHub, on one page. If you need something that is not here, add it here first." %}
+
+  <nav aria-label="Style guide sections" class="mb-8 flex flex-wrap gap-2">
+      <a href="#color" class="badge-neutral hover:bg-neutral-200">Color</a>
+      <a href="#type" class="badge-neutral hover:bg-neutral-200">Type</a>
+      <a href="#spacing" class="badge-neutral hover:bg-neutral-200">Spacing</a>
+      <a href="#radius" class="badge-neutral hover:bg-neutral-200">Radius</a>
+      <a href="#buttons" class="badge-neutral hover:bg-neutral-200">Buttons</a>
+      <a href="#forms" class="badge-neutral hover:bg-neutral-200">Forms</a>
+      <a href="#components" class="badge-neutral hover:bg-neutral-200">Cards & rows</a>
+      <a href="#badges" class="badge-neutral hover:bg-neutral-200">Badges</a>
+      <a href="#header" class="badge-neutral hover:bg-neutral-200">Page header</a>
+      <a href="#empty" class="badge-neutral hover:bg-neutral-200">Empty state</a>
+      <a href="#htmx" class="badge-neutral hover:bg-neutral-200">HTMX</a>
+  </nav>
+
+  <div class="space-y-12">
+  <section id="color" class="scroll-mt-20">
+    <h2 class="text-h2">Color</h2>
+    <p class="mt-1 mb-4 max-w-2xl text-neutral-500">One accent derived from Farmingdale's green carries actions and emphasis; neutrals carry everything else. Contrast ratios are against white and were verified against WCAG AA.</p>
+    <h3 class="text-h3 mb-2">Neutral — surfaces, borders, and text</h3>
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-neutral-50 text-neutral-900 flex items-end px-2 pb-1 text-meta font-medium">50</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-neutral-50</p>
+        <p class="text-meta font-mono text-neutral-500">#f8f9fa</p>
+        <p class="text-meta text-neutral-500">page background</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-neutral-100 text-neutral-900 flex items-end px-2 pb-1 text-meta font-medium">100</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-neutral-100</p>
+        <p class="text-meta font-mono text-neutral-500">#f1f3f5</p>
+        <p class="text-meta text-neutral-500">subtle fills, badge background</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-neutral-200 text-neutral-900 flex items-end px-2 pb-1 text-meta font-medium">200</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-neutral-200</p>
+        <p class="text-meta font-mono text-neutral-500">#e6e8eb</p>
+        <p class="text-meta text-neutral-500">dividers, card borders</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-neutral-300 text-neutral-900 flex items-end px-2 pb-1 text-meta font-medium">300</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-neutral-300</p>
+        <p class="text-meta font-mono text-neutral-500">#d3d7dc</p>
+        <p class="text-meta text-neutral-500">resting borders</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-neutral-400 text-neutral-900 flex items-end px-2 pb-1 text-meta font-medium">400</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-neutral-400</p>
+        <p class="text-meta font-mono text-neutral-500">#858d98</p>
+        <p class="text-meta text-neutral-500">control borders — 3.35:1 white / 3.17:1 page bg</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-neutral-500 text-white flex items-end px-2 pb-1 text-meta font-medium">500</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-neutral-500</p>
+        <p class="text-meta font-mono text-neutral-500">#666e7a</p>
+        <p class="text-meta text-neutral-500">muted text — 5.15:1 white / 4.89:1 page bg</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-neutral-600 text-white flex items-end px-2 pb-1 text-meta font-medium">600</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-neutral-600</p>
+        <p class="text-meta font-mono text-neutral-500">#545c68</p>
+        <p class="text-meta text-neutral-500">secondary text — 6.76:1 AA</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-neutral-700 text-white flex items-end px-2 pb-1 text-meta font-medium">700</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-neutral-700</p>
+        <p class="text-meta font-mono text-neutral-500">#3d444e</p>
+        <p class="text-meta text-neutral-500">strong secondary text</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-neutral-800 text-white flex items-end px-2 pb-1 text-meta font-medium">800</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-neutral-800</p>
+        <p class="text-meta font-mono text-neutral-500">#272c34</p>
+        <p class="text-meta text-neutral-500">body text — 14.0:1 AAA</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-neutral-900 text-white flex items-end px-2 pb-1 text-meta font-medium">900</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-neutral-900</p>
+        <p class="text-meta font-mono text-neutral-500">#171a1f</p>
+        <p class="text-meta text-neutral-500">headings — 17.4:1 AAA</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-neutral-950 text-white flex items-end px-2 pb-1 text-meta font-medium">950</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-neutral-950</p>
+        <p class="text-meta font-mono text-neutral-500">#0d0f12</p>
+        <p class="text-meta text-neutral-500">highest emphasis</p>
+      </div>
+    </div>
+    <h3 class="text-h3 mt-6 mb-2">Accent — Farmingdale green, actions and emphasis only</h3>
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-accent-50 text-neutral-900 flex items-end px-2 pb-1 text-meta font-medium">50</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-accent-50</p>
+        <p class="text-meta font-mono text-neutral-500">#eaf6ef</p>
+        <p class="text-meta text-neutral-500">badge / icon background</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-accent-100 text-neutral-900 flex items-end px-2 pb-1 text-meta font-medium">100</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-accent-100</p>
+        <p class="text-meta font-mono text-neutral-500">#d0ebda</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-accent-200 text-neutral-900 flex items-end px-2 pb-1 text-meta font-medium">200</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-accent-200</p>
+        <p class="text-meta font-mono text-neutral-500">#a3d7b8</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-accent-300 text-neutral-900 flex items-end px-2 pb-1 text-meta font-medium">300</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-accent-300</p>
+        <p class="text-meta font-mono text-neutral-500">#6fbd91</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-accent-400 text-neutral-900 flex items-end px-2 pb-1 text-meta font-medium">400</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-accent-400</p>
+        <p class="text-meta font-mono text-neutral-500">#3f9e6d</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-accent-500 text-white flex items-end px-2 pb-1 text-meta font-medium">500</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-accent-500</p>
+        <p class="text-meta font-mono text-neutral-500">#1d8253</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-accent-600 text-white flex items-end px-2 pb-1 text-meta font-medium">600</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-accent-600</p>
+        <p class="text-meta font-mono text-neutral-500">#00693e</p>
+        <p class="text-meta text-neutral-500">primary action — 6.80:1 w/ white</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-accent-700 text-white flex items-end px-2 pb-1 text-meta font-medium">700</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-accent-700</p>
+        <p class="text-meta font-mono text-neutral-500">#005432</p>
+        <p class="text-meta text-neutral-500">hover, link text — 9.07:1</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-accent-800 text-white flex items-end px-2 pb-1 text-meta font-medium">800</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-accent-800</p>
+        <p class="text-meta font-mono text-neutral-500">#044027</p>
+        <p class="text-meta text-neutral-500">active — 11.88:1</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-accent-900 text-white flex items-end px-2 pb-1 text-meta font-medium">900</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-accent-900</p>
+        <p class="text-meta font-mono text-neutral-500">#06331f</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-accent-950 text-white flex items-end px-2 pb-1 text-meta font-medium">950</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-accent-950</p>
+        <p class="text-meta font-mono text-neutral-500">#021a10</p>
+      </div>
+    </div>
+    <h3 class="text-h3 mt-6 mb-2">Danger — error states only, not a second brand color</h3>
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-danger-50 text-neutral-900 flex items-end px-2 pb-1 text-meta font-medium">50</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-danger-50</p>
+        <p class="text-meta font-mono text-neutral-500">#fdf2f2</p>
+        <p class="text-meta text-neutral-500">error badge background</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-danger-100 text-neutral-900 flex items-end px-2 pb-1 text-meta font-medium">100</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-danger-100</p>
+        <p class="text-meta font-mono text-neutral-500">#fbe3e3</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-danger-200 text-neutral-900 flex items-end px-2 pb-1 text-meta font-medium">200</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-danger-200</p>
+        <p class="text-meta font-mono text-neutral-500">#f5c2c2</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-danger-500 text-white flex items-end px-2 pb-1 text-meta font-medium">500</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-danger-500</p>
+        <p class="text-meta font-mono text-neutral-500">#c02626</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-danger-600 text-white flex items-end px-2 pb-1 text-meta font-medium">600</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-danger-600</p>
+        <p class="text-meta font-mono text-neutral-500">#a81f1f</p>
+        <p class="text-meta text-neutral-500">error text and border</p>
+      </div>
+      <div>
+        <div class="h-12 rounded-md border border-neutral-200 bg-danger-700 text-white flex items-end px-2 pb-1 text-meta font-medium">700</div>
+        <p class="mt-1 text-meta font-mono text-neutral-700">--color-danger-700</p>
+        <p class="text-meta font-mono text-neutral-500">#8a1a1a</p>
+        <p class="text-meta text-neutral-500">hover</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="type" class="scroll-mt-20">
+    <h2 class="text-h2">Type</h2>
+    <p class="mt-1 mb-4 max-w-2xl text-neutral-500">One sans-serif family, four sizes plus a body size. Body line-height is 1.65 because advice posts are read end to end, not skimmed.</p>
+    <div class="card card-pad">
+      <div class="flex flex-col gap-1 border-b border-neutral-200 py-4 last:border-0 sm:flex-row sm:gap-6">
+        <div class="w-48 shrink-0">
+          <p class="font-mono text-meta text-neutral-700">--text-h1</p>
+          <p class="font-mono text-meta text-neutral-500">.text-h1 · 28px · lh 1.25</p>
+        </div>
+        <p class="text-h1 max-w-xl">Organic Chemistry I</p>
+      </div>
+      <div class="flex flex-col gap-1 border-b border-neutral-200 py-4 last:border-0 sm:flex-row sm:gap-6">
+        <div class="w-48 shrink-0">
+          <p class="font-mono text-meta text-neutral-700">--text-h2</p>
+          <p class="font-mono text-meta text-neutral-500">.text-h2 · 22px · lh 1.30</p>
+        </div>
+        <p class="text-h2 max-w-xl">What students say about this course</p>
+      </div>
+      <div class="flex flex-col gap-1 border-b border-neutral-200 py-4 last:border-0 sm:flex-row sm:gap-6">
+        <div class="w-48 shrink-0">
+          <p class="font-mono text-meta text-neutral-700">--text-h3</p>
+          <p class="font-mono text-meta text-neutral-500">.text-h3 · 18px · lh 1.40</p>
+        </div>
+        <p class="text-h3 max-w-xl">How I did well in this class</p>
+      </div>
+      <div class="flex flex-col gap-1 border-b border-neutral-200 py-4 last:border-0 sm:flex-row sm:gap-6">
+        <div class="w-48 shrink-0">
+          <p class="font-mono text-meta text-neutral-700">--text-body</p>
+          <p class="font-mono text-meta text-neutral-500">.text-body · 15px · lh 1.65</p>
+        </div>
+        <p class="text-body max-w-xl">The workload is heavy but predictable. Expect a problem set every week and two midterms. Start the reading before the semester begins and you will be fine.</p>
+      </div>
+      <div class="flex flex-col gap-1 border-b border-neutral-200 py-4 last:border-0 sm:flex-row sm:gap-6">
+        <div class="w-48 shrink-0">
+          <p class="font-mono text-meta text-neutral-700">--text-meta</p>
+          <p class="font-mono text-meta text-neutral-500">.text-meta · 12.5px · lh 1.45</p>
+        </div>
+        <p class="text-meta max-w-xl">CSC 240 · Fall 2025 · 48 ratings</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="spacing" class="scroll-mt-20">
+    <h2 class="text-h2">Spacing</h2>
+    <p class="mt-1 mb-4 max-w-2xl text-neutral-500">A 4px base step. Dense UI uses 2 and 3 (8/12px); page rhythm uses 4 and 6 (16/24px).</p>
+    <div class="card card-pad space-y-3">
+      <div class="flex items-center gap-4">
+        <span class="w-28 shrink-0 font-mono text-meta text-neutral-700">1 · 4px</span>
+        <span class="h-4 w-1 rounded-sm bg-accent-300"></span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="w-28 shrink-0 font-mono text-meta text-neutral-700">2 · 8px</span>
+        <span class="h-4 w-2 rounded-sm bg-accent-300"></span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="w-28 shrink-0 font-mono text-meta text-neutral-700">3 · 12px</span>
+        <span class="h-4 w-3 rounded-sm bg-accent-300"></span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="w-28 shrink-0 font-mono text-meta text-neutral-700">4 · 16px</span>
+        <span class="h-4 w-4 rounded-sm bg-accent-300"></span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="w-28 shrink-0 font-mono text-meta text-neutral-700">6 · 24px</span>
+        <span class="h-4 w-6 rounded-sm bg-accent-300"></span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="w-28 shrink-0 font-mono text-meta text-neutral-700">8 · 32px</span>
+        <span class="h-4 w-8 rounded-sm bg-accent-300"></span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="w-28 shrink-0 font-mono text-meta text-neutral-700">12 · 48px</span>
+        <span class="h-4 w-12 rounded-sm bg-accent-300"></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="radius" class="scroll-mt-20">
+    <h2 class="text-h2">Radius</h2>
+    <p class="mt-1 mb-4 max-w-2xl text-neutral-500">6px is the default for buttons, inputs, and cards. Pills are reserved for badges.</p>
+    <div class="card card-pad grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <div class="text-center">
+        <div class="h-14 w-full border border-neutral-300 bg-neutral-100 rounded-sm"></div>
+        <p class="mt-1 font-mono text-meta text-neutral-700">--radius-sm</p>
+        <p class="font-mono text-meta text-neutral-500">4px</p>
+      </div>
+      <div class="text-center">
+        <div class="h-14 w-full border border-neutral-300 bg-neutral-100 rounded-md"></div>
+        <p class="mt-1 font-mono text-meta text-neutral-700">--radius-md</p>
+        <p class="font-mono text-meta text-neutral-500">6px</p>
+      </div>
+      <div class="text-center">
+        <div class="h-14 w-full border border-neutral-300 bg-neutral-100 rounded-lg"></div>
+        <p class="mt-1 font-mono text-meta text-neutral-700">--radius-lg</p>
+        <p class="font-mono text-meta text-neutral-500">10px</p>
+      </div>
+      <div class="text-center">
+        <div class="h-14 w-full border border-neutral-300 bg-neutral-100 rounded-full"></div>
+        <p class="mt-1 font-mono text-meta text-neutral-700">--radius-full</p>
+        <p class="font-mono text-meta text-neutral-500">pill</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="buttons" class="scroll-mt-20">
+    <h2 class="text-h2">Buttons</h2>
+    <p class="mt-1 mb-4 max-w-2xl text-neutral-500">Four variants. Primary is the one action a page most wants you to take — use exactly one per view.</p>
+    <div class="card card-pad space-y-5">
+      <div>
+        <p class="field-label">Variants — hover and press them, the states are live</p>
+        <div class="flex flex-wrap items-center gap-3">
+          <button type="button" class="btn-primary">Post advice</button>
+          <button type="button" class="btn-secondary">Cancel</button>
+          <button type="button" class="btn-ghost">Sort</button>
+          <button type="button" class="btn-danger">Remove post</button>
+        </div>
+      </div>
+      <div>
+        <p class="field-label">Disabled</p>
+        <div class="flex flex-wrap items-center gap-3">
+          <button type="button" class="btn-primary" disabled>Post advice</button>
+          <button type="button" class="btn-secondary" disabled>Cancel</button>
+          <button type="button" class="btn-ghost" disabled>Sort</button>
+          <button type="button" class="btn-danger" disabled>Remove post</button>
+        </div>
+      </div>
+      <div>
+        <p class="field-label">Small — for dense rows</p>
+        <div class="flex flex-wrap items-center gap-3">
+          <button type="button" class="btn-primary btn-sm">Save</button>
+          <button type="button" class="btn-secondary btn-sm">Filter</button>
+        </div>
+      </div>
+      <div>
+        <p class="field-label">With an icon</p>
+        <button type="button" class="btn-secondary">
+          {% include "partials/icons/search.html" %}
+          <span>Search within this course</span>
+        </button>
+      </div>
+      <p class="text-meta text-neutral-500">
+        Tab through this section — every control shows the same 2px accent focus ring.
+      </p>
+    </div>
+  </section>
+
+  <section id="forms" class="scroll-mt-20">
+    <h2 class="text-h2">Forms</h2>
+    <p class="mt-1 mb-4 max-w-2xl text-neutral-500">Labels are always visible. Errors are announced with aria-invalid and aria-describedby, not color alone.</p>
+    <div class="card card-pad grid gap-5 sm:grid-cols-2">
+      <div>
+        <label class="field-label" for="sg-default">Course code</label>
+        <input type="text" id="sg-default" class="field-input" placeholder="CSC 240">
+        <p class="field-hint">Search by code or title.</p>
+      </div>
+      <div>
+        <label class="field-label" for="sg-error">Semester</label>
+        <input type="text" id="sg-error" class="field-input-error" value="Fall 2019"
+               aria-invalid="true" aria-describedby="sg-error-msg">
+        <p class="field-error" id="sg-error-msg">Pick a semester within the last five years.</p>
+      </div>
+      <div>
+        <label class="field-label" for="sg-select">Department</label>
+        <select id="sg-select" class="field-input">
+          <option>Computer Science</option>
+          <option>Chemistry</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label" for="sg-disabled">Professor</label>
+        <input type="text" id="sg-disabled" class="field-input" value="Not yet selected" disabled>
+        <p class="field-hint">Disabled until a course is chosen.</p>
+      </div>
+      <div class="sm:col-span-2">
+        <label class="field-label" for="sg-textarea">Your advice</label>
+        <textarea id="sg-textarea" rows="3" class="field-input"
+                  placeholder="What do you wish you had known before taking this?"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <section id="components" class="scroll-mt-20">
+    <h2 class="text-h2">Cards and directory rows</h2>
+    <p class="mt-1 mb-4 max-w-2xl text-neutral-500">The card is the default container. The row is the unit of every directory.</p>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div class="card card-pad">
+        <h3 class="text-h3">A plain card</h3>
+        <p class="mt-1 text-neutral-600">
+          <code class="font-mono text-meta">.card</code> is the border and radius;
+          <code class="font-mono text-meta">.card-pad</code> adds the padding, so a
+          card holding a full-bleed list can skip it.
+        </p>
+      </div>
+      <div class="card">
+        <div class="border-b border-neutral-200 px-4 py-3">
+          <h3 class="text-h3">A card holding rows</h3>
+        </div>
+        <a href="#components" class="row-link">
+          <span class="rating-value">4.6</span>
+          <span class="min-w-0 flex-1">
+            <span class="block font-medium text-neutral-900">CHM 152 — Organic Chemistry I</span>
+            <span class="block text-meta text-neutral-500">Chemistry · 4 credits · 48 ratings</span>
+          </span>
+          <span class="badge-accent">Heavy</span>
+        </a>
+        <a href="#components" class="row-link border-b-0">
+          <span class="rating-value">3.1</span>
+          <span class="min-w-0 flex-1">
+            <span class="block font-medium text-neutral-900">CSC 240 — Data Structures</span>
+            <span class="block text-meta text-neutral-500">Computer Science · 3 credits · 22 ratings</span>
+          </span>
+          <span class="badge-neutral">Moderate</span>
+        </a>
+      </div>
+    </div>
+    <p class="mt-2 text-meta text-neutral-500">
+      <code class="font-mono">.row-link</code> is the directory row used by the Courses
+      and Professors tabs. The rating is the leftmost thing on the row on purpose.
+    </p>
+  </section>
+
+  <section id="badges" class="scroll-mt-20">
+    <h2 class="text-h2">Badges</h2>
+    <p class="mt-1 mb-4 max-w-2xl text-neutral-500">Short status and category labels. Neutral by default; accent for emphasis; danger for moderation.</p>
+    <div class="card card-pad flex flex-wrap items-center gap-3">
+      <span class="badge-neutral">Discussion</span>
+      <span class="badge-neutral">3 credits</span>
+      <span class="badge-accent">Advice</span>
+      <span class="badge-accent">Most helpful</span>
+      <span class="badge-danger">Reported</span>
+    </div>
+  </section>
+
+  <section id="header" class="scroll-mt-20">
+    <h2 class="text-h2">Page header</h2>
+    <p class="mt-1 mb-4 max-w-2xl text-neutral-500">The reusable header partial, used on every page.</p>
+    <div class="card card-pad">
+      {% include "partials/page_header.html" with title="Courses" count="1,284" subtitle="Every course at Farmingdale State College, rated by students who took it." action_label="Add a course" %}
+      <p class="text-meta text-neutral-500">
+        Accepts <code class="font-mono">title</code>, <code class="font-mono">subtitle</code>,
+        <code class="font-mono">count</code>, <code class="font-mono">action_label</code>,
+        and <code class="font-mono">action_url</code>.
+      </p>
+    </div>
+  </section>
+
+  <section id="empty" class="scroll-mt-20">
+    <h2 class="text-h2">Empty state</h2>
+    <p class="mt-1 mb-4 max-w-2xl text-neutral-500">The reusable empty-state partial. Every empty region gets one — never a blank panel.</p>
+    {% include "partials/empty_state.html" with icon="chat" headline="No advice for this course yet" description="Be the first to write about it. Advice posts are what make a course page worth opening." action_label="Write advice" %}
+  </section>
+
+  <section id="htmx" class="scroll-mt-20">
+    <h2 class="text-h2">HTMX</h2>
+    <p class="mt-1 mb-4 max-w-2xl text-neutral-500">Partial updates return HTML fragments from Django. The loading indicator is part of the pattern.</p>
+    <div class="card card-pad space-y-3">
+      <div class="flex flex-wrap items-center gap-3">
+        <button type="button"
+                class="btn-primary"
+                hx-get="{% url 'styleguide_htmx_demo' %}"
+                hx-target="#htmx-demo-target"
+                hx-swap="innerHTML"
+                hx-indicator="#htmx-demo-indicator">
+          Load a fragment
+        </button>
+        <span id="htmx-demo-indicator" class="htmx-indicator text-meta text-neutral-500">
+          Loading&hellip;
+        </span>
+      </div>
+
+      <div id="htmx-demo-target">
+        <p class="text-meta text-neutral-500">
+          Nothing loaded yet. The button asks Django for an HTML fragment and swaps
+          it in here.
+        </p>
+      </div>
+
+      <p class="text-meta text-neutral-500">
+        CSRF is handled globally: <code class="font-mono">base.html</code> sets
+        <code class="font-mono">hx-headers</code> with the token on
+        <code class="font-mono">&lt;body&gt;</code>, so POSTs work without per-form wiring.
+      </p>
+    </div>
+  </section>
+  </div>
+{% endblock %}

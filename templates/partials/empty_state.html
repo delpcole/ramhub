@@ -1,0 +1,20 @@
+{% comment %}
+Empty state. Never ship a blank region — say what goes here and how to add it.
+
+  {% include "partials/empty_state.html" with icon="book" headline="No courses yet"
+     description="…" action_label="Add advice" action_url="…" %}
+
+`icon` is a filename in templates/partials/icons/ without the extension.
+{% endcomment %}
+<div class="card flex flex-col items-center justify-center px-6 py-12 text-center">
+  <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+    {% with icon_name=icon|default:"book" %}
+      {% include "partials/icons/"|add:icon_name|add:".html" %}
+    {% endwith %}
+  </div>
+  <h2 class="text-h3">{{ headline }}</h2>
+  <p class="mt-1.5 max-w-md text-body text-neutral-500">{{ description }}</p>
+  {% if action_label %}
+    <a href="{{ action_url|default:'#' }}" class="btn-primary mt-5">{{ action_label }}</a>
+  {% endif %}
+</div>

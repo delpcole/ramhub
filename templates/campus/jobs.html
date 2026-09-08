@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Jobs · RamHub{% endblock %}
+
+{% block content %}
+  {% include "partials/page_header.html" with title="Jobs" subtitle="On-campus jobs, work-study positions, internships, and leads posted by students." %}
+  {% include "partials/empty_state.html" with icon="briefcase" headline="No job postings yet" description="Listings will appear here as they are imported and as students post leads from their own departments. Student postings expire on their own." action_label="" %}
+{% endblock %}

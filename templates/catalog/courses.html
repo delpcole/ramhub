@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Courses · RamHub{% endblock %}
+
+{% block content %}
+  {% include "partials/page_header.html" with title="Courses" subtitle="Every course at Farmingdale State College, with difficulty, workload, and usefulness rated by students who took it." %}
+  {% include "partials/empty_state.html" with icon="book" headline="The course directory is not seeded yet" description="Once the catalog import runs, every course gets a page here with its rating summary and the advice students have written about it." action_label="Read the import plan" %}
+{% endblock %}

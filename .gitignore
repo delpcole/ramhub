@@ -1,0 +1,28 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Django
+.env
+*.log
+db.sqlite3
+staticfiles/
+media/
+
+# Node / Tailwind
+node_modules/
+# Built CSS is generated — run `npm run tailwind:build`
+static/css/site.css
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Claude Code local config
+.claude/

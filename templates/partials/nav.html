@@ -1,0 +1,93 @@
+{% comment %}
+Top navigation. Tabs come from config.context_processors.navigation, which also
+decides which one is active. Below 768px the tabs move into #mobile-menu.
+{% endcomment %}
+<header class="sticky top-0 z-40 border-b border-neutral-200 bg-white">
+  <div class="mx-auto flex h-14 w-full max-w-6xl items-center gap-2 px-4 sm:px-6">
+
+    {# Wordmark #}
+    <a href="{% url 'community:feed' %}"
+       class="flex shrink-0 items-center gap-2 rounded-md pr-2 text-h3 font-semibold tracking-tight text-neutral-900">
+      <span class="flex h-7 w-7 items-center justify-center rounded-md bg-accent-600 text-white"
+            aria-hidden="true">
+        <span class="text-body font-bold leading-none">R</span>
+      </span>
+      <span>Ram<span class="text-accent-700">Hub</span></span>
+    </a>
+
+    {# Desktop tabs #}
+    <nav class="hidden md:flex md:items-center md:gap-0.5" aria-label="Primary">
+      {% for tab in nav_tabs %}
+        <a href="{{ tab.url }}"
+           class="{% if tab.is_active %}nav-tab-active{% else %}nav-tab{% endif %} md:px-2 lg:px-3"
+           {% if tab.is_active %}aria-current="page"{% endif %}>{{ tab.label }}</a>
+      {% endfor %}
+    </nav>
+
+    <div class="flex flex-1 items-center justify-end gap-2">
+
+      {# Search — full input on large screens #}
+      <form action="#" method="get" role="search" class="hidden lg:block">
+        <label for="site-search" class="sr-only">Search RamHub</label>
+        <div class="relative">
+          <span class="pointer-events-none absolute inset-y-0 left-2 flex items-center text-neutral-500">
+            {% include "partials/icons/search.html" %}
+          </span>
+          <input type="search" id="site-search" name="q" placeholder="Search courses, professors, posts"
+                 class="field-input w-72 pl-9" autocomplete="off">
+        </div>
+      </form>
+
+      {# Search — icon only between 768px and 1024px #}
+      <a href="#" class="btn-ghost hidden md:inline-flex lg:hidden" aria-label="Search RamHub">
+        {% include "partials/icons/search.html" %}
+      </a>
+
+      {# Account menu — a placeholder until auth lands in Phase 2 #}
+      <a href="#" class="btn-secondary hidden shrink-0 md:inline-flex">
+        {% include "partials/icons/user.html" %}
+        <span>Sign in</span>
+      </a>
+
+      {# Mobile menu toggle #}
+      <button type="button"
+              class="btn-ghost md:hidden"
+              aria-label="Open menu"
+              aria-expanded="false"
+              aria-controls="mobile-menu"
+              data-menu-toggle>
+        <span data-menu-icon-open>{% include "partials/icons/menu.html" %}</span>
+        <span data-menu-icon-close hidden>{% include "partials/icons/close.html" %}</span>
+      </button>
+    </div>
+  </div>
+
+  {# Mobile menu #}
+  <div id="mobile-menu" class="border-t border-neutral-200 bg-white md:hidden" hidden>
+    <nav class="mx-auto max-w-6xl space-y-1 px-4 py-3" aria-label="Primary (mobile)">
+      <form action="#" method="get" role="search" class="pb-2">
+        <label for="mobile-search" class="sr-only">Search RamHub</label>
+        <div class="relative">
+          <span class="pointer-events-none absolute inset-y-0 left-2 flex items-center text-neutral-500">
+            {% include "partials/icons/search.html" %}
+          </span>
+          <input type="search" id="mobile-search" name="q" placeholder="Search RamHub"
+                 class="field-input pl-9" autocomplete="off">
+        </div>
+      </form>
+
+      {% for tab in nav_tabs %}
+        <a href="{{ tab.url }}"
+           class="{% if tab.is_active %}nav-tab-mobile-active{% else %}nav-tab-mobile{% endif %}"
+           {% if tab.is_active %}aria-current="page"{% endif %}>{{ tab.label }}</a>
+      {% endfor %}
+
+      <div class="border-t border-neutral-200 pt-3">
+        <a href="#" class="btn-secondary w-full">
+          {% include "partials/icons/user.html" %}
+          <span>Sign in</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>

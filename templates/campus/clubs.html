@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Clubs · RamHub{% endblock %}
+
+{% block content %}
+  {% include "partials/page_header.html" with title="Clubs" subtitle="Registered student organizations — what they do, when they meet, and how to join." %}
+  {% include "partials/empty_state.html" with icon="flag" headline="No clubs listed yet" description="Club listings come from the official organization directory, with a discussion thread on each one for the things the official page never mentions." action_label="" %}
+{% endblock %}

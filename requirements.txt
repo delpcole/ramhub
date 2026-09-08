@@ -1,0 +1,11 @@
+# RamHub — pinned to the versions verified against MongoDB Atlas in Phase 0.
+# django-mongodb-backend X.Y.* only works with Django X.Y.* — upgrade them together.
+Django==6.1.1
+django-mongodb-backend==6.1.0
+djangorestframework==3.18.1
+django-environ==0.14.0
+
+# Dev / CI
+pytest==9.1.1
+pytest-django==4.14.0
+ruff==0.16.6

@@ -1,0 +1,39 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}RamHub{% endblock %}</title>
+  <meta name="description" content="{% block description %}Course and professor advice from Farmingdale State College students.{% endblock %}">
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+  <script src="{% static 'vendor/htmx.min.js' %}" defer></script>
+</head>
+{# hx-headers puts Django's CSRF token on every htmx request, so POSTs work. #}
+<body class="flex min-h-full flex-col bg-neutral-50"
+      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+  <a href="#main"
+     class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50
+            focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-body
+            focus:font-medium focus:text-accent-700 focus:shadow">
+    Skip to main content
+  </a>
+
+  {% include "partials/nav.html" %}
+
+  <main id="main" class="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6">
+    {% if messages %}
+      <div class="mb-4 space-y-2">
+        {% for message in messages %}
+          <div class="card card-pad text-body" role="status">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  {% include "partials/footer.html" %}
+
+  <script src="{% static 'js/ui.js' %}" defer></script>
+</body>
+</html>
