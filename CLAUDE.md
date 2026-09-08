@@ -25,16 +25,21 @@ Roles: `STUDENT` (default), `MODERATOR`, `ADMIN`.
 
 ## Tech stack — fixed by the course, do not propose alternatives
 
-- **Python 3.12+**
+- **Python 3.12+** (developed on 3.13)
 - **Django 6.1** — server-rendered **Django templates** are the user interface.
 - **Django REST Framework** — JSON endpoints under `/api/` for the interactive pieces the
   templates call (voting, search autocomplete, saving items, the AI assistant).
 - **MongoDB** via **`django-mongodb-backend`** (MongoDB's official Django backend, GA).
   `ENGINE = "django_mongodb_backend"`. Use MongoDB Atlas.
+  **Pinned: Django 6.1.1 + django-mongodb-backend 6.1.0.** The backend's X.Y must match
+  Django's X.Y — it raises `ImproperlyConfigured` at import time otherwise. Upgrade both
+  in the same PR or neither.
 - **HTMX** for progressive interactivity inside templates (partial updates, infinite
   scroll, inline forms). Small amounts of vanilla JS only where HTMX doesn't fit. No React,
   no SPA framework.
-- **Tailwind CSS** via `django-tailwind` (or the standalone Tailwind CLI) for styling.
+- **Tailwind CSS v4** via the standalone CLI (`npm run tailwind:watch`). Tokens live in
+  `static/src/input.css`; the stock color and type scales are cleared on purpose, so add a
+  token rather than hardcoding a value. Review the system at `/styleguide`.
 - **Figma** for design mockups — implement what the design lead produces.
 - **GitHub** for version control, **Kanban board** for task tracking.
 - **Testing:** `pytest` + `pytest-django`. **Linting/format:** `ruff`.
@@ -49,15 +54,27 @@ https://www.mongodb.com/docs/languages/python/django-mongodb/current/
 them — do not "fix" them by reaching for patterns that don't work here.
 
 - **`AutoField` is unsupported.** Every model uses `ObjectIdAutoField` as its primary key.
+  `DEFAULT_AUTO_FIELD` covers our apps but **does not reach Django's contrib apps** — they
+  pin their own, so `auth.User`, `auth.Group`, `auth.Permission`, `admin.LogEntry`, and
+  `contenttypes.ContentType` fail `manage.py check` with `mongodb.fields.auto.E001`.
+  `config/mongo_apps.py` subclasses those AppConfigs. **The custom User model in Phase 2
+  must do the same** on the `accounts` AppConfig.
 - **`ForeignKey` works but is slow** (compiles to `$lookup`), and **`prefetch_related` is
   unsupported**. Use `ForeignKey` only when the related object is genuinely independent.
-- **`ManyToManyField` is not supported.** Model many-to-many as an `ArrayField` of
-  `ObjectIdField`, or as an explicit through-model when the relationship carries data.
+- **`ManyToManyField` works, but avoid it anyway.** (Corrected in Phase 0 — earlier
+  versions did not support it; 6.1 creates the implicit through-collection.) It still costs
+  a `$lookup` per traversal and `prefetch_related` can't help. Model many-to-many as an
+  `ArrayField` of `ObjectIdField`, or as an explicit through-model when the relationship
+  carries data. Reach for a real `ManyToManyField` only with a reason in the PR.
 - **Prefer embedding.** Data that is always read together with its parent should be an
   `EmbeddedModelField` / `EmbeddedModelArrayField`, not a separate collection. Comments live
   embedded inside their Post for exactly this reason.
-- **Migrations do not detect changes to embedded models.** When you change an embedded
-  model's shape, write the migration or data backfill by hand and say so in the PR.
+- **Embedded-model migrations are only partly automatic.** 6.1 ships its own
+  `MigrationAutodetector` (which is why `django_mongodb_backend` must stay in
+  `INSTALLED_APPS`) and it does order embedded models correctly. But **updating an embedded
+  model's indexes after the collection exists is unsupported**, and existing documents are
+  never rewritten. Changing an embedded model's shape still means a hand-written data
+  backfill — say so in the PR. Verify the exact behaviour before relying on it.
 - **Aggregation is limited** and `QuerySet.raw()` is unsupported. Use `raw_aggregate()` when
   you truly need a pipeline — but prefer our denormalized summary fields (below).
 - **Denormalize rating averages.** `Course.rating_summary` and `Professor.rating_summary`
@@ -67,6 +84,9 @@ them — do not "fix" them by reaching for patterns that don't work here.
   Keep write paths simple rather than leaning on nested atomic blocks.
 - **Unique constraints and indexes are supported** — use `UniqueConstraint` freely (one
   rating per user+course, one vote per user+target).
+- **There is no `parse_uri()` any more.** It was removed in 6.1, but nearly every tutorial
+  (and most LLM output) still calls it. Pass the whole Atlas connection string as the
+  database `HOST` and set `NAME` separately. Read both from the environment.
 
 ## Commands
 
@@ -74,11 +94,11 @@ them — do not "fix" them by reaching for patterns that don't work here.
 python manage.py runserver
 python manage.py makemigrations
 python manage.py migrate
-python manage.py seed_demo          # load demo data (idempotent)
+python manage.py seed_demo          # load demo data (idempotent) — arrives in Phase 1
 python manage.py createsuperuser
 pytest                              # tests
 ruff check . && ruff format --check .
-npm run tailwind:watch              # or: python manage.py tailwind start
+npm run tailwind:watch              # rebuild CSS while you edit templates
 ```
 
 Run `ruff check . && pytest` before declaring any work done.
