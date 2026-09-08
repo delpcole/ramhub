@@ -59,6 +59,11 @@ them — do not "fix" them by reaching for patterns that don't work here.
   `contenttypes.ContentType` fail `manage.py check` with `mongodb.fields.auto.E001`.
   `config/mongo_apps.py` subclasses those AppConfigs. **The custom User model in Phase 2
   must do the same** on the `accounts` AppConfig.
+- **Django's own contrib migrations are unusable as shipped.** They hardcode `AutoField`,
+  and `post_migrate` rebuilds those models from the migration files rather than from the
+  AppConfig — so `migrate` fails with *"Model instances without primary key value are
+  unhashable"* while creating permissions. `MIGRATION_MODULES` points `admin`, `auth`, and
+  `contenttypes` at regenerated copies in `mongo_migrations/`. Do not delete that package.
 - **`ForeignKey` works but is slow** (compiles to `$lookup`), and **`prefetch_related` is
   unsupported**. Use `ForeignKey` only when the related object is genuinely independent.
 - **`ManyToManyField` works, but avoid it anyway.** (Corrected in Phase 0 — earlier

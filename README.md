@@ -44,6 +44,44 @@ npm run tailwind:build
 python manage.py migrate
 ```
 
+### Database: local or Atlas
+
+Either works — it is one line in `.env`. Local is faster to set up and works
+offline; Atlas is what the team shares and what the assistant's vector search
+will need later.
+
+**Local (macOS, Homebrew):**
+
+```bash
+brew tap mongodb/brew && brew trust mongodb/brew
+brew install mongodb-community
+```
+
+MongoDB only supports transactions on a replica set, and Atlas is always one, so
+run local as a single-node replica set to keep behaviour identical. Add this to
+`/opt/homebrew/etc/mongod.conf`:
+
+```yaml
+replication:
+  replSetName: rs0
+```
+
+Then start it and initiate the set once:
+
+```bash
+brew services start mongodb-community
+mongosh --eval "rs.initiate()"
+```
+
+`.env`:
+
+```
+MONGODB_URI=mongodb://127.0.0.1:27017/?replicaSet=rs0
+MONGODB_NAME=ramhub
+```
+
+Handy: `brew services stop mongodb-community`, and `mongosh ramhub` for a shell.
+
 ### Environment variables
 
 `.env` is gitignored. Never commit it, and never put a connection string in a
@@ -64,7 +102,7 @@ Generate a key for `.env` with:
 python -c "from django.core.management.utils import get_random_secret_key as g; print(g())"
 ```
 
-### Pointing it at Atlas
+**Atlas:**
 
 1. In Atlas, create a free **M0** cluster.
 2. **Database Access** → add a database user with a password.
@@ -130,6 +168,7 @@ python manage.py createsuperuser
 ```
 config/              settings/{base,dev,prod}.py, urls, views for site-level pages
   mongo_apps.py      MongoDB-compatible AppConfigs for Django's contrib apps
+mongo_migrations/    regenerated admin/auth/contenttypes migrations (see its docstring)
   context_processors.py  builds the nav and marks the active tab
 apps/                accounts, catalog, ratings, community, campus, saved,
                      assistant, moderation

@@ -104,6 +104,16 @@ DATABASE_ROUTERS = ["django_mongodb_backend.routers.MongoRouter"]
 # MongoDB has no AutoField. Every model gets an ObjectId primary key.
 DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
 
+# Django's own admin/auth/contenttypes migrations hardcode AutoField, and
+# post_migrate rebuilds those models from the migration files rather than from
+# config/mongo_apps.py. Regenerated copies live in mongo_migrations/ — see the
+# docstring there before touching this.
+MIGRATION_MODULES = {
+    "admin": "mongo_migrations.admin",
+    "auth": "mongo_migrations.auth",
+    "contenttypes": "mongo_migrations.contenttypes",
+}
+
 # --------------------------------------------------------------------------
 # Auth
 # --------------------------------------------------------------------------
