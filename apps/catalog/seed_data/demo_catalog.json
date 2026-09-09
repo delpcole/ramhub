@@ -1,0 +1,1509 @@
+{
+  "_meta": {
+    "purpose": "Demo data for `python manage.py seed_demo`.",
+    "provenance": "REPRESENTATIVE, NOT AUTHORITATIVE. Course codes, titles, credits, prerequisites and descriptions were written by hand to resemble a real Farmingdale State College catalog so the directory pages demo convincingly. They were NOT scraped from or verified against the official catalog, and some will be wrong. Replace this file with real catalog data via the import tool before anything is shown as fact.",
+    "professors": "ENTIRELY FICTIONAL. These are invented names, titles, biographies and ratings. They are not real Farmingdale faculty and any resemblance to a real person is coincidental. Never attach demo ratings to a real person's name.",
+    "ratings": "Generated from a fixed random seed so this file is stable and reviewable in git.",
+    "counts": {
+      "courses": 66,
+      "professors": 30
+    }
+  },
+  "courses": [
+    {
+      "code": "CSC 111",
+      "title": "Introduction to Programming",
+      "credits": 4,
+      "department": "Computer Science",
+      "prereq_text": "",
+      "description": "A first programming course. Variables, control flow, functions, arrays, and basic problem decomposition, taught in Python with weekly lab work.",
+      "rating_summary": {
+        "avg_difficulty": 2.9,
+        "avg_workload": 2.7,
+        "avg_usefulness": 3.2,
+        "count": 65
+      }
+    },
+    {
+      "code": "CSC 112",
+      "title": "Computer Programming II",
+      "credits": 4,
+      "department": "Computer Science",
+      "prereq_text": "CSC 111",
+      "description": "Object-oriented programming, recursion, file I/O, and an introduction to algorithm analysis. Continues the Python sequence and introduces Java.",
+      "rating_summary": {
+        "avg_difficulty": 3.1,
+        "avg_workload": 2.5,
+        "avg_usefulness": 3.9,
+        "count": 70
+      }
+    },
+    {
+      "code": "CSC 205",
+      "title": "Discrete Structures",
+      "credits": 3,
+      "department": "Computer Science",
+      "prereq_text": "CSC 111 and MTH 129",
+      "description": "Logic, proof techniques, sets, relations, functions, combinatorics, and graphs, with an emphasis on the mathematics used in later computing courses.",
+      "rating_summary": {
+        "avg_difficulty": 3.9,
+        "avg_workload": 3.0,
+        "avg_usefulness": 4.6,
+        "count": 31
+      }
+    },
+    {
+      "code": "CSC 240",
+      "title": "Data Structures",
+      "credits": 4,
+      "department": "Computer Science",
+      "prereq_text": "CSC 112",
+      "description": "Lists, stacks, queues, trees, hash tables, and graphs. Implementation, asymptotic analysis, and the tradeoffs that decide which structure fits a problem.",
+      "rating_summary": {
+        "avg_difficulty": 4.1,
+        "avg_workload": 4.5,
+        "avg_usefulness": 4.3,
+        "count": 40
+      }
+    },
+    {
+      "code": "CSC 250",
+      "title": "Computer Organization",
+      "credits": 3,
+      "department": "Computer Science",
+      "prereq_text": "CSC 112",
+      "description": "Number representation, digital logic, assembly language, the memory hierarchy, and how a high-level program actually executes on hardware.",
+      "rating_summary": {
+        "avg_difficulty": 4.3,
+        "avg_workload": 3.8,
+        "avg_usefulness": 3.8,
+        "count": 15
+      }
+    },
+    {
+      "code": "CSC 310",
+      "title": "Database Management Systems",
+      "credits": 3,
+      "department": "Computer Science",
+      "prereq_text": "CSC 240",
+      "description": "Relational modeling, normalization, SQL, transactions, and indexing, with a term project building an application against a live database.",
+      "rating_summary": {
+        "avg_difficulty": 3.7,
+        "avg_workload": 3.1,
+        "avg_usefulness": 4.6,
+        "count": 70
+      }
+    },
+    {
+      "code": "CSC 330",
+      "title": "Operating Systems",
+      "credits": 3,
+      "department": "Computer Science",
+      "prereq_text": "CSC 240 and CSC 250",
+      "description": "Processes, threads, scheduling, synchronization, deadlock, memory management, and file systems, with programming assignments in C.",
+      "rating_summary": {
+        "avg_difficulty": 4.1,
+        "avg_workload": 4.7,
+        "avg_usefulness": 3.2,
+        "count": 30
+      }
+    },
+    {
+      "code": "CSC 340",
+      "title": "Software Engineering",
+      "credits": 3,
+      "department": "Computer Science",
+      "prereq_text": "CSC 240",
+      "description": "Requirements, design, version control, testing, and code review, practiced on a semester-long team project.",
+      "rating_summary": {
+        "avg_difficulty": 3.7,
+        "avg_workload": 2.9,
+        "avg_usefulness": 4.4,
+        "count": 36
+      }
+    },
+    {
+      "code": "CSC 380",
+      "title": "Web Application Development",
+      "credits": 3,
+      "department": "Computer Science",
+      "prereq_text": "CSC 240",
+      "description": "Server-side frameworks, templating, HTTP, authentication, and deployment. Students build and deploy a database-backed web application.",
+      "rating_summary": {
+        "avg_difficulty": 2.7,
+        "avg_workload": 3.0,
+        "avg_usefulness": 4.7,
+        "count": 49
+      }
+    },
+    {
+      "code": "CSC 440",
+      "title": "Computer Networks",
+      "credits": 3,
+      "department": "Computer Science",
+      "prereq_text": "CSC 330",
+      "description": "Layered network architecture, TCP/IP, routing, reliability, and network programming with sockets.",
+      "rating_summary": {
+        "avg_difficulty": null,
+        "avg_workload": null,
+        "avg_usefulness": null,
+        "count": 0
+      }
+    },
+    {
+      "code": "MTH 110",
+      "title": "College Algebra",
+      "credits": 3,
+      "department": "Mathematics",
+      "prereq_text": "",
+      "description": "Linear and quadratic equations, inequalities, functions and their graphs, exponentials and logarithms. Prepares students for precalculus.",
+      "rating_summary": {
+        "avg_difficulty": 2.4,
+        "avg_workload": 1.8,
+        "avg_usefulness": 3.0,
+        "count": 31
+      }
+    },
+    {
+      "code": "MTH 129",
+      "title": "Precalculus",
+      "credits": 4,
+      "department": "Mathematics",
+      "prereq_text": "MTH 110 or placement",
+      "description": "Polynomial, rational, exponential, logarithmic, and trigonometric functions, with the algebraic fluency calculus assumes.",
+      "rating_summary": {
+        "avg_difficulty": 2.8,
+        "avg_workload": 2.8,
+        "avg_usefulness": 3.6,
+        "count": 10
+      }
+    },
+    {
+      "code": "MTH 150",
+      "title": "Calculus I",
+      "credits": 4,
+      "department": "Mathematics",
+      "prereq_text": "MTH 129 or placement",
+      "description": "Limits, continuity, derivatives, and their applications, closing with the definite integral and the Fundamental Theorem.",
+      "rating_summary": {
+        "avg_difficulty": 3.2,
+        "avg_workload": 3.2,
+        "avg_usefulness": 3.9,
+        "count": 82
+      }
+    },
+    {
+      "code": "MTH 151",
+      "title": "Calculus II",
+      "credits": 4,
+      "department": "Mathematics",
+      "prereq_text": "MTH 150",
+      "description": "Techniques and applications of integration, sequences and series, parametric equations, and polar coordinates.",
+      "rating_summary": {
+        "avg_difficulty": 4.3,
+        "avg_workload": 4.4,
+        "avg_usefulness": 4.7,
+        "count": 79
+      }
+    },
+    {
+      "code": "MTH 220",
+      "title": "Linear Algebra",
+      "credits": 3,
+      "department": "Mathematics",
+      "prereq_text": "MTH 151",
+      "description": "Systems of linear equations, matrices, determinants, vector spaces, eigenvalues, and linear transformations.",
+      "rating_summary": {
+        "avg_difficulty": 3.4,
+        "avg_workload": 3.5,
+        "avg_usefulness": 4.2,
+        "count": 58
+      }
+    },
+    {
+      "code": "MTH 240",
+      "title": "Calculus III",
+      "credits": 4,
+      "department": "Mathematics",
+      "prereq_text": "MTH 151",
+      "description": "Vectors, partial derivatives, multiple integrals, and vector calculus through Green's and Stokes' theorems.",
+      "rating_summary": {
+        "avg_difficulty": 4.1,
+        "avg_workload": 4.1,
+        "avg_usefulness": 3.8,
+        "count": 29
+      }
+    },
+    {
+      "code": "MTH 250",
+      "title": "Differential Equations",
+      "credits": 3,
+      "department": "Mathematics",
+      "prereq_text": "MTH 151",
+      "description": "First and second order equations, Laplace transforms, series solutions, and systems, with applications to physical models.",
+      "rating_summary": {
+        "avg_difficulty": null,
+        "avg_workload": null,
+        "avg_usefulness": null,
+        "count": 0
+      }
+    },
+    {
+      "code": "MTH 285",
+      "title": "Introduction to Statistics",
+      "credits": 3,
+      "department": "Mathematics",
+      "prereq_text": "MTH 110",
+      "description": "Descriptive statistics, probability, distributions, confidence intervals, hypothesis testing, and regression, using statistical software.",
+      "rating_summary": {
+        "avg_difficulty": 2.7,
+        "avg_workload": 3.1,
+        "avg_usefulness": 3.2,
+        "count": 51
+      }
+    },
+    {
+      "code": "EGL 101",
+      "title": "Composition I",
+      "credits": 3,
+      "department": "English",
+      "prereq_text": "",
+      "description": "Academic writing: developing a thesis, structuring an argument, integrating sources, and revising. Required of all students.",
+      "rating_summary": {
+        "avg_difficulty": 3.4,
+        "avg_workload": 3.1,
+        "avg_usefulness": 3.5,
+        "count": 21
+      }
+    },
+    {
+      "code": "EGL 102",
+      "title": "Composition II: Writing About Literature",
+      "credits": 3,
+      "department": "English",
+      "prereq_text": "EGL 101",
+      "description": "Close reading and argument built from fiction, poetry, and drama, with a documented research essay.",
+      "rating_summary": {
+        "avg_difficulty": 3.4,
+        "avg_workload": 3.2,
+        "avg_usefulness": 4.4,
+        "count": 44
+      }
+    },
+    {
+      "code": "EGL 205",
+      "title": "Technical Writing",
+      "credits": 3,
+      "department": "English",
+      "prereq_text": "EGL 101",
+      "description": "Documentation, reports, proposals, and instructions written for professional audiences, with attention to clarity and design.",
+      "rating_summary": {
+        "avg_difficulty": 2.8,
+        "avg_workload": 3.6,
+        "avg_usefulness": 4.8,
+        "count": 62
+      }
+    },
+    {
+      "code": "EGL 210",
+      "title": "Introduction to Creative Writing",
+      "credits": 3,
+      "department": "English",
+      "prereq_text": "EGL 101",
+      "description": "Workshop in fiction and poetry. Students write, revise, and critique in a peer workshop setting.",
+      "rating_summary": {
+        "avg_difficulty": 2.1,
+        "avg_workload": 1.7,
+        "avg_usefulness": 3.2,
+        "count": 44
+      }
+    },
+    {
+      "code": "EGL 232",
+      "title": "American Literature I",
+      "credits": 3,
+      "department": "English",
+      "prereq_text": "EGL 102",
+      "description": "American writing from the colonial period through the Civil War, read in historical context.",
+      "rating_summary": {
+        "avg_difficulty": 3.2,
+        "avg_workload": 3.2,
+        "avg_usefulness": 3.2,
+        "count": 78
+      }
+    },
+    {
+      "code": "EGL 245",
+      "title": "Shakespeare",
+      "credits": 3,
+      "department": "English",
+      "prereq_text": "EGL 102",
+      "description": "A selection of comedies, histories, and tragedies, with attention to language, staging, and performance history.",
+      "rating_summary": {
+        "avg_difficulty": 3.6,
+        "avg_workload": 3.3,
+        "avg_usefulness": 4.7,
+        "count": 77
+      }
+    },
+    {
+      "code": "EGL 270",
+      "title": "Introduction to Film Studies",
+      "credits": 3,
+      "department": "English",
+      "prereq_text": "EGL 101",
+      "description": "Film form, narrative, genre, and criticism, with weekly screenings and analytical writing.",
+      "rating_summary": {
+        "avg_difficulty": 1.8,
+        "avg_workload": 1.6,
+        "avg_usefulness": 3.0,
+        "count": 13
+      }
+    },
+    {
+      "code": "EGL 301",
+      "title": "Advanced Composition",
+      "credits": 3,
+      "department": "English",
+      "prereq_text": "EGL 102",
+      "description": "Extended nonfiction projects with substantial revision, aimed at students who already write competently.",
+      "rating_summary": {
+        "avg_difficulty": null,
+        "avg_workload": null,
+        "avg_usefulness": null,
+        "count": 0
+      }
+    },
+    {
+      "code": "BUS 101",
+      "title": "Introduction to Business",
+      "credits": 3,
+      "department": "Business",
+      "prereq_text": "",
+      "description": "A survey of business functions: management, marketing, finance, accounting, and operations, and how they fit together in a firm.",
+      "rating_summary": {
+        "avg_difficulty": 1.7,
+        "avg_workload": 2.1,
+        "avg_usefulness": 4.8,
+        "count": 62
+      }
+    },
+    {
+      "code": "BUS 110",
+      "title": "Financial Accounting",
+      "credits": 3,
+      "department": "Business",
+      "prereq_text": "",
+      "description": "The accounting cycle, financial statements, and the principles behind how transactions are recorded and reported to outsiders.",
+      "rating_summary": {
+        "avg_difficulty": 3.5,
+        "avg_workload": 3.1,
+        "avg_usefulness": 3.1,
+        "count": 36
+      }
+    },
+    {
+      "code": "BUS 111",
+      "title": "Managerial Accounting",
+      "credits": 3,
+      "department": "Business",
+      "prereq_text": "BUS 110",
+      "description": "Cost behavior, budgeting, variance analysis, and the accounting information managers use to make internal decisions.",
+      "rating_summary": {
+        "avg_difficulty": 2.7,
+        "avg_workload": 3.2,
+        "avg_usefulness": 3.7,
+        "count": 23
+      }
+    },
+    {
+      "code": "BUS 210",
+      "title": "Principles of Marketing",
+      "credits": 3,
+      "department": "Business",
+      "prereq_text": "BUS 101",
+      "description": "Segmentation, positioning, product, pricing, promotion, and distribution, applied through cases and a marketing plan.",
+      "rating_summary": {
+        "avg_difficulty": 3.7,
+        "avg_workload": 2.6,
+        "avg_usefulness": 4.9,
+        "count": 56
+      }
+    },
+    {
+      "code": "BUS 220",
+      "title": "Business Law I",
+      "credits": 3,
+      "department": "Business",
+      "prereq_text": "BUS 101",
+      "description": "Contracts, torts, agency, and the legal environment in which businesses operate, taught through case analysis.",
+      "rating_summary": {
+        "avg_difficulty": 2.9,
+        "avg_workload": 2.7,
+        "avg_usefulness": 4.1,
+        "count": 48
+      }
+    },
+    {
+      "code": "BUS 250",
+      "title": "Principles of Management",
+      "credits": 3,
+      "department": "Business",
+      "prereq_text": "BUS 101",
+      "description": "Planning, organizing, leading, and controlling, with attention to organizational structure and decision making.",
+      "rating_summary": {
+        "avg_difficulty": 3.1,
+        "avg_workload": 2.9,
+        "avg_usefulness": 3.2,
+        "count": 64
+      }
+    },
+    {
+      "code": "BUS 320",
+      "title": "Corporate Finance",
+      "credits": 3,
+      "department": "Business",
+      "prereq_text": "BUS 110 and MTH 285",
+      "description": "Time value of money, valuation, capital budgeting, risk and return, and capital structure.",
+      "rating_summary": {
+        "avg_difficulty": 4.8,
+        "avg_workload": 4.0,
+        "avg_usefulness": 3.2,
+        "count": 44
+      }
+    },
+    {
+      "code": "BUS 380",
+      "title": "Organizational Behavior",
+      "credits": 3,
+      "department": "Business",
+      "prereq_text": "BUS 250",
+      "description": "Motivation, teams, leadership, communication, and culture, grounded in behavioral research.",
+      "rating_summary": {
+        "avg_difficulty": 3.8,
+        "avg_workload": 3.4,
+        "avg_usefulness": 3.9,
+        "count": 22
+      }
+    },
+    {
+      "code": "BIO 120",
+      "title": "General Biology I",
+      "credits": 4,
+      "department": "Biology",
+      "prereq_text": "",
+      "description": "Cell structure, metabolism, genetics, and evolution, with a laboratory. The first course for biology majors.",
+      "rating_summary": {
+        "avg_difficulty": 2.8,
+        "avg_workload": 2.7,
+        "avg_usefulness": 3.2,
+        "count": 57
+      }
+    },
+    {
+      "code": "BIO 121",
+      "title": "General Biology II",
+      "credits": 4,
+      "department": "Biology",
+      "prereq_text": "BIO 120",
+      "description": "Diversity of life, plant and animal form and function, and ecology, with a laboratory.",
+      "rating_summary": {
+        "avg_difficulty": 3.0,
+        "avg_workload": 2.9,
+        "avg_usefulness": 4.1,
+        "count": 82
+      }
+    },
+    {
+      "code": "BIO 130",
+      "title": "Anatomy and Physiology I",
+      "credits": 4,
+      "department": "Biology",
+      "prereq_text": "BIO 120",
+      "description": "Structure and function of the integumentary, skeletal, muscular, and nervous systems, with cadaver-model laboratory work.",
+      "rating_summary": {
+        "avg_difficulty": 2.7,
+        "avg_workload": 2.5,
+        "avg_usefulness": 4.2,
+        "count": 56
+      }
+    },
+    {
+      "code": "BIO 131",
+      "title": "Anatomy and Physiology II",
+      "credits": 4,
+      "department": "Biology",
+      "prereq_text": "BIO 130",
+      "description": "Cardiovascular, respiratory, digestive, urinary, endocrine, and reproductive systems, with laboratory.",
+      "rating_summary": {
+        "avg_difficulty": 3.0,
+        "avg_workload": 2.9,
+        "avg_usefulness": 3.0,
+        "count": 48
+      }
+    },
+    {
+      "code": "BIO 210",
+      "title": "Microbiology",
+      "credits": 4,
+      "department": "Biology",
+      "prereq_text": "BIO 121 and CHM 130",
+      "description": "Bacteria, viruses, and fungi; growth, control, and pathogenesis, with aseptic technique in the laboratory.",
+      "rating_summary": {
+        "avg_difficulty": 3.9,
+        "avg_workload": 4.5,
+        "avg_usefulness": 4.9,
+        "count": 75
+      }
+    },
+    {
+      "code": "BIO 240",
+      "title": "Genetics",
+      "credits": 4,
+      "department": "Biology",
+      "prereq_text": "BIO 121",
+      "description": "Mendelian and molecular genetics, gene expression, and genomics, with problem sets and laboratory work.",
+      "rating_summary": {
+        "avg_difficulty": 4.0,
+        "avg_workload": 4.4,
+        "avg_usefulness": 4.0,
+        "count": 27
+      }
+    },
+    {
+      "code": "BIO 310",
+      "title": "Cell Biology",
+      "credits": 4,
+      "department": "Biology",
+      "prereq_text": "BIO 240",
+      "description": "Membranes, organelles, the cytoskeleton, signaling, and the cell cycle, read partly through primary literature.",
+      "rating_summary": {
+        "avg_difficulty": 4.1,
+        "avg_workload": 4.3,
+        "avg_usefulness": 4.0,
+        "count": 64
+      }
+    },
+    {
+      "code": "BIO 350",
+      "title": "Ecology",
+      "credits": 3,
+      "department": "Biology",
+      "prereq_text": "BIO 121",
+      "description": "Populations, communities, and ecosystems, with field work on and near campus.",
+      "rating_summary": {
+        "avg_difficulty": null,
+        "avg_workload": null,
+        "avg_usefulness": null,
+        "count": 0
+      }
+    },
+    {
+      "code": "PSY 101",
+      "title": "Introduction to Psychology",
+      "credits": 3,
+      "department": "Psychology",
+      "prereq_text": "",
+      "description": "A survey of the field: biological bases of behavior, learning, memory, development, personality, and psychological disorders.",
+      "rating_summary": {
+        "avg_difficulty": 2.0,
+        "avg_workload": 1.7,
+        "avg_usefulness": 3.3,
+        "count": 78
+      }
+    },
+    {
+      "code": "PSY 210",
+      "title": "Developmental Psychology",
+      "credits": 3,
+      "department": "Psychology",
+      "prereq_text": "PSY 101",
+      "description": "Physical, cognitive, and social development across the lifespan, from infancy through late adulthood.",
+      "rating_summary": {
+        "avg_difficulty": 2.8,
+        "avg_workload": 3.4,
+        "avg_usefulness": 3.1,
+        "count": 39
+      }
+    },
+    {
+      "code": "PSY 220",
+      "title": "Abnormal Psychology",
+      "credits": 3,
+      "department": "Psychology",
+      "prereq_text": "PSY 101",
+      "description": "Classification, etiology, and treatment of psychological disorders, with attention to the limits of diagnosis.",
+      "rating_summary": {
+        "avg_difficulty": 3.4,
+        "avg_workload": 2.5,
+        "avg_usefulness": 3.7,
+        "count": 33
+      }
+    },
+    {
+      "code": "PSY 230",
+      "title": "Social Psychology",
+      "credits": 3,
+      "department": "Psychology",
+      "prereq_text": "PSY 101",
+      "description": "Attitudes, conformity, group behavior, persuasion, and attribution, grounded in classic and modern experiments.",
+      "rating_summary": {
+        "avg_difficulty": 3.1,
+        "avg_workload": 3.8,
+        "avg_usefulness": 4.6,
+        "count": 29
+      }
+    },
+    {
+      "code": "PSY 250",
+      "title": "Research Methods in Psychology",
+      "credits": 4,
+      "department": "Psychology",
+      "prereq_text": "PSY 101 and MTH 285",
+      "description": "Experimental design, measurement, ethics, and statistical analysis, with students running and reporting their own study.",
+      "rating_summary": {
+        "avg_difficulty": 4.4,
+        "avg_workload": 3.9,
+        "avg_usefulness": 3.9,
+        "count": 51
+      }
+    },
+    {
+      "code": "PSY 310",
+      "title": "Cognitive Psychology",
+      "credits": 3,
+      "department": "Psychology",
+      "prereq_text": "PSY 250",
+      "description": "Attention, memory, language, reasoning, and decision making, read partly through primary literature.",
+      "rating_summary": {
+        "avg_difficulty": 3.2,
+        "avg_workload": 3.1,
+        "avg_usefulness": 4.1,
+        "count": 34
+      }
+    },
+    {
+      "code": "PSY 330",
+      "title": "Health Psychology",
+      "credits": 3,
+      "department": "Psychology",
+      "prereq_text": "PSY 101",
+      "description": "Behavioral factors in health and illness, stress and coping, and the design of health interventions.",
+      "rating_summary": {
+        "avg_difficulty": 3.5,
+        "avg_workload": 2.7,
+        "avg_usefulness": 4.7,
+        "count": 58
+      }
+    },
+    {
+      "code": "PSY 350",
+      "title": "Psychology of Personality",
+      "credits": 3,
+      "department": "Psychology",
+      "prereq_text": "PSY 101",
+      "description": "Major theories of personality and the evidence for and against them, including trait, psychodynamic, and social-cognitive accounts.",
+      "rating_summary": {
+        "avg_difficulty": 3.0,
+        "avg_workload": 3.2,
+        "avg_usefulness": 3.8,
+        "count": 41
+      }
+    },
+    {
+      "code": "HIS 110",
+      "title": "Western Civilization I",
+      "credits": 3,
+      "department": "History",
+      "prereq_text": "",
+      "description": "The ancient Near East through the Reformation, read through primary sources alongside a narrative text.",
+      "rating_summary": {
+        "avg_difficulty": 2.5,
+        "avg_workload": 1.7,
+        "avg_usefulness": 4.4,
+        "count": 67
+      }
+    },
+    {
+      "code": "HIS 111",
+      "title": "Western Civilization II",
+      "credits": 3,
+      "department": "History",
+      "prereq_text": "",
+      "description": "The Enlightenment to the present: revolution, industrialization, empire, and the world wars.",
+      "rating_summary": {
+        "avg_difficulty": 3.4,
+        "avg_workload": 3.1,
+        "avg_usefulness": 3.2,
+        "count": 71
+      }
+    },
+    {
+      "code": "HIS 130",
+      "title": "American History I",
+      "credits": 3,
+      "department": "History",
+      "prereq_text": "",
+      "description": "Colonization through Reconstruction, with attention to slavery, expansion, and the origins of the Civil War.",
+      "rating_summary": {
+        "avg_difficulty": 2.9,
+        "avg_workload": 2.7,
+        "avg_usefulness": 4.1,
+        "count": 8
+      }
+    },
+    {
+      "code": "HIS 131",
+      "title": "American History II",
+      "credits": 3,
+      "department": "History",
+      "prereq_text": "",
+      "description": "Reconstruction to the present: industrialization, immigration, the world wars, civil rights, and the postwar order.",
+      "rating_summary": {
+        "avg_difficulty": 2.6,
+        "avg_workload": 2.7,
+        "avg_usefulness": 3.6,
+        "count": 14
+      }
+    },
+    {
+      "code": "HIS 220",
+      "title": "History of New York",
+      "credits": 3,
+      "department": "History",
+      "prereq_text": "HIS 130 or HIS 131",
+      "description": "New York from Dutch settlement to the present, with a research project using local and digitized archives.",
+      "rating_summary": {
+        "avg_difficulty": 2.8,
+        "avg_workload": 3.4,
+        "avg_usefulness": 4.9,
+        "count": 37
+      }
+    },
+    {
+      "code": "HIS 240",
+      "title": "Modern Europe",
+      "credits": 3,
+      "department": "History",
+      "prereq_text": "HIS 111",
+      "description": "Europe since 1789: nationalism, total war, fascism, the Cold War, and integration.",
+      "rating_summary": {
+        "avg_difficulty": 2.8,
+        "avg_workload": 3.7,
+        "avg_usefulness": 3.4,
+        "count": 76
+      }
+    },
+    {
+      "code": "HIS 260",
+      "title": "History of Technology",
+      "credits": 3,
+      "department": "History",
+      "prereq_text": "",
+      "description": "How technologies emerge and reshape work and society, from the steam engine through computing.",
+      "rating_summary": {
+        "avg_difficulty": 1.6,
+        "avg_workload": 2.0,
+        "avg_usefulness": 4.0,
+        "count": 19
+      }
+    },
+    {
+      "code": "HIS 310",
+      "title": "The Civil War Era",
+      "credits": 3,
+      "department": "History",
+      "prereq_text": "HIS 130",
+      "description": "Sectional crisis, war, and Reconstruction, with substantial reading in primary documents.",
+      "rating_summary": {
+        "avg_difficulty": null,
+        "avg_workload": null,
+        "avg_usefulness": null,
+        "count": 0
+      }
+    },
+    {
+      "code": "ARC 101",
+      "title": "Architectural Design I",
+      "credits": 4,
+      "department": "Architecture",
+      "prereq_text": "",
+      "description": "Studio introduction to design: form, space, order, and representation, through a sequence of abstract and site-based projects.",
+      "rating_summary": {
+        "avg_difficulty": 2.8,
+        "avg_workload": 3.7,
+        "avg_usefulness": 3.2,
+        "count": 23
+      }
+    },
+    {
+      "code": "ARC 102",
+      "title": "Architectural Design II",
+      "credits": 4,
+      "department": "Architecture",
+      "prereq_text": "ARC 101",
+      "description": "Studio continuation with small buildings, program, and site, developing drawing and model-making skills.",
+      "rating_summary": {
+        "avg_difficulty": 3.4,
+        "avg_workload": 3.8,
+        "avg_usefulness": 4.3,
+        "count": 14
+      }
+    },
+    {
+      "code": "ARC 150",
+      "title": "Architectural Graphics",
+      "credits": 3,
+      "department": "Architecture",
+      "prereq_text": "",
+      "description": "Orthographic projection, axonometrics, perspective, and freehand drawing, moving from hand drafting into CAD.",
+      "rating_summary": {
+        "avg_difficulty": 3.3,
+        "avg_workload": 2.9,
+        "avg_usefulness": 3.0,
+        "count": 66
+      }
+    },
+    {
+      "code": "ARC 201",
+      "title": "Building Construction I",
+      "credits": 3,
+      "department": "Architecture",
+      "prereq_text": "ARC 102",
+      "description": "Wood and light-gauge steel construction: assemblies, detailing, and the relationship between material and method.",
+      "rating_summary": {
+        "avg_difficulty": 3.3,
+        "avg_workload": 3.8,
+        "avg_usefulness": 3.2,
+        "count": 54
+      }
+    },
+    {
+      "code": "ARC 220",
+      "title": "History of Architecture I",
+      "credits": 3,
+      "department": "Architecture",
+      "prereq_text": "",
+      "description": "Antiquity through the Renaissance, examined through buildings, cities, and the ideas that shaped them.",
+      "rating_summary": {
+        "avg_difficulty": 1.8,
+        "avg_workload": 1.5,
+        "avg_usefulness": 3.1,
+        "count": 36
+      }
+    },
+    {
+      "code": "ARC 240",
+      "title": "Structures I",
+      "credits": 3,
+      "department": "Architecture",
+      "prereq_text": "MTH 129 and ARC 102",
+      "description": "Statics, loads, and the behavior of beams and columns, developing intuition for how buildings stand up.",
+      "rating_summary": {
+        "avg_difficulty": 4.3,
+        "avg_workload": 4.0,
+        "avg_usefulness": 4.1,
+        "count": 24
+      }
+    },
+    {
+      "code": "ARC 310",
+      "title": "Environmental Systems",
+      "credits": 3,
+      "department": "Architecture",
+      "prereq_text": "ARC 201",
+      "description": "Daylighting, thermal comfort, mechanical systems, and energy performance in building design.",
+      "rating_summary": {
+        "avg_difficulty": 2.8,
+        "avg_workload": 3.6,
+        "avg_usefulness": 4.5,
+        "count": 34
+      }
+    },
+    {
+      "code": "ARC 350",
+      "title": "Digital Fabrication",
+      "credits": 3,
+      "department": "Architecture",
+      "prereq_text": "ARC 150",
+      "description": "Parametric modeling and CNC, laser cutting, and 3D printing, applied to design prototypes.",
+      "rating_summary": {
+        "avg_difficulty": null,
+        "avg_workload": null,
+        "avg_usefulness": null,
+        "count": 0
+      }
+    }
+  ],
+  "professors": [
+    {
+      "first_name": "Marisol",
+      "last_name": "Reyes",
+      "department": "Computer Science",
+      "title": "Associate Professor",
+      "photo": "",
+      "bio": "Marisol Reyes teaches in the Computer Science department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 3.2,
+        "avg_helpfulness": 3.2,
+        "avg_fairness": 3.9,
+        "count": 63
+      },
+      "teaches": [
+        "CSC 112",
+        "CSC 205",
+        "CSC 240",
+        "CSC 250",
+        "CSC 330"
+      ]
+    },
+    {
+      "first_name": "Daniel",
+      "last_name": "Okonkwo",
+      "department": "Computer Science",
+      "title": "Professor",
+      "photo": "",
+      "bio": "Daniel Okonkwo teaches in the Computer Science department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 2.7,
+        "avg_helpfulness": 4.8,
+        "avg_fairness": 4.8,
+        "count": 77
+      },
+      "teaches": [
+        "CSC 310"
+      ]
+    },
+    {
+      "first_name": "Priya",
+      "last_name": "Raghavan",
+      "department": "Computer Science",
+      "title": "Assistant Professor",
+      "photo": "",
+      "bio": "Priya Raghavan teaches in the Computer Science department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 3.9,
+        "avg_helpfulness": 2.8,
+        "avg_fairness": 4.8,
+        "count": 41
+      },
+      "teaches": [
+        "CSC 111",
+        "CSC 112",
+        "CSC 330",
+        "CSC 340"
+      ]
+    },
+    {
+      "first_name": "Thomas",
+      "last_name": "Brennan",
+      "department": "Computer Science",
+      "title": "Lecturer",
+      "photo": "",
+      "bio": "Thomas Brennan teaches in the Computer Science department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 4.9,
+        "avg_helpfulness": 4.5,
+        "avg_fairness": 3.1,
+        "count": 93
+      },
+      "teaches": [
+        "CSC 205",
+        "CSC 380",
+        "CSC 440"
+      ]
+    },
+    {
+      "first_name": "Wei",
+      "last_name": "Zhang",
+      "department": "Mathematics",
+      "title": "Professor",
+      "photo": "",
+      "bio": "Wei Zhang teaches in the Mathematics department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 3.0,
+        "avg_helpfulness": 4.0,
+        "avg_fairness": 4.8,
+        "count": 59
+      },
+      "teaches": [
+        "MTH 129",
+        "MTH 240"
+      ]
+    },
+    {
+      "first_name": "Hannah",
+      "last_name": "Liebowitz",
+      "department": "Mathematics",
+      "title": "Associate Professor",
+      "photo": "",
+      "bio": "Hannah Liebowitz teaches in the Mathematics department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 2.7,
+        "avg_helpfulness": 4.3,
+        "avg_fairness": 3.6,
+        "count": 71
+      },
+      "teaches": [
+        "MTH 150",
+        "MTH 240",
+        "MTH 285"
+      ]
+    },
+    {
+      "first_name": "Andre",
+      "last_name": "Fontaine",
+      "department": "Mathematics",
+      "title": "Assistant Professor",
+      "photo": "",
+      "bio": "Andre Fontaine teaches in the Mathematics department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 3.5,
+        "avg_helpfulness": 3.5,
+        "avg_fairness": 4.6,
+        "count": 90
+      },
+      "teaches": [
+        "MTH 110",
+        "MTH 151",
+        "MTH 250",
+        "MTH 285"
+      ]
+    },
+    {
+      "first_name": "Nadia",
+      "last_name": "Haddad",
+      "department": "Mathematics",
+      "title": "Lecturer",
+      "photo": "",
+      "bio": "Nadia Haddad teaches in the Mathematics department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 2.8,
+        "avg_helpfulness": 2.9,
+        "avg_fairness": 3.7,
+        "count": 31
+      },
+      "teaches": [
+        "MTH 129",
+        "MTH 150",
+        "MTH 220"
+      ]
+    },
+    {
+      "first_name": "Gregory",
+      "last_name": "Salas",
+      "department": "English",
+      "title": "Professor",
+      "photo": "",
+      "bio": "Gregory Salas teaches in the English department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 3.5,
+        "avg_helpfulness": 2.9,
+        "avg_fairness": 3.6,
+        "count": 112
+      },
+      "teaches": [
+        "EGL 205",
+        "EGL 232"
+      ]
+    },
+    {
+      "first_name": "Imani",
+      "last_name": "Whitfield",
+      "department": "English",
+      "title": "Associate Professor",
+      "photo": "",
+      "bio": "Imani Whitfield teaches in the English department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 4.9,
+        "avg_helpfulness": 3.8,
+        "avg_fairness": 3.1,
+        "count": 79
+      },
+      "teaches": [
+        "EGL 210",
+        "EGL 232",
+        "EGL 301"
+      ]
+    },
+    {
+      "first_name": "Peter",
+      "last_name": "Nakamura",
+      "department": "English",
+      "title": "Assistant Professor",
+      "photo": "",
+      "bio": "Peter Nakamura teaches in the English department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 4.5,
+        "avg_helpfulness": 3.0,
+        "avg_fairness": 4.4,
+        "count": 99
+      },
+      "teaches": [
+        "EGL 101",
+        "EGL 102",
+        "EGL 270"
+      ]
+    },
+    {
+      "first_name": "Colleen",
+      "last_name": "Doyle",
+      "department": "English",
+      "title": "Lecturer",
+      "photo": "",
+      "bio": "Colleen Doyle teaches in the English department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": null,
+        "avg_helpfulness": null,
+        "avg_fairness": null,
+        "count": 0
+      },
+      "teaches": [
+        "EGL 102",
+        "EGL 205",
+        "EGL 210",
+        "EGL 245",
+        "EGL 270"
+      ]
+    },
+    {
+      "first_name": "Raymond",
+      "last_name": "Castellano",
+      "department": "Business",
+      "title": "Professor",
+      "photo": "",
+      "bio": "Raymond Castellano teaches in the Business department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 4.3,
+        "avg_helpfulness": 4.7,
+        "avg_fairness": 3.1,
+        "count": 59
+      },
+      "teaches": [
+        "BUS 111",
+        "BUS 210"
+      ]
+    },
+    {
+      "first_name": "Aisha",
+      "last_name": "Bello",
+      "department": "Business",
+      "title": "Associate Professor",
+      "photo": "",
+      "bio": "Aisha Bello teaches in the Business department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 3.0,
+        "avg_helpfulness": 3.4,
+        "avg_fairness": 4.7,
+        "count": 108
+      },
+      "teaches": [
+        "BUS 101",
+        "BUS 110",
+        "BUS 320",
+        "BUS 380"
+      ]
+    },
+    {
+      "first_name": "Jonathan",
+      "last_name": "Pierce",
+      "department": "Business",
+      "title": "Assistant Professor",
+      "photo": "",
+      "bio": "Jonathan Pierce teaches in the Business department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 4.0,
+        "avg_helpfulness": 4.6,
+        "avg_fairness": 4.0,
+        "count": 70
+      },
+      "teaches": [
+        "BUS 220"
+      ]
+    },
+    {
+      "first_name": "Elena",
+      "last_name": "Vasquez",
+      "department": "Business",
+      "title": "Lecturer",
+      "photo": "",
+      "bio": "Elena Vasquez teaches in the Business department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 3.5,
+        "avg_helpfulness": 4.5,
+        "avg_fairness": 4.9,
+        "count": 84
+      },
+      "teaches": [
+        "BUS 101",
+        "BUS 110",
+        "BUS 250"
+      ]
+    },
+    {
+      "first_name": "Sofia",
+      "last_name": "Marchetti",
+      "department": "Biology",
+      "title": "Professor",
+      "photo": "",
+      "bio": "Sofia Marchetti teaches in the Biology department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 4.1,
+        "avg_helpfulness": 4.2,
+        "avg_fairness": 3.3,
+        "count": 102
+      },
+      "teaches": [
+        "BIO 210",
+        "BIO 240",
+        "BIO 350"
+      ]
+    },
+    {
+      "first_name": "Kwame",
+      "last_name": "Asante",
+      "department": "Biology",
+      "title": "Associate Professor",
+      "photo": "",
+      "bio": "Kwame Asante teaches in the Biology department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 3.4,
+        "avg_helpfulness": 4.5,
+        "avg_fairness": 4.4,
+        "count": 51
+      },
+      "teaches": [
+        "BIO 120",
+        "BIO 131"
+      ]
+    },
+    {
+      "first_name": "Rebecca",
+      "last_name": "Lindgren",
+      "department": "Biology",
+      "title": "Assistant Professor",
+      "photo": "",
+      "bio": "Rebecca Lindgren teaches in the Biology department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 3.3,
+        "avg_helpfulness": 4.1,
+        "avg_fairness": 4.2,
+        "count": 69
+      },
+      "teaches": [
+        "BIO 121",
+        "BIO 130"
+      ]
+    },
+    {
+      "first_name": "Victor",
+      "last_name": "Nguyen",
+      "department": "Biology",
+      "title": "Lecturer",
+      "photo": "",
+      "bio": "Victor Nguyen teaches in the Biology department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": null,
+        "avg_helpfulness": null,
+        "avg_fairness": null,
+        "count": 0
+      },
+      "teaches": [
+        "BIO 131",
+        "BIO 210",
+        "BIO 310"
+      ]
+    },
+    {
+      "first_name": "Laura",
+      "last_name": "Petrosyan",
+      "department": "Psychology",
+      "title": "Professor",
+      "photo": "",
+      "bio": "Laura Petrosyan teaches in the Psychology department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 4.2,
+        "avg_helpfulness": 3.5,
+        "avg_fairness": 4.0,
+        "count": 117
+      },
+      "teaches": [
+        "PSY 220",
+        "PSY 230",
+        "PSY 310"
+      ]
+    },
+    {
+      "first_name": "Marcus",
+      "last_name": "Hollis",
+      "department": "Psychology",
+      "title": "Associate Professor",
+      "photo": "",
+      "bio": "Marcus Hollis teaches in the Psychology department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 2.9,
+        "avg_helpfulness": 3.7,
+        "avg_fairness": 4.6,
+        "count": 39
+      },
+      "teaches": [
+        "PSY 230",
+        "PSY 250",
+        "PSY 310",
+        "PSY 350"
+      ]
+    },
+    {
+      "first_name": "Yuki",
+      "last_name": "Tanaka",
+      "department": "Psychology",
+      "title": "Assistant Professor",
+      "photo": "",
+      "bio": "Yuki Tanaka teaches in the Psychology department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 2.9,
+        "avg_helpfulness": 3.4,
+        "avg_fairness": 4.8,
+        "count": 50
+      },
+      "teaches": [
+        "PSY 101",
+        "PSY 210",
+        "PSY 250"
+      ]
+    },
+    {
+      "first_name": "Denise",
+      "last_name": "Carver",
+      "department": "Psychology",
+      "title": "Lecturer",
+      "photo": "",
+      "bio": "Denise Carver teaches in the Psychology department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 3.0,
+        "avg_helpfulness": 4.8,
+        "avg_fairness": 4.8,
+        "count": 80
+      },
+      "teaches": [
+        "PSY 330"
+      ]
+    },
+    {
+      "first_name": "Samuel",
+      "last_name": "Adeyemi",
+      "department": "History",
+      "title": "Professor",
+      "photo": "",
+      "bio": "Samuel Adeyemi teaches in the History department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 4.5,
+        "avg_helpfulness": 4.8,
+        "avg_fairness": 3.6,
+        "count": 35
+      },
+      "teaches": [
+        "HIS 131",
+        "HIS 220",
+        "HIS 310"
+      ]
+    },
+    {
+      "first_name": "Katherine",
+      "last_name": "Muir",
+      "department": "History",
+      "title": "Associate Professor",
+      "photo": "",
+      "bio": "Katherine Muir teaches in the History department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 4.2,
+        "avg_helpfulness": 4.2,
+        "avg_fairness": 4.5,
+        "count": 72
+      },
+      "teaches": [
+        "HIS 110",
+        "HIS 130",
+        "HIS 131",
+        "HIS 240"
+      ]
+    },
+    {
+      "first_name": "Louis",
+      "last_name": "Bergeron",
+      "department": "History",
+      "title": "Assistant Professor",
+      "photo": "",
+      "bio": "Louis Bergeron teaches in the History department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": null,
+        "avg_helpfulness": null,
+        "avg_fairness": null,
+        "count": 0
+      },
+      "teaches": [
+        "HIS 110",
+        "HIS 111",
+        "HIS 260"
+      ]
+    },
+    {
+      "first_name": "Farah",
+      "last_name": "Qureshi",
+      "department": "Architecture",
+      "title": "Professor",
+      "photo": "",
+      "bio": "Farah Qureshi teaches in the Architecture department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 4.8,
+        "avg_helpfulness": 3.7,
+        "avg_fairness": 3.6,
+        "count": 80
+      },
+      "teaches": [
+        "ARC 150",
+        "ARC 350"
+      ]
+    },
+    {
+      "first_name": "Stephen",
+      "last_name": "Kowalski",
+      "department": "Architecture",
+      "title": "Associate Professor",
+      "photo": "",
+      "bio": "Stephen Kowalski teaches in the Architecture department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 3.5,
+        "avg_helpfulness": 3.1,
+        "avg_fairness": 3.0,
+        "count": 5
+      },
+      "teaches": [
+        "ARC 102",
+        "ARC 150",
+        "ARC 201"
+      ]
+    },
+    {
+      "first_name": "Julia",
+      "last_name": "Moreno",
+      "department": "Architecture",
+      "title": "Assistant Professor",
+      "photo": "",
+      "bio": "Julia Moreno teaches in the Architecture department at Farmingdale State College. Office hours are posted each semester on the department page.",
+      "rating_summary": {
+        "avg_clarity": 3.9,
+        "avg_helpfulness": 3.2,
+        "avg_fairness": 3.1,
+        "count": 44
+      },
+      "teaches": [
+        "ARC 101",
+        "ARC 220",
+        "ARC 240",
+        "ARC 310",
+        "ARC 350"
+      ]
+    }
+  ]
+}
