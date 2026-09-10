@@ -19,7 +19,11 @@
         </p>
       </div>
 
-      {% if professor.rating_summary.has_ratings %}
+      {% comment %}
+      Only RamHub's own three axes belong in this header. RMP figures get their
+      own labelled panel below rather than being dressed up as ours.
+      {% endcomment %}
+      {% if professor.rating_summary.has_ratings and not professor.rating_summary.is_from_rmp %}
         <div class="grid grid-cols-3 gap-3 sm:flex sm:shrink-0 sm:gap-8">
           {% include "partials/rating_stat_lg.html" with value=professor.rating_summary.avg_clarity caption="Clarity" %}
           {% include "partials/rating_stat_lg.html" with value=professor.rating_summary.avg_helpfulness caption="Helpfulness" %}
@@ -31,19 +35,25 @@
     {# Stacks on phones: side by side, the sentence gets squeezed to one word per line. #}
     <div class="mt-4 flex flex-col items-start gap-3 border-t border-neutral-200 pt-3 sm:flex-row sm:items-center">
       <p class="text-meta text-neutral-500 sm:flex-1">
-        {% if professor.rating_summary.has_ratings %}
+        {% if professor.rating_summary.has_ratings and not professor.rating_summary.is_from_rmp %}
           Overall {{ professor.rating_summary.avg_overall|floatformat:1 }} / 5, averaged from
           {{ professor.rating_summary.count }} student review{{ professor.rating_summary.count|pluralize }}.
         {% else %}
           No one has reviewed this professor on RamHub yet.
         {% endif %}
       </p>
-      {% include "catalog/partials/rmp_link.html" with professor=professor %}
+      {% if not professor.rmp_num_ratings %}
+        {% include "catalog/partials/rmp_link.html" with professor=professor %}
+      {% endif %}
     </div>
   </div>
 
   <div class="grid gap-6 lg:grid-cols-3">
     <div class="space-y-6 lg:col-span-2">
+      {% if professor.rmp_num_ratings %}
+        {% include "catalog/partials/rmp_panel.html" with professor=professor %}
+      {% endif %}
+
       {% if professor.bio %}
         <section class="card card-pad">
           <h2 class="text-h3">About</h2>

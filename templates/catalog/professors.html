@@ -3,7 +3,7 @@
 {% block title %}Professors · RamHub{% endblock %}
 
 {% block content %}
-  {% include "partials/page_header.html" with title="Professors" count=total subtitle="Every instructor, rated by students on clarity, helpfulness, and fairness." %}
+  {% include "partials/page_header.html" with title="Professors" count=total subtitle="Every instructor at Farmingdale State College. Ratings shown are imported from Rate My Professors until RamHub&rsquo;s own reviews open." %}
 
   {% comment %}See catalog/courses.html — same plain-GET-then-HTMX approach.{% endcomment %}
   <form method="get"
@@ -49,6 +49,12 @@
       Searching&hellip;
     </span>
   </form>
+
+  <p class="mb-3 rounded-md border border-neutral-200 bg-neutral-100 px-3 py-2 text-meta text-neutral-600">
+    Ratings shown here were imported from <strong class="font-medium">Rate My Professors</strong>,
+    not submitted on RamHub. They are voluntary and self-selected — read them as anecdotes.
+    RamHub&rsquo;s own reviews open when accounts do.
+  </p>
 
   {% include "catalog/partials/professor_results.html" %}
 {% endblock %}

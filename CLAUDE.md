@@ -28,12 +28,30 @@ Roles: `STUDENT` (default), `MODERATOR`, `ADMIN`.
 directory (`manage.py import_directory`). There is no demo data left in either. Two rules
 follow and are not negotiable:
 
-- **Never write a rating we did not receive from a student.** No demo ratings, no seeded
-  averages, no imported third-party scores. If a record shows a rating, a student left it.
+- **Never invent a rating.** No demo ratings, no seeded averages, no numbers we made up.
+  **Courses have no ratings at all** until a student leaves one.
+- **Professor ratings are currently imported from RateMyProfessors**, by explicit decision.
+  This is the single exception to the rule above, and it comes with conditions that are not
+  optional:
+  - Every imported number carries `rating_summary.source = "rmp"`, and **every place it is
+    displayed says it came from RateMyProfessors**. Do not remove that attribution, and do
+    not add a rating path that leaves `source` blank.
+  - A rating a student leaves on RamHub always wins. `import_rmp` skips any professor whose
+    summary is already `source="ramhub"`.
+  - RMP's single "quality" score maps to `avg_overall` only. `avg_clarity` /
+    `avg_helpfulness` / `avg_fairness` stay null — splitting one number into three would
+    invent detail RMP does not have.
+  - Only ~60% of directory staff match an RMP record. The rest correctly show no rating.
+  - RMP data is scraped from an undocumented endpoint, is voluntary and self-selected, and
+    its README says not to redistribute it commercially. Revisit this when RamHub has
+    reviews of its own — the intent is a bridge, not a permanent feature.
 - **Never assert a relationship we cannot verify.** A directory says who works here; a
   catalog says a course exists. Neither says who teaches what, so courses are not linked to
   professors. Guessing by department would put a real person's name on a course they may
   never have taught. That link waits for real section/schedule data.
+- **"Highest rated" sorts on `rank_score`, not the raw average.** A 5.0 from one rating must
+  not outrank a 4.9 from 226. `rank_score` is a stored Bayesian average; the displayed
+  number stays the true average.
 
 ## Tech stack — fixed by the course, do not propose alternatives
 
@@ -215,10 +233,14 @@ Professor
   faculty_id, profile_url, department_url, phone, office, directory_retrieved
                                                     # imported facts, never edited in-app
   course_ids: ArrayField(ObjectIdField)
+  rmp_legacy_id, rmp_avg_rating, rmp_avg_difficulty,
+  rmp_would_take_again_pct, rmp_num_ratings, rmp_retrieved
+                                                    # RateMyProfessors; source of truth
   rating_summary: Emb(avg_clarity, avg_helpfulness, avg_fairness,
-                      avg_overall, count)           # denormalized; avg_overall is
-                                                    # stored because the directory
-                                                    # sorts on it
+                      avg_overall, count, source, rank_score)
+                                                    # source: "ramhub" | "rmp" — never blank
+                                                    # when count > 0
+                                                    # rank_score: Bayesian, for sorting only
 
 CourseRating      FK user, FK course, difficulty, workload, usefulness, semester
                   UniqueConstraint(user, course)

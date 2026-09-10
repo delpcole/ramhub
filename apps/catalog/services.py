@@ -48,9 +48,12 @@ COURSE_SORTS: dict[str, SortSpec] = {
 
 PROFESSOR_SORTS: dict[str, SortSpec] = {
     "name": SortSpec("Name (A–Z)", [F("last_name").asc(), F("first_name").asc()]),
+    # Orders on rank_score, not the raw average — see
+    # ProfessorRatingSummary.rank_score for why a 5.0 from one rating should not
+    # outrank a 4.9 from 226.
     "rating": SortSpec(
         "Highest rated",
-        [F("rating_summary__avg_overall").desc(nulls_last=True), F("last_name").asc()],
+        [F("rating_summary__rank_score").desc(nulls_last=True), F("last_name").asc()],
     ),
     "reviews": SortSpec("Most reviewed", [F("rating_summary__count").desc(), F("last_name").asc()]),
 }

@@ -54,6 +54,7 @@ convenience wrapper; you can run either import on its own:
 |---|---|---|
 | `import_catalog` | published [2025–26 course catalog](https://www.farmingdale.edu/course-offerings/catalog_2025_2026.html) | ~1,785 courses |
 | `import_directory` | public [campus directory](https://www.farmingdale.edu/directory/) | ~913 teaching staff |
+| `import_rmp` | [RateMyProfessors](https://www.ratemyprofessors.com/school/14046) export | ratings for ~517 of them |
 
 Both exports live in `apps/catalog/seed_data/` with a `.README.md` documenting
 provenance and caveats. `scrape_catalog.py` regenerates the course export when a
@@ -61,9 +62,13 @@ new catalog year is published.
 
 Two rules neither import will bend:
 
-- **They never write ratings.** Every course and professor starts unrated, and a
-  re-import leaves any ratings students have left completely alone. Nothing on
-  RamHub has a rating until a student submits one.
+- **Courses are never rated by an import.** No course has a rating until a
+  student leaves one.
+- **Professor ratings come from RateMyProfessors for now**, by explicit decision.
+  Every one is tagged `source="rmp"` and labelled as RMP data everywhere it is
+  shown — do not strip that. A rating a student leaves on RamHub always wins:
+  `import_rmp` never overwrites one. About 40% of faculty have no RMP match and
+  correctly show no rating.
 - **They never invent relationships.** A directory says who works here; a catalog
   says a course exists. Neither says who teaches what, so courses are not linked
   to professors. That needs real section/schedule data.

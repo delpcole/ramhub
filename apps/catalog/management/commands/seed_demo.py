@@ -8,10 +8,14 @@ imports in order:
 
     manage.py import_catalog     ~1,785 courses from the published catalog
     manage.py import_directory   ~913 teaching staff from the campus directory
+    manage.py import_rmp         RateMyProfessors scores onto matching faculty
 
-Run either directly if you only want one of them. Both are idempotent, and
-neither writes ratings — no course or professor on RamHub has a rating until a
-student leaves one.
+Run any of them directly. All three are idempotent.
+
+Note what the third one does: it writes professor ratings that RamHub did not
+receive from its own students. Those are tagged source="rmp" and labelled as
+RateMyProfessors data wherever they appear. Courses are never rated this way —
+no course has a rating until a student leaves one.
 """
 
 from typing import Any
@@ -23,7 +27,7 @@ from apps.catalog.models import Course, Professor
 
 
 class Command(BaseCommand):
-    help = "Load real courses and faculty. Runs import_catalog then import_directory."
+    help = "Load real courses, faculty and RMP ratings. Runs the three imports in order."
 
     def add_arguments(self, parser) -> None:
         parser.add_argument(
@@ -44,10 +48,16 @@ class Command(BaseCommand):
             self.stdout.write(self.style.MIGRATE_HEADING(f"\n{command}"))
             call_command(command, *extra, stdout=self.stdout, stderr=self.stderr)
 
+        # import_rmp has no --prune; it must run last, after the faculty it
+        # matches against exist.
+        self.stdout.write(self.style.MIGRATE_HEADING("\nimport_rmp"))
+        call_command("import_rmp", stdout=self.stdout, stderr=self.stderr)
+
         self.stdout.write("")
         self.stdout.write(
             self.style.SUCCESS(
                 f"Ready: {Course.objects.count()} courses and "
-                f"{Professor.objects.count()} professors, all from official sources."
+                f"{Professor.objects.count()} professors. Courses and faculty come from "
+                f"the college; professor ratings come from RateMyProfessors, not RamHub."
             )
         )

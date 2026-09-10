@@ -59,12 +59,49 @@ class ProfessorRatingSummary(EmbeddedModel):
     avg_overall = models.FloatField(null=True, blank=True)
     count = models.PositiveIntegerField(default=0)
 
+    # Where these numbers came from. Without it the UI cannot tell a rating a
+    # student left on RamHub from an aggregate imported off RateMyProfessors,
+    # and it must, because those are not the same claim.
+    SOURCE_RAMHUB = "ramhub"
+    SOURCE_RMP = "rmp"
+    SOURCE_CHOICES = [
+        (SOURCE_RAMHUB, "Students on RamHub"),
+        (SOURCE_RMP, "RateMyProfessors"),
+    ]
+    source = models.CharField(max_length=16, blank=True, choices=SOURCE_CHOICES)
+
+    # What "Highest rated" actually sorts on. A raw average ranks a 5.0 from a
+    # single rating above a 4.9 from 226, which is not what a reader means by
+    # "highest rated". This is a Bayesian average — it pulls thinly-rated
+    # professors toward the overall mean until they have enough ratings to earn
+    # their position — stored because MongoDB cannot order by a computed value.
+    # The displayed number stays the true average; only the ordering uses this.
+    rank_score = models.FloatField(null=True, blank=True)
+
     def __str__(self) -> str:
         return f"{self.count} ratings"
 
     @property
     def has_ratings(self) -> bool:
         return self.count > 0
+
+    @property
+    def is_from_rmp(self) -> bool:
+        return self.source == self.SOURCE_RMP
+
+    # Ratings needed before a professor's own average dominates the prior, and
+    # the mean rating to pull toward. 3.71 is the mean across rated Farmingdale
+    # professors on RMP; see farmingdale_rmp.README.md.
+    RANK_PRIOR_COUNT = 10
+    RANK_PRIOR_MEAN = 3.71
+
+    @classmethod
+    def compute_rank_score(cls, average: float | None, count: int) -> float | None:
+        """Bayesian average: (v*R + m*C) / (v + m)."""
+        if average is None or not count:
+            return None
+        v, m, c = count, cls.RANK_PRIOR_COUNT, cls.RANK_PRIOR_MEAN
+        return round((v * average + m * c) / (v + m), 4)
 
     @staticmethod
     def compute_overall(
@@ -119,6 +156,7 @@ class Course(models.Model):
 # lookup link on a professor page to this campus.
 RMP_SCHOOL_ID = "14046"
 RMP_SEARCH_URL = "https://www.ratemyprofessors.com/search/professors/{school}?q={query}"
+RMP_PROFILE_URL = "https://www.ratemyprofessors.com/professor/{legacy_id}"
 
 
 class Professor(models.Model):
@@ -145,6 +183,19 @@ class Professor(models.Model):
         null=True, blank=True, help_text="When the directory row was last pulled."
     )
 
+    # --- RateMyProfessors ------------------------------------------------
+    # Third-party data about a real person, kept in its own fields so its
+    # provenance is never lost. rating_summary mirrors the headline number so
+    # the existing directory UI works; these stay the source of truth.
+    rmp_legacy_id = models.PositiveIntegerField(
+        null=True, blank=True, help_text="RMP's stable professor id; enables a direct link."
+    )
+    rmp_avg_rating = models.FloatField(null=True, blank=True, help_text="RMP quality, 1-5.")
+    rmp_avg_difficulty = models.FloatField(null=True, blank=True, help_text="RMP difficulty, 1-5.")
+    rmp_would_take_again_pct = models.FloatField(null=True, blank=True)
+    rmp_num_ratings = models.PositiveIntegerField(default=0)
+    rmp_retrieved = models.DateField(null=True, blank=True)
+
     # M2M replacement. Kept in sync with Course.professor_ids.
     course_ids = ArrayField(ObjectIdField(), default=list, blank=True)
 
@@ -167,13 +218,19 @@ class Professor(models.Model):
         return f"{self.first_name} {self.last_name}"
 
     @property
-    def rmp_search_url(self) -> str:
+    def rmp_url(self) -> str:
         """
-        A RateMyProfessors lookup for this person, scoped to Farmingdale.
+        Where to send someone who wants this professor on RateMyProfessors.
 
-        Deliberately a search rather than a deep link: the college directory
-        carries no RMP ids, and RMP holds duplicate and differently-spelled
-        entries for the same person. A search lets the reader pick the right
-        one instead of us guessing an id and sending them to the wrong page.
+        A direct profile link once the RMP import has matched an id, and a
+        school-scoped search otherwise. The fallback matters: only about 60% of
+        directory staff match an RMP record, and RMP holds duplicate entries for
+        the same person, so a search is the honest answer when we are not sure.
         """
+        if self.rmp_legacy_id:
+            return RMP_PROFILE_URL.format(legacy_id=self.rmp_legacy_id)
         return RMP_SEARCH_URL.format(school=RMP_SCHOOL_ID, query=quote_plus(self.full_name))
+
+    @property
+    def has_rmp_profile(self) -> bool:
+        return self.rmp_legacy_id is not None

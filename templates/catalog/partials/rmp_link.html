@@ -1,16 +1,16 @@
 {% comment %}
-Link out to RateMyProfessors, scoped to Farmingdale.
+Link out to RateMyProfessors.
 
-It is a *search*, not a deep link: the college directory carries no RMP ids, and
-RMP holds duplicate and differently-spelled entries for the same person. Sending
-the reader to a search lets them pick the right one rather than us guessing an id
-and landing them on the wrong professor. The label says "Look up" for that reason.
+A direct profile link when the RMP import matched this person to an id, and a
+school-scoped search otherwise. About 40% of directory staff have no RMP match,
+and RMP holds duplicate entries for the same name, so the search fallback is the
+honest answer rather than a guessed id pointing at the wrong professor.
 {% endcomment %}
-<a href="{{ professor.rmp_search_url }}"
+<a href="{{ professor.rmp_url }}"
    target="_blank"
    rel="noopener noreferrer nofollow"
    class="btn-secondary btn-sm shrink-0">
   {% include "partials/icons/external.html" %}
-  <span>Look up on Rate My Professors</span>
+  <span>{% if professor.has_rmp_profile %}View on Rate My Professors{% else %}Look up on Rate My Professors{% endif %}</span>
   <span class="sr-only"> (opens in a new tab)</span>
 </a>

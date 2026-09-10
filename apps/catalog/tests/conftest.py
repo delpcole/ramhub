@@ -43,12 +43,18 @@ def make_professor():
             clarity = kwargs.pop("clarity", None)
             helpfulness = kwargs.pop("helpfulness", None)
             fairness = kwargs.pop("fairness", None)
+            count = kwargs.pop("count", 0)
+            overall = ProfessorRatingSummary.compute_overall(clarity, helpfulness, fairness)
             summary = ProfessorRatingSummary(
                 avg_clarity=clarity,
                 avg_helpfulness=helpfulness,
                 avg_fairness=fairness,
-                avg_overall=ProfessorRatingSummary.compute_overall(clarity, helpfulness, fairness),
-                count=kwargs.pop("count", 0),
+                avg_overall=overall,
+                count=count,
+                source=kwargs.pop("source", ProfessorRatingSummary.SOURCE_RAMHUB if count else ""),
+                # The directory sorts on this, so a fixture without it would
+                # make every rating-sort test fall through to name order.
+                rank_score=ProfessorRatingSummary.compute_rank_score(overall, count),
             )
         return Professor.objects.create(
             first_name=first_name,

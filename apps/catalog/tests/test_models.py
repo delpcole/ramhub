@@ -81,24 +81,41 @@ def test_professor_ids_store_and_return_objectids(make_course, make_professor):
     assert stored.professor_ids[0] == professor.pk
 
 
-def test_rmp_link_is_a_farmingdale_scoped_search(make_professor):
-    """
-    A search, not a deep link: the directory has no RMP ids, and RMP holds
-    duplicate entries per person. Guessing an id would land students on the
-    wrong professor.
-    """
+def test_rmp_link_falls_back_to_a_scoped_search_without_an_id(make_professor):
+    """~40% of directory staff have no RMP match; a search is the honest answer."""
     professor = make_professor(first_name="Melixa", last_name="Abad Izquierdo")
 
-    url = professor.rmp_search_url
+    url = professor.rmp_url
 
     assert url.startswith("https://www.ratemyprofessors.com/search/professors/14046?q=")
     assert "Melixa+Abad+Izquierdo" in url
+    assert professor.has_rmp_profile is False
 
 
-def test_rmp_link_url_encodes_awkward_names(make_professor):
+def test_rmp_link_is_a_direct_profile_once_an_id_is_known(make_professor):
+    professor = make_professor(first_name="Karen", last_name="Bottalico", rmp_legacy_id=351387)
+
+    assert professor.rmp_url == "https://www.ratemyprofessors.com/professor/351387"
+    assert professor.has_rmp_profile is True
+
+
+def test_rmp_search_url_encodes_awkward_names(make_professor):
     professor = make_professor(first_name="José", last_name="O'Brien-Smith")
 
-    url = professor.rmp_search_url
+    url = professor.rmp_url
 
     assert " " not in url
     assert "'" not in url
+
+
+def test_rank_score_prefers_a_well_rated_professor_over_a_thin_perfect_score():
+    """The whole point: 5.0 from one rating must not outrank 4.9 from 226."""
+    thin = ProfessorRatingSummary.compute_rank_score(5.0, 1)
+    solid = ProfessorRatingSummary.compute_rank_score(4.9, 226)
+
+    assert solid > thin
+
+
+def test_rank_score_is_none_without_ratings():
+    assert ProfessorRatingSummary.compute_rank_score(None, 0) is None
+    assert ProfessorRatingSummary.compute_rank_score(4.5, 0) is None

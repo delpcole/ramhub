@@ -1,0 +1,34 @@
+{% comment %}
+RateMyProfessors figures, on the record as theirs.
+
+These numbers were imported from RMP, not left by students on RamHub. The panel
+says so in words rather than relying on the reader to infer it from styling, and
+links to the profile the numbers came from.
+{% endcomment %}
+<section class="card" aria-labelledby="rmp-heading">
+  {# Stacks on phones: side by side, the heading wraps to three lines. #}
+  <div class="flex flex-col items-start gap-2 border-b border-neutral-200 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+    <h2 id="rmp-heading" class="text-h3">On Rate My Professors</h2>
+    {% include "catalog/partials/rmp_link.html" with professor=professor %}
+  </div>
+
+  <div class="grid grid-cols-3 gap-3 px-4 py-4">
+    {% include "partials/rating_stat_lg.html" with value=professor.rmp_avg_rating caption="Quality" %}
+    {% include "partials/rating_stat_lg.html" with value=professor.rmp_avg_difficulty caption="Difficulty" %}
+    <div class="rating-stat-lg">
+      <span class="rating-caption">Would take again</span>
+      {% if professor.rmp_would_take_again_pct is not None %}
+        <span class="rating-value">{{ professor.rmp_would_take_again_pct|floatformat:0 }}<span class="rating-caption">%</span></span>
+      {% else %}
+        <span class="rating-none">Not enough data</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <p class="border-t border-neutral-200 px-4 py-2.5 text-meta text-neutral-500">
+    From {{ professor.rmp_num_ratings }} rating{{ professor.rmp_num_ratings|pluralize }} submitted on
+    RateMyProfessors{% if professor.rmp_retrieved %}, as of {{ professor.rmp_retrieved|date:"F j, Y" }}{% endif %}.
+    These are not RamHub reviews. RMP ratings are voluntary and self-selected, so
+    read them as anecdotes rather than an evaluation.
+  </p>
+</section>
