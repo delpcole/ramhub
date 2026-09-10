@@ -79,9 +79,15 @@ class Course(models.Model):
     code = models.CharField(max_length=16, help_text="Catalog code, e.g. CSC 240.")
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    credits = models.PositiveSmallIntegerField(default=3)
-    department = models.CharField(max_length=64)
+    # Nullable on purpose: 23 real catalog entries publish no credit value, only
+    # lecture/lab hours like "(1,0)" which are not credits. A default of 3 would
+    # be inventing a fact about a real course.
+    credits = models.PositiveSmallIntegerField(null=True, blank=True)
+    department = models.CharField(max_length=120)
+    subject = models.CharField(max_length=8, blank=True, help_text="Code prefix, e.g. CSC.")
     prereq_text = models.TextField(blank=True, help_text="Free text, as the catalog prints it.")
+    coreq_text = models.TextField(blank=True, help_text="Free text, as the catalog prints it.")
+    catalog_year = models.CharField(max_length=16, blank=True, help_text="e.g. 2025-2026.")
 
     # M2M replacement. Kept in sync with Professor.course_ids.
     professor_ids = ArrayField(ObjectIdField(), default=list, blank=True)

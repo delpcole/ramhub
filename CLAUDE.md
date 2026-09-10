@@ -23,12 +23,17 @@ in the college domain (`farmingdale.edu`, read from the `COLLEGE_EMAIL_DOMAIN` s
 
 Roles: `STUDENT` (default), `MODERATOR`, `ADMIN`.
 
-**Professors are real, named people.** The ~913 faculty records come from the public
-campus directory via `manage.py import_directory`. Two rules follow from that and are not
-negotiable: **never write a rating we did not receive from a student** (no demo ratings, no
-seeded averages, no imported third-party scores), and **never assert a relationship we
-cannot verify** — the directory says who works at the college, not who teaches which
-course. Demo data is fine for courses; it is not fine attached to a person's name.
+**Both directories hold real, official data.** ~1,785 courses come from the published
+2025-26 catalog (`manage.py import_catalog`) and ~913 faculty from the public campus
+directory (`manage.py import_directory`). There is no demo data left in either. Two rules
+follow and are not negotiable:
+
+- **Never write a rating we did not receive from a student.** No demo ratings, no seeded
+  averages, no imported third-party scores. If a record shows a rating, a student left it.
+- **Never assert a relationship we cannot verify.** A directory says who works here; a
+  catalog says a course exists. Neither says who teaches what, so courses are not linked to
+  professors. Guessing by department would put a real person's name on a course they may
+  never have taught. That link waits for real section/schedule data.
 
 ## Tech stack — fixed by the course, do not propose alternatives
 
@@ -197,7 +202,10 @@ User(AbstractUser)
   courses_taken: EmbeddedModelArrayField(CourseTaken{course_id, semester})
 
 Course
-  code(unique, indexed), title, description, credits, department, prereq_text
+  code(unique, indexed), title, description, department, subject
+  credits(nullable)                                 # 23 real catalog entries
+                                                    # publish none; never guess
+  prereq_text, coreq_text, catalog_year             # imported facts
   professor_ids: ArrayField(ObjectIdField)          # M2M replacement
   rating_summary: Emb(avg_difficulty, avg_workload, avg_usefulness, count)  # denormalized
 

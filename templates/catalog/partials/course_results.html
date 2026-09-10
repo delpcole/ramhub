@@ -12,7 +12,7 @@ and rendered inline on first load — so both paths produce identical markup.
     </div>
   {% else %}
     <div role="status" aria-live="polite">
-      {% include "partials/empty_state.html" with icon="search" headline="No courses match that search" description="Try a course code like CSC 240, a keyword from the title, or a different department." action_label="Clear search and filters" action_url=clear_url %}
+      {% include "partials/empty_state.html" with icon="search" headline="No courses match that search" description="Try a course code like CSC 229, a keyword from the title, or a different department." action_label="Clear search and filters" action_url=clear_url %}
     </div>
   {% endif %}
 </div>

@@ -16,7 +16,12 @@
         <p class="font-mono text-meta font-semibold text-accent-700">{{ course.code }}</p>
         <h1 class="mt-1 text-h1">{{ course.title }}</h1>
         <p class="mt-1 text-meta text-neutral-500">
-          {{ course.department }} &middot; {{ course.credits }} credit{{ course.credits|pluralize }}
+          {{ course.department }}
+          {% if course.credits %}
+            &middot; {{ course.credits }} credit{{ course.credits|pluralize }}
+          {% else %}
+            &middot; <span title="The catalog lists no credit value for this course">credits not listed</span>
+          {% endif %}
         </p>
       </div>
 
@@ -46,15 +51,19 @@
         <section class="card card-pad">
           <h2 class="text-h3">About this course</h2>
           <p class="mt-2 text-neutral-700">{{ course.description }}</p>
-          {% if course.prereq_text %}
-            <p class="mt-3 border-t border-neutral-200 pt-3 text-meta text-neutral-500">
-              <span class="font-medium text-neutral-700">Prerequisites:</span> {{ course.prereq_text }}
-            </p>
-          {% else %}
-            <p class="mt-3 border-t border-neutral-200 pt-3 text-meta text-neutral-500">
-              No prerequisites listed.
-            </p>
-          {% endif %}
+          <div class="mt-3 space-y-1 border-t border-neutral-200 pt-3 text-meta text-neutral-500">
+            {% if course.prereq_text %}
+              <p><span class="font-medium text-neutral-700">Prerequisites:</span> {{ course.prereq_text }}</p>
+            {% else %}
+              <p>No prerequisites listed.</p>
+            {% endif %}
+            {% if course.coreq_text %}
+              <p><span class="font-medium text-neutral-700">Corequisites:</span> {{ course.coreq_text }}</p>
+            {% endif %}
+            {% if course.catalog_year %}
+              <p>From the {{ course.catalog_year }} college catalog.</p>
+            {% endif %}
+          </div>
         </section>
       {% endif %}
 

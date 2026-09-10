@@ -43,33 +43,32 @@ npm run tailwind:build
 # 5. Create the collections Django needs
 python manage.py migrate
 
-# 6. Load demo courses, so the Courses directory is not empty
+# 6. Load real courses and faculty (runs both imports below)
 python manage.py seed_demo
-
-# 7. Import the real faculty from the college directory
-python manage.py import_directory
 ```
 
-Both are idempotent — run them as often as you like.
+Everything is idempotent — run it as often as you like. `seed_demo` is a
+convenience wrapper; you can run either import on its own:
 
-`seed_demo` loads ~66 **demo** courses from
-`apps/catalog/seed_data/demo_catalog.json`. Read the `_meta` block in that file
-first: the courses only *resemble* the real Farmingdale catalog and are not
-authoritative. Replace them when real catalog data is available.
+| command | source | records |
+|---|---|---|
+| `import_catalog` | published [2025–26 course catalog](https://www.farmingdale.edu/course-offerings/catalog_2025_2026.html) | ~1,785 courses |
+| `import_directory` | public [campus directory](https://www.farmingdale.edu/directory/) | ~913 teaching staff |
 
-`import_directory` loads the ~913 **real** teaching staff from
-`apps/catalog/seed_data/farmingdale_directory.ndjson`, a public export of
-[the campus directory](https://www.farmingdale.edu/directory/). Two rules it
-will not bend:
+Both exports live in `apps/catalog/seed_data/` with a `.README.md` documenting
+provenance and caveats. `scrape_catalog.py` regenerates the course export when a
+new catalog year is published.
 
-- **It never writes ratings.** These are real, named people. Everyone starts at
-  zero, and a re-import leaves any ratings students have left completely alone.
-- **It never invents relationships.** The directory says who works here, not who
-  teaches what, so it does not link professors to courses. Guessing would put a
-  real person's name on a course they may never have taught.
+Two rules neither import will bend:
 
-Use `--prune --yes` to drop records that are no longer in the export (departed
-staff, or leftover demo rows).
+- **They never write ratings.** Every course and professor starts unrated, and a
+  re-import leaves any ratings students have left completely alone. Nothing on
+  RamHub has a rating until a student submits one.
+- **They never invent relationships.** A directory says who works here; a catalog
+  says a course exists. Neither says who teaches what, so courses are not linked
+  to professors. That needs real section/schedule data.
+
+Use `--prune --yes` to drop records no longer in the exports.
 
 ### Database: local or Atlas
 
