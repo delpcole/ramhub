@@ -13,6 +13,7 @@
       <a href="#buttons" class="badge-neutral hover:bg-neutral-200">Buttons</a>
       <a href="#forms" class="badge-neutral hover:bg-neutral-200">Forms</a>
       <a href="#components" class="badge-neutral hover:bg-neutral-200">Cards & rows</a>
+      <a href="#ratings" class="badge-neutral hover:bg-neutral-200">Ratings</a>
       <a href="#badges" class="badge-neutral hover:bg-neutral-200">Badges</a>
       <a href="#header" class="badge-neutral hover:bg-neutral-200">Page header</a>
       <a href="#empty" class="badge-neutral hover:bg-neutral-200">Empty state</a>
@@ -411,6 +412,34 @@
       <code class="font-mono">.row-link</code> is the directory row used by the Courses
       and Professors tabs. The rating is the leftmost thing on the row on purpose.
     </p>
+  </section>
+
+  <section id="ratings" class="scroll-mt-20">
+    <h2 class="text-h2">Ratings</h2>
+    <p class="mt-1 mb-4 max-w-2xl text-neutral-500">A number and a proportional bar. Never stars &mdash; a 1&ndash;5 difficulty score is not an endorsement, and star clip art reads as one. An unrated record shows a dash, never a zero.</p>
+    <div class="card card-pad space-y-6">
+      <div>
+        <p class="field-label">Row size &mdash; <code class="font-mono">partials/rating_stat.html</code></p>
+        <div class="flex flex-wrap items-start gap-6">
+          {% include "partials/rating_stat.html" with value=4.6 caption="Diff" %}
+          {% include "partials/rating_stat.html" with value=3.1 caption="Work" %}
+          {% include "partials/rating_stat.html" with value=1.8 caption="Useful" %}
+          {% include "partials/rating_stat.html" with value=None caption="Unrated" %}
+        </div>
+      </div>
+      <div>
+        <p class="field-label">Detail-header size &mdash; <code class="font-mono">partials/rating_stat_lg.html</code></p>
+        <div class="grid grid-cols-3 gap-3 sm:flex sm:gap-8">
+          {% include "partials/rating_stat_lg.html" with value=4.1 caption="Difficulty" %}
+          {% include "partials/rating_stat_lg.html" with value=4.5 caption="Workload" %}
+          {% include "partials/rating_stat_lg.html" with value=None caption="Usefulness" %}
+        </div>
+      </div>
+      <p class="text-meta text-neutral-500">
+        The bar width is data, so it is set inline as <code class="font-mono">--rating-fill</code>
+        by the <code class="font-mono">rating_pct</code> filter. Everything else is a token.
+      </p>
+    </div>
   </section>
 
   <section id="badges" class="scroll-mt-20">

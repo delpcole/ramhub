@@ -1,0 +1,20 @@
+{% comment %}
+The rating anchor: a number and a proportional bar.
+
+  {% include "partials/rating_stat.html" with value=c.rating_summary.avg_difficulty caption="Diff" %}
+
+`value` may be None — that renders the quiet "no ratings" state, never a zero.
+{% endcomment %}
+{% load catalog_extras %}
+<div class="rating-stat">
+  {% if value %}
+    <span class="rating-value">{{ value|floatformat:1 }}</span>
+    <span class="rating-bar">
+      <span class="rating-bar-fill" style="--rating-fill: {{ value|rating_pct }}"></span>
+    </span>
+  {% else %}
+    <span class="rating-none" title="No ratings yet">&ndash;&ndash;</span>
+    <span class="rating-bar"><span class="rating-bar-fill" style="--rating-fill: 0%"></span></span>
+  {% endif %}
+  {% if caption %}<span class="rating-caption">{{ caption }}</span>{% endif %}
+</div>

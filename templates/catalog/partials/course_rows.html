@@ -1,0 +1,27 @@
+{% comment %}
+The rows for one page, plus the control that loads the next.
+
+"Load more" replaces itself (hx-swap="outerHTML"), so the next batch lands
+exactly where the button was and a fresh button follows it. With JavaScript off
+the same element is an ordinary link to page N+1.
+{% endcomment %}
+{% for course in page_obj %}
+  {% include "catalog/partials/course_row.html" %}
+{% endfor %}
+
+{% if next_page_url %}
+  <div class="flex items-center justify-center gap-3 border-t border-neutral-200 px-4 py-3">
+    <a href="{{ next_page_url }}"
+       class="btn-secondary btn-sm"
+       hx-get="{{ next_page_url }}"
+       hx-target="closest div"
+       hx-swap="outerHTML"
+       hx-indicator="find .htmx-indicator">
+      Load more
+      <span class="htmx-indicator" aria-hidden="true">&hellip;</span>
+    </a>
+    <span class="text-meta text-neutral-500">
+      Showing {{ page_obj.end_index }} of {{ total }}
+    </span>
+  </div>
+{% endif %}

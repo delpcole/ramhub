@@ -1,0 +1,15 @@
+{% comment %}See catalog/partials/course_results.html — same pattern.{% endcomment %}
+<div id="professor-results">
+  {% if total %}
+    <p class="mb-2 text-meta text-neutral-500" role="status" aria-live="polite">
+      {{ total }} professor{{ total|pluralize }}{% if is_filtered %} matching your search{% endif %}
+    </p>
+    <div class="card overflow-hidden">
+      {% include "catalog/partials/professor_rows.html" %}
+    </div>
+  {% else %}
+    <div role="status" aria-live="polite">
+      {% include "partials/empty_state.html" with icon="search" headline="No professors match that search" description="Try a last name, a first name, or a different department." action_label="Clear search and filters" action_url=clear_url %}
+    </div>
+  {% endif %}
+</div>

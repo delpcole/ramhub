@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}{{ professor.full_name }} · RamHub{% endblock %}
+{% block description %}Student reviews and ratings for {{ professor.full_name }}, {{ professor.department }} at Farmingdale State College.{% endblock %}
+
+{% block content %}
+  <nav aria-label="Breadcrumb" class="mb-3 text-meta">
+    <a href="{% url 'catalog:professors' %}" class="rounded text-neutral-500 hover:text-neutral-900 hover:underline">
+      &larr; All professors
+    </a>
+  </nav>
+
+  <div class="card card-pad mb-6">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+      <div class="min-w-0">
+        <h1 class="text-h1">{{ professor.full_name }}</h1>
+        <p class="mt-1 text-meta text-neutral-500">
+          {% if professor.title %}{{ professor.title }} &middot; {% endif %}{{ professor.department }}
+        </p>
+      </div>
+
+      {% if professor.rating_summary.has_ratings %}
+        <div class="grid grid-cols-3 gap-3 sm:flex sm:shrink-0 sm:gap-8">
+          {% include "partials/rating_stat_lg.html" with value=professor.rating_summary.avg_clarity caption="Clarity" %}
+          {% include "partials/rating_stat_lg.html" with value=professor.rating_summary.avg_helpfulness caption="Helpfulness" %}
+          {% include "partials/rating_stat_lg.html" with value=professor.rating_summary.avg_fairness caption="Fairness" %}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if professor.rating_summary.has_ratings %}
+      <p class="mt-4 border-t border-neutral-200 pt-3 text-meta text-neutral-500">
+        Overall {{ professor.rating_summary.avg_overall|floatformat:1 }} / 5, averaged from
+        {{ professor.rating_summary.count }} student review{{ professor.rating_summary.count|pluralize }}.
+      </p>
+    {% else %}
+      <p class="mt-4 border-t border-neutral-200 pt-3 text-meta text-neutral-500">
+        No one has reviewed this professor yet.
+      </p>
+    {% endif %}
+  </div>
+
+  <div class="grid gap-6 lg:grid-cols-3">
+    <div class="space-y-6 lg:col-span-2">
+      {% if professor.bio %}
+        <section class="card card-pad">
+          <h2 class="text-h3">About</h2>
+          <p class="mt-2 text-neutral-700">{{ professor.bio }}</p>
+        </section>
+      {% endif %}
+
+      <section aria-labelledby="reviews-heading">
+        <h2 id="reviews-heading" class="sr-only">Student reviews</h2>
+        {% include "partials/empty_state.html" with icon="chat" headline="Reviews are not open yet" description="Once accounts are live, students who took a class with this instructor can review how they teach. That work is scheduled for a later sprint." %}
+      </section>
+    </div>
+
+    <aside class="space-y-6">
+      <section class="card">
+        <h2 class="border-b border-neutral-200 px-4 py-3 text-h3">Courses taught</h2>
+        {% for course in courses %}
+          <a href="{% url 'catalog:course_detail' course.slug %}" class="row-link">
+            {% include "partials/rating_stat.html" with value=course.rating_summary.avg_difficulty caption="Diff" %}
+            <span class="min-w-0 flex-1">
+              <span class="block font-mono text-meta font-semibold text-accent-700">{{ course.code }}</span>
+              <span class="block font-medium text-neutral-900">{{ course.title }}</span>
+            </span>
+          </a>
+        {% empty %}
+          <p class="px-4 py-6 text-center text-meta text-neutral-500">
+            No courses are on record for this instructor yet.
+          </p>
+        {% endfor %}
+      </section>
+    </aside>
+  </div>
+{% endblock %}

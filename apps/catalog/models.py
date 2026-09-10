@@ -46,6 +46,15 @@ class ProfessorRatingSummary(EmbeddedModel):
     avg_clarity = models.FloatField(null=True, blank=True)
     avg_helpfulness = models.FloatField(null=True, blank=True)
     avg_fairness = models.FloatField(null=True, blank=True)
+    # Stored, not computed: the professors directory sorts on it, and MongoDB
+    # cannot order by a Python property. Whatever writes ratings must call
+    # compute_overall() and store the result alongside the three axes.
+    #
+    # Courses deliberately have no equivalent. Difficulty, workload, and
+    # usefulness are not a single quality axis — a hard course is not a bad one
+    # — so averaging them would produce a number that means nothing. The
+    # courses directory sorts on the specific axis the reader asked for.
+    avg_overall = models.FloatField(null=True, blank=True)
     count = models.PositiveIntegerField(default=0)
 
     def __str__(self) -> str:
@@ -55,13 +64,12 @@ class ProfessorRatingSummary(EmbeddedModel):
     def has_ratings(self) -> bool:
         return self.count > 0
 
-    @property
-    def overall(self) -> float | None:
-        """The single number shown on directory rows. None until someone rates."""
-        if not self.has_ratings:
-            return None
-        parts = [self.avg_clarity, self.avg_helpfulness, self.avg_fairness]
-        known = [p for p in parts if p is not None]
+    @staticmethod
+    def compute_overall(
+        clarity: float | None, helpfulness: float | None, fairness: float | None
+    ) -> float | None:
+        """Mean of whichever axes are known. None when none are."""
+        known = [v for v in (clarity, helpfulness, fairness) if v is not None]
         return round(sum(known) / len(known), 2) if known else None
 
 

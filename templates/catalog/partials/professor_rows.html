@@ -1,0 +1,21 @@
+{% comment %}See catalog/partials/course_rows.html — same pattern.{% endcomment %}
+{% for professor in page_obj %}
+  {% include "catalog/partials/professor_row.html" %}
+{% endfor %}
+
+{% if next_page_url %}
+  <div class="flex items-center justify-center gap-3 border-t border-neutral-200 px-4 py-3">
+    <a href="{{ next_page_url }}"
+       class="btn-secondary btn-sm"
+       hx-get="{{ next_page_url }}"
+       hx-target="closest div"
+       hx-swap="outerHTML"
+       hx-indicator="find .htmx-indicator">
+      Load more
+      <span class="htmx-indicator" aria-hidden="true">&hellip;</span>
+    </a>
+    <span class="text-meta text-neutral-500">
+      Showing {{ page_obj.end_index }} of {{ total }}
+    </span>
+  </div>
+{% endif %}

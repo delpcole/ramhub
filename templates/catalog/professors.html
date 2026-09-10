@@ -3,6 +3,52 @@
 {% block title %}Professors · RamHub{% endblock %}
 
 {% block content %}
-  {% include "partials/page_header.html" with title="Professors" subtitle="Every instructor, rated by students on clarity, helpfulness, and fairness." %}
-  {% include "partials/empty_state.html" with icon="users" headline="The professor directory is not seeded yet" description="After the faculty import, each instructor gets a page showing their courses, their rating summary, and student reviews of how they teach." action_label="Read the import plan" %}
+  {% include "partials/page_header.html" with title="Professors" count=total subtitle="Every instructor, rated by students on clarity, helpfulness, and fairness." %}
+
+  {% comment %}See catalog/courses.html — same plain-GET-then-HTMX approach.{% endcomment %}
+  <form method="get"
+        action="{% url 'catalog:professors' %}"
+        role="search"
+        class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end"
+        hx-get="{% url 'catalog:professors' %}"
+        hx-target="#professor-results"
+        hx-swap="outerHTML"
+        hx-push-url="true"
+        hx-indicator="#professor-search-indicator"
+        hx-trigger="submit, change, keyup changed delay:300ms">
+
+    <div class="flex-1">
+      <label for="professor-q" class="field-label">Search professors</label>
+      <input type="search" id="professor-q" name="q" value="{{ query.q }}"
+             class="field-input" autocomplete="off"
+             placeholder="Name — try Reyes or Marisol Reyes">
+    </div>
+
+    <div class="sm:w-52">
+      <label for="professor-department" class="field-label">Department</label>
+      <select id="professor-department" name="department" class="field-input">
+        <option value="">All departments</option>
+        {% for department in departments %}
+          <option value="{{ department }}" {% if department == query.department %}selected{% endif %}>{{ department }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="sm:w-44">
+      <label for="professor-sort" class="field-label">Sort</label>
+      <select id="professor-sort" name="sort" class="field-input">
+        {% for key, spec in sorts.items %}
+          <option value="{{ key }}" {% if key == query.sort %}selected{% endif %}>{{ spec.label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <noscript><button type="submit" class="btn-primary">Search</button></noscript>
+
+    <span id="professor-search-indicator" class="htmx-indicator self-center text-meta text-neutral-500">
+      Searching&hellip;
+    </span>
+  </form>
+
+  {% include "catalog/partials/professor_results.html" %}
 {% endblock %}

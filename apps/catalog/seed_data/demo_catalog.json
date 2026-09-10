@@ -947,6 +947,7 @@
         "avg_clarity": 3.2,
         "avg_helpfulness": 3.2,
         "avg_fairness": 3.9,
+        "avg_overall": 3.43,
         "count": 63
       },
       "teaches": [
@@ -968,6 +969,7 @@
         "avg_clarity": 2.7,
         "avg_helpfulness": 4.8,
         "avg_fairness": 4.8,
+        "avg_overall": 4.1,
         "count": 77
       },
       "teaches": [
@@ -985,6 +987,7 @@
         "avg_clarity": 3.9,
         "avg_helpfulness": 2.8,
         "avg_fairness": 4.8,
+        "avg_overall": 3.83,
         "count": 41
       },
       "teaches": [
@@ -1005,6 +1008,7 @@
         "avg_clarity": 4.9,
         "avg_helpfulness": 4.5,
         "avg_fairness": 3.1,
+        "avg_overall": 4.17,
         "count": 93
       },
       "teaches": [
@@ -1024,6 +1028,7 @@
         "avg_clarity": 3.0,
         "avg_helpfulness": 4.0,
         "avg_fairness": 4.8,
+        "avg_overall": 3.93,
         "count": 59
       },
       "teaches": [
@@ -1042,6 +1047,7 @@
         "avg_clarity": 2.7,
         "avg_helpfulness": 4.3,
         "avg_fairness": 3.6,
+        "avg_overall": 3.53,
         "count": 71
       },
       "teaches": [
@@ -1061,6 +1067,7 @@
         "avg_clarity": 3.5,
         "avg_helpfulness": 3.5,
         "avg_fairness": 4.6,
+        "avg_overall": 3.87,
         "count": 90
       },
       "teaches": [
@@ -1081,6 +1088,7 @@
         "avg_clarity": 2.8,
         "avg_helpfulness": 2.9,
         "avg_fairness": 3.7,
+        "avg_overall": 3.13,
         "count": 31
       },
       "teaches": [
@@ -1100,6 +1108,7 @@
         "avg_clarity": 3.5,
         "avg_helpfulness": 2.9,
         "avg_fairness": 3.6,
+        "avg_overall": 3.33,
         "count": 112
       },
       "teaches": [
@@ -1118,6 +1127,7 @@
         "avg_clarity": 4.9,
         "avg_helpfulness": 3.8,
         "avg_fairness": 3.1,
+        "avg_overall": 3.93,
         "count": 79
       },
       "teaches": [
@@ -1137,6 +1147,7 @@
         "avg_clarity": 4.5,
         "avg_helpfulness": 3.0,
         "avg_fairness": 4.4,
+        "avg_overall": 3.97,
         "count": 99
       },
       "teaches": [
@@ -1156,6 +1167,7 @@
         "avg_clarity": null,
         "avg_helpfulness": null,
         "avg_fairness": null,
+        "avg_overall": null,
         "count": 0
       },
       "teaches": [
@@ -1177,6 +1189,7 @@
         "avg_clarity": 4.3,
         "avg_helpfulness": 4.7,
         "avg_fairness": 3.1,
+        "avg_overall": 4.03,
         "count": 59
       },
       "teaches": [
@@ -1195,6 +1208,7 @@
         "avg_clarity": 3.0,
         "avg_helpfulness": 3.4,
         "avg_fairness": 4.7,
+        "avg_overall": 3.7,
         "count": 108
       },
       "teaches": [
@@ -1215,6 +1229,7 @@
         "avg_clarity": 4.0,
         "avg_helpfulness": 4.6,
         "avg_fairness": 4.0,
+        "avg_overall": 4.2,
         "count": 70
       },
       "teaches": [
@@ -1232,6 +1247,7 @@
         "avg_clarity": 3.5,
         "avg_helpfulness": 4.5,
         "avg_fairness": 4.9,
+        "avg_overall": 4.3,
         "count": 84
       },
       "teaches": [
@@ -1251,6 +1267,7 @@
         "avg_clarity": 4.1,
         "avg_helpfulness": 4.2,
         "avg_fairness": 3.3,
+        "avg_overall": 3.87,
         "count": 102
       },
       "teaches": [
@@ -1270,6 +1287,7 @@
         "avg_clarity": 3.4,
         "avg_helpfulness": 4.5,
         "avg_fairness": 4.4,
+        "avg_overall": 4.1,
         "count": 51
       },
       "teaches": [
@@ -1288,6 +1306,7 @@
         "avg_clarity": 3.3,
         "avg_helpfulness": 4.1,
         "avg_fairness": 4.2,
+        "avg_overall": 3.87,
         "count": 69
       },
       "teaches": [
@@ -1306,6 +1325,7 @@
         "avg_clarity": null,
         "avg_helpfulness": null,
         "avg_fairness": null,
+        "avg_overall": null,
         "count": 0
       },
       "teaches": [
@@ -1325,6 +1345,7 @@
         "avg_clarity": 4.2,
         "avg_helpfulness": 3.5,
         "avg_fairness": 4.0,
+        "avg_overall": 3.9,
         "count": 117
       },
       "teaches": [
@@ -1344,6 +1365,7 @@
         "avg_clarity": 2.9,
         "avg_helpfulness": 3.7,
         "avg_fairness": 4.6,
+        "avg_overall": 3.73,
         "count": 39
       },
       "teaches": [
@@ -1364,6 +1386,7 @@
         "avg_clarity": 2.9,
         "avg_helpfulness": 3.4,
         "avg_fairness": 4.8,
+        "avg_overall": 3.7,
         "count": 50
       },
       "teaches": [
@@ -1383,6 +1406,7 @@
         "avg_clarity": 3.0,
         "avg_helpfulness": 4.8,
         "avg_fairness": 4.8,
+        "avg_overall": 4.2,
         "count": 80
       },
       "teaches": [
@@ -1400,6 +1424,7 @@
         "avg_clarity": 4.5,
         "avg_helpfulness": 4.8,
         "avg_fairness": 3.6,
+        "avg_overall": 4.3,
         "count": 35
       },
       "teaches": [
@@ -1419,6 +1444,7 @@
         "avg_clarity": 4.2,
         "avg_helpfulness": 4.2,
         "avg_fairness": 4.5,
+        "avg_overall": 4.3,
         "count": 72
       },
       "teaches": [
@@ -1439,6 +1465,7 @@
         "avg_clarity": null,
         "avg_helpfulness": null,
         "avg_fairness": null,
+        "avg_overall": null,
         "count": 0
       },
       "teaches": [
@@ -1458,6 +1485,7 @@
         "avg_clarity": 4.8,
         "avg_helpfulness": 3.7,
         "avg_fairness": 3.6,
+        "avg_overall": 4.03,
         "count": 80
       },
       "teaches": [
@@ -1476,6 +1504,7 @@
         "avg_clarity": 3.5,
         "avg_helpfulness": 3.1,
         "avg_fairness": 3.0,
+        "avg_overall": 3.2,
         "count": 5
       },
       "teaches": [
@@ -1495,6 +1524,7 @@
         "avg_clarity": 3.9,
         "avg_helpfulness": 3.2,
         "avg_fairness": 3.1,
+        "avg_overall": 3.4,
         "count": 44
       },
       "teaches": [

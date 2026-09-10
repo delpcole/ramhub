@@ -1,0 +1,13 @@
+{% comment %}Detail-header version of partials/rating_stat.html.{% endcomment %}
+{% load catalog_extras %}
+<div class="rating-stat-lg">
+  <span class="rating-caption">{{ caption }}</span>
+  {% if value %}
+    <span class="rating-value">{{ value|floatformat:1 }}<span class="rating-caption"> / 5</span></span>
+    <span class="rating-bar">
+      <span class="rating-bar-fill" style="--rating-fill: {{ value|rating_pct }}"></span>
+    </span>
+  {% else %}
+    <span class="rating-none">No ratings yet</span>
+  {% endif %}
+</div>

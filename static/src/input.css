@@ -246,8 +246,47 @@
   }
 
   /* --- Ratings: the visual anchor on rows and detail headers ------------- */
+  /* A number plus a proportional bar. Never stars — a 1-5 scale of difficulty
+     is not an endorsement, and star clip art reads as one. */
   .rating-value {
     @apply font-mono text-body font-semibold tabular-nums text-neutral-900;
+  }
+
+  .rating-stat {
+    @apply flex w-11 shrink-0 flex-col items-center gap-1;
+  }
+
+  .rating-bar {
+    @apply h-1 w-full overflow-hidden rounded-full bg-neutral-200;
+  }
+
+  /* Width comes from the data, so it is set inline as --rating-fill. */
+  .rating-bar-fill {
+    @apply block h-full rounded-full bg-accent-600;
+    width: var(--rating-fill, 0%);
+  }
+
+  .rating-caption {
+    @apply text-meta text-neutral-500;
+  }
+
+  /* Detail-page header version of the same idea, at reading size. */
+  .rating-stat-lg {
+    @apply flex min-w-0 flex-col gap-1;
+  }
+
+  .rating-stat-lg .rating-value {
+    @apply text-h2;
+  }
+
+  /* Fluid on phones — three fixed 96px bars overflow the card at 375px. */
+  .rating-stat-lg .rating-bar {
+    @apply w-full sm:w-24;
+  }
+
+  /* "No ratings yet" — deliberately quiet, never a zero. */
+  .rating-none {
+    @apply font-mono text-meta text-neutral-500;
   }
 
   /* --- HTMX loading state ----------------------------------------------- */

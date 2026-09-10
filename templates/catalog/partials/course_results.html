@@ -1,0 +1,18 @@
+{% comment %}
+The whole results region. Swapped wholesale when the search or filters change,
+and rendered inline on first load — so both paths produce identical markup.
+{% endcomment %}
+<div id="course-results">
+  {% if total %}
+    <p class="mb-2 text-meta text-neutral-500" role="status" aria-live="polite">
+      {{ total }} course{{ total|pluralize }}{% if is_filtered %} matching your search{% endif %}
+    </p>
+    <div class="card overflow-hidden">
+      {% include "catalog/partials/course_rows.html" %}
+    </div>
+  {% else %}
+    <div role="status" aria-live="polite">
+      {% include "partials/empty_state.html" with icon="search" headline="No courses match that search" description="Try a course code like CSC 240, a keyword from the title, or a different department." action_label="Clear search and filters" action_url=clear_url %}
+    </div>
+  {% endif %}
+</div>
