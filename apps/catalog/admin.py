@@ -40,7 +40,10 @@ class ProfessorAdmin(admin.ModelAdmin):
         s = obj.rating_summary
         if not s.has_ratings:
             return "no ratings"
-        return f"{s.count} · overall {s.overall} (clarity {s.avg_clarity} / help {s.avg_helpfulness} / fair {s.avg_fairness})"
+        return (
+            f"{s.count} · overall {s.avg_overall} "
+            f"(clarity {s.avg_clarity} / help {s.avg_helpfulness} / fair {s.avg_fairness})"
+        )
 
     @admin.display(description="Courses")
     def course_count(self, obj: Professor) -> int:

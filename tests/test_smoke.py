@@ -1,8 +1,10 @@
 """
-Phase 0 smoke tests: the shell renders and the navigation works.
+Smoke tests: the shell renders and the navigation works.
 
-None of these touch MongoDB — they only prove routing, templates, and the
-active-tab rule. Model tests arrive with the models in Phase 1.
+These prove routing, templates, and the active-tab rule rather than any model
+behaviour — catalog behaviour is covered in apps/catalog/tests/. They do need
+``django_db`` now: as of Phase 1 the Courses and Professors pages query on
+every request, so rendering them touches MongoDB.
 """
 
 import pytest
@@ -23,12 +25,14 @@ PAGE_URL_NAMES = [
 ]
 
 
+@pytest.mark.django_db
 @pytest.mark.parametrize("url_name", PAGE_URL_NAMES)
 def test_page_renders(client, url_name):
     response = client.get(reverse(url_name))
     assert response.status_code == 200
 
 
+@pytest.mark.django_db
 def test_nav_marks_only_the_current_tab_active(client):
     response = client.get(reverse("catalog:courses"))
     tabs = {tab["label"]: tab["is_active"] for tab in response.context["nav_tabs"]}
@@ -36,6 +40,7 @@ def test_nav_marks_only_the_current_tab_active(client):
     assert sum(tabs.values()) == 1
 
 
+@pytest.mark.django_db
 def test_feed_tab_is_not_active_on_other_pages(client):
     """The feed lives at "/", so a naive startswith check would always match."""
     response = client.get(reverse("campus:parking"))
