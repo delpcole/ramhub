@@ -1,6 +1,7 @@
 """Factory helpers for the catalog tests."""
 
 import pytest
+from django.utils.text import slugify
 
 from apps.catalog.models import (
     Course,
@@ -36,6 +37,7 @@ def make_course():
 @pytest.fixture
 def make_professor():
     def _make(first_name="Ada", last_name="Lovelace", department="Testing", **kwargs):
+        kwargs.setdefault("slug", slugify(f"{first_name} {last_name}"))
         summary = kwargs.pop("rating_summary", None)
         if summary is None:
             clarity = kwargs.pop("clarity", None)

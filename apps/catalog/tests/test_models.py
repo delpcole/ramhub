@@ -79,3 +79,26 @@ def test_professor_ids_store_and_return_objectids(make_course, make_professor):
     assert len(stored.professor_ids) == 1
     assert isinstance(stored.professor_ids[0], ObjectId)
     assert stored.professor_ids[0] == professor.pk
+
+
+def test_rmp_link_is_a_farmingdale_scoped_search(make_professor):
+    """
+    A search, not a deep link: the directory has no RMP ids, and RMP holds
+    duplicate entries per person. Guessing an id would land students on the
+    wrong professor.
+    """
+    professor = make_professor(first_name="Melixa", last_name="Abad Izquierdo")
+
+    url = professor.rmp_search_url
+
+    assert url.startswith("https://www.ratemyprofessors.com/search/professors/14046?q=")
+    assert "Melixa+Abad+Izquierdo" in url
+
+
+def test_rmp_link_url_encodes_awkward_names(make_professor):
+    professor = make_professor(first_name="José", last_name="O'Brien-Smith")
+
+    url = professor.rmp_search_url
+
+    assert " " not in url
+    assert "'" not in url

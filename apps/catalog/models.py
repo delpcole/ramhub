@@ -18,6 +18,8 @@ are spelled out:
    be right the first time.
 """
 
+from urllib.parse import quote_plus
+
 from django.db import models
 from django_mongodb_backend.fields import ArrayField, EmbeddedModelField, ObjectIdField
 from django_mongodb_backend.models import EmbeddedModel
@@ -107,13 +109,35 @@ class Course(models.Model):
         return self.code.replace(" ", "-")
 
 
+# RateMyProfessors' internal id for Farmingdale State College, used to scope the
+# lookup link on a professor page to this campus.
+RMP_SCHOOL_ID = "14046"
+RMP_SEARCH_URL = "https://www.ratemyprofessors.com/search/professors/{school}?q={query}"
+
+
 class Professor(models.Model):
+    # Stable, human-readable key straight from the college directory
+    # ("melixa-abad-izquierdo"). It is the URL and the import's natural key.
+    slug = models.SlugField(max_length=120, unique=True)
+
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)
-    department = models.CharField(max_length=64)
-    title = models.CharField(max_length=64, blank=True, help_text="e.g. Associate Professor.")
+    department = models.CharField(max_length=120)
+    title = models.CharField(max_length=160, blank=True, help_text="e.g. Associate Professor.")
     photo = models.URLField(blank=True)
     bio = models.TextField(blank=True)
+
+    # --- Facts imported from the official directory -----------------------
+    # These are the college's data, not ours. import_directory overwrites them
+    # on every run; nothing in the app should edit them.
+    faculty_id = models.CharField(max_length=16, blank=True)
+    profile_url = models.URLField(blank=True, help_text="Official faculty page.")
+    department_url = models.URLField(blank=True)
+    phone = models.CharField(max_length=32, blank=True)
+    office = models.CharField(max_length=160, blank=True)
+    directory_retrieved = models.DateField(
+        null=True, blank=True, help_text="When the directory row was last pulled."
+    )
 
     # M2M replacement. Kept in sync with Course.professor_ids.
     course_ids = ArrayField(ObjectIdField(), default=list, blank=True)
@@ -135,3 +159,15 @@ class Professor(models.Model):
     @property
     def full_name(self) -> str:
         return f"{self.first_name} {self.last_name}"
+
+    @property
+    def rmp_search_url(self) -> str:
+        """
+        A RateMyProfessors lookup for this person, scoped to Farmingdale.
+
+        Deliberately a search rather than a deep link: the college directory
+        carries no RMP ids, and RMP holds duplicate and differently-spelled
+        entries for the same person. A search lets the reader pick the right
+        one instead of us guessing an id and sending them to the wrong page.
+        """
+        return RMP_SEARCH_URL.format(school=RMP_SCHOOL_ID, query=quote_plus(self.full_name))

@@ -171,13 +171,13 @@ def test_course_detail_renders_and_links_its_professors(client, catalog):
     assert response.status_code == 200
     assert b"Data Structures" in response.content
     assert b"Marisol Reyes" in response.content
-    assert reverse("catalog:professor_detail", args=[professor.pk]).encode() in response.content
+    assert reverse("catalog:professor_detail", args=[professor.slug]).encode() in response.content
 
 
 def test_professor_detail_renders_and_links_its_courses(client, catalog):
     course, professor = catalog
 
-    response = client.get(reverse("catalog:professor_detail", args=[professor.pk]))
+    response = client.get(reverse("catalog:professor_detail", args=[professor.slug]))
 
     assert response.status_code == 200
     assert b"Marisol Reyes" in response.content
@@ -189,13 +189,13 @@ def test_unknown_course_code_404s(client, catalog):
     assert client.get("/courses/NOPE-999/").status_code == 404
 
 
-def test_unknown_professor_id_404s(client, catalog):
+def test_unknown_professor_slug_404s(client, catalog):
+    assert client.get("/professors/nobody-at-all/").status_code == 404
+
+
+def test_slug_shaped_like_an_objectid_still_404s(client, catalog):
+    """Professor URLs moved from ObjectId to the directory slug in the import."""
     assert client.get("/professors/aaaaaaaaaaaaaaaaaaaaaaaa/").status_code == 404
-
-
-def test_malformed_professor_id_404s_at_the_url_layer(client, catalog):
-    """The object_id converter rejects it before the view runs."""
-    assert client.get("/professors/not-an-object-id/").status_code == 404
 
 
 def test_unrated_course_detail_says_so_rather_than_showing_zeros(client, make_course):
@@ -219,7 +219,7 @@ def test_course_detail_url_keeps_the_courses_tab_active(client, catalog):
 def test_professor_detail_url_keeps_the_professors_tab_active(client, catalog):
     _, professor = catalog
 
-    response = client.get(reverse("catalog:professor_detail", args=[professor.pk]))
+    response = client.get(reverse("catalog:professor_detail", args=[professor.slug]))
 
     tabs = {t["label"]: t["is_active"] for t in response.context["nav_tabs"]}
     assert tabs["Professors"] is True

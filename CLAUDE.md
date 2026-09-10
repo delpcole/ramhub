@@ -23,6 +23,13 @@ in the college domain (`farmingdale.edu`, read from the `COLLEGE_EMAIL_DOMAIN` s
 
 Roles: `STUDENT` (default), `MODERATOR`, `ADMIN`.
 
+**Professors are real, named people.** The ~913 faculty records come from the public
+campus directory via `manage.py import_directory`. Two rules follow from that and are not
+negotiable: **never write a rating we did not receive from a student** (no demo ratings, no
+seeded averages, no imported third-party scores), and **never assert a relationship we
+cannot verify** — the directory says who works at the college, not who teaches which
+course. Demo data is fine for courses; it is not fine attached to a person's name.
+
 ## Tech stack — fixed by the course, do not propose alternatives
 
 - **Python 3.12+** (developed on 3.13)
@@ -195,9 +202,15 @@ Course
   rating_summary: Emb(avg_difficulty, avg_workload, avg_usefulness, count)  # denormalized
 
 Professor
+  slug(unique, indexed)                             # directory key; also the URL
   first_name, last_name, department, title, photo, bio
+  faculty_id, profile_url, department_url, phone, office, directory_retrieved
+                                                    # imported facts, never edited in-app
   course_ids: ArrayField(ObjectIdField)
-  rating_summary: Emb(avg_clarity, avg_helpfulness, avg_fairness, count)    # denormalized
+  rating_summary: Emb(avg_clarity, avg_helpfulness, avg_fairness,
+                      avg_overall, count)           # denormalized; avg_overall is
+                                                    # stored because the directory
+                                                    # sorts on it
 
 CourseRating      FK user, FK course, difficulty, workload, usefulness, semester
                   UniqueConstraint(user, course)

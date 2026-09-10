@@ -1,5 +1,5 @@
 {% comment %}One row of the professor directory.{% endcomment %}
-<a href="{% url 'catalog:professor_detail' professor.pk %}" class="row-link">
+<a href="{% url 'catalog:professor_detail' professor.slug %}" class="row-link">
   {% include "partials/rating_stat.html" with value=professor.rating_summary.avg_overall caption="Overall" %}
 
   <span class="min-w-0 flex-1">

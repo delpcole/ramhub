@@ -127,9 +127,9 @@ def course_detail(request: HttpRequest, code: str) -> HttpResponse:
     )
 
 
-def professor_detail(request: HttpRequest, pk) -> HttpResponse:
-    """One professor. `pk` is an ObjectId, validated by the object_id URL converter."""
-    professor = get_object_or_404(Professor, pk=pk)
+def professor_detail(request: HttpRequest, slug: str) -> HttpResponse:
+    """One professor, keyed on the directory slug."""
+    professor = get_object_or_404(Professor, slug=slug)
     return render(
         request,
         "catalog/professor_detail.html",

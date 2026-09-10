@@ -43,14 +43,33 @@ npm run tailwind:build
 # 5. Create the collections Django needs
 python manage.py migrate
 
-# 6. Load demo courses and professors, so the directories are not empty
+# 6. Load demo courses, so the Courses directory is not empty
 python manage.py seed_demo
+
+# 7. Import the real faculty from the college directory
+python manage.py import_directory
 ```
 
-`seed_demo` is idempotent — run it as often as you like. It loads ~66 courses
-and ~30 professors from `apps/catalog/seed_data/demo_catalog.json`. Read the
-`_meta` block in that file before trusting any of it: the courses only
-*resemble* the real Farmingdale catalog, and the professors are invented.
+Both are idempotent — run them as often as you like.
+
+`seed_demo` loads ~66 **demo** courses from
+`apps/catalog/seed_data/demo_catalog.json`. Read the `_meta` block in that file
+first: the courses only *resemble* the real Farmingdale catalog and are not
+authoritative. Replace them when real catalog data is available.
+
+`import_directory` loads the ~913 **real** teaching staff from
+`apps/catalog/seed_data/farmingdale_directory.ndjson`, a public export of
+[the campus directory](https://www.farmingdale.edu/directory/). Two rules it
+will not bend:
+
+- **It never writes ratings.** These are real, named people. Everyone starts at
+  zero, and a re-import leaves any ratings students have left completely alone.
+- **It never invents relationships.** The directory says who works here, not who
+  teaches what, so it does not link professors to courses. Guessing would put a
+  real person's name on a course they may never have taught.
+
+Use `--prune --yes` to drop records that are no longer in the export (departed
+staff, or leftover demo rows).
 
 ### Database: local or Atlas
 

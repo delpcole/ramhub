@@ -68,7 +68,7 @@
       <section class="card">
         <h2 class="border-b border-neutral-200 px-4 py-3 text-h3">Who teaches it</h2>
         {% for professor in professors %}
-          <a href="{% url 'catalog:professor_detail' professor.pk %}" class="row-link">
+          <a href="{% url 'catalog:professor_detail' professor.slug %}" class="row-link">
             {% include "partials/rating_stat.html" with value=professor.rating_summary.avg_overall caption="Overall" %}
             <span class="min-w-0 flex-1">
               <span class="block font-medium text-neutral-900">{{ professor.full_name }}</span>
