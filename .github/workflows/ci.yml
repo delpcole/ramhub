@@ -3,23 +3,57 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, master]
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     env:
-      # No Atlas access from CI. Settings need a URI to load, but the Phase 0
-      # tests never open a connection. Add a service container here when the
-      # first tests that touch the database land in Phase 1.
-      MONGODB_URI: mongodb://localhost:27017
+      # directConnection avoids replica-set host-advertisement mismatches: the
+      # container advertises its own hostname, which the runner cannot always
+      # resolve. A direct connection to a replica-set member still reports
+      # `setName` in `hello`, which is what django-mongodb-backend checks to
+      # decide whether transactions are available.
+      MONGODB_URI: mongodb://localhost:27017/?directConnection=true
       MONGODB_NAME: ramhub_ci
       SECRET_KEY: ci-only-not-a-real-secret
       DEBUG: "False"
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Start MongoDB as a single-node replica set
+        # Not a plain `services:` container. MongoDB only supports transactions
+        # on a replica set, and pytest-django's @django_db isolation relies on
+        # them — a standalone mongod still passes but silently degrades every
+        # test to truncate-between-tests. `services:` cannot pass --replSet, so
+        # the container is started by hand here.
+        run: |
+          set -euo pipefail
+          docker run -d --name mongo -p 27017:27017 mongo:8.0 --replSet rs0 --bind_ip_all
+
+          echo "Waiting for mongod to accept connections..."
+          for _ in $(seq 1 60); do
+            if docker exec mongo mongosh --quiet --eval 'db.adminCommand({ping:1}).ok' >/dev/null 2>&1; then
+              break
+            fi
+            sleep 1
+          done
+
+          docker exec mongo mongosh --quiet --eval \
+            'rs.initiate({_id: "rs0", members: [{_id: 0, host: "localhost:27017"}]})'
+
+          echo "Waiting for the member to become PRIMARY..."
+          for _ in $(seq 1 60); do
+            if [ "$(docker exec mongo mongosh --quiet --eval 'rs.status().myState')" = "1" ]; then
+              break
+            fi
+            sleep 1
+          done
+
+          docker exec mongo mongosh --quiet --eval \
+            'print("replica set ready: " + db.adminCommand("hello").setName)'
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -39,6 +73,23 @@ jobs:
 
       - name: Django system checks
         run: python manage.py check
+
+      - name: Confirm MongoDB reports transaction support
+        # Fails loudly if the replica set did not come up. Without this, a
+        # standalone mongod would let the suite pass while quietly running
+        # every test with weaker isolation than we think.
+        run: |
+          python - <<'PY'
+          import django, os, sys
+          sys.path.insert(0, os.getcwd())
+          os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")
+          django.setup()
+          from django.db import connection
+          supported = connection.features._supports_transactions
+          print(f"_supports_transactions = {supported}")
+          if not supported:
+              sys.exit("MongoDB is not a replica set — @django_db isolation would degrade.")
+          PY
 
       - name: Test
         run: pytest

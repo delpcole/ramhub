@@ -42,7 +42,15 @@ npm run tailwind:build
 
 # 5. Create the collections Django needs
 python manage.py migrate
+
+# 6. Load demo courses and professors, so the directories are not empty
+python manage.py seed_demo
 ```
+
+`seed_demo` is idempotent — run it as often as you like. It loads ~66 courses
+and ~30 professors from `apps/catalog/seed_data/demo_catalog.json`. Read the
+`_meta` block in that file before trusting any of it: the courses only
+*resemble* the real Farmingdale catalog, and the professors are invented.
 
 ### Database: local or Atlas
 
@@ -153,6 +161,18 @@ ruff check . && ruff format --check .
 pytest
 ```
 
+### Tests and the database
+
+The tests run against a **real MongoDB**, in a separate database — pytest-django
+creates and drops `test_<MONGODB_NAME>`, so your development data is never
+touched. Your local MongoDB has to be running for `pytest` to work.
+
+Any test that reads or writes needs `@pytest.mark.django_db`. That now includes
+view tests for pages that only display things: the Courses and Professors pages
+query on every request. The plain mark is enough — you do not need
+`transaction=True` just because this is MongoDB. `conftest.py` explains why,
+and what depends on MongoDB running as a replica set.
+
 Useful extras:
 
 ```bash
@@ -172,6 +192,11 @@ mongo_migrations/    regenerated admin/auth/contenttypes migrations (see its doc
   context_processors.py  builds the nav and marks the active tab
 apps/                accounts, catalog, ratings, community, campus, saved,
                      assistant, moderation
+apps/catalog/        Course + Professor, the two directories, and the detail
+  services.py        pages. Query logic lives here, never in a view.
+  forms.py           query-string validation for the directories
+  seed_data/         demo_catalog.json — see its _meta block
+
 templates/           base.html, partials/, one directory per app
 static/src/          input.css — every design token lives here
 static/css/          built output (gitignored)

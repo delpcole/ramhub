@@ -76,10 +76,13 @@ them — do not "fix" them by reaching for patterns that don't work here.
   embedded inside their Post for exactly this reason.
 - **Embedded-model migrations are only partly automatic.** 6.1 ships its own
   `MigrationAutodetector` (which is why `django_mongodb_backend` must stay in
-  `INSTALLED_APPS`) and it does order embedded models correctly. But **updating an embedded
-  model's indexes after the collection exists is unsupported**, and existing documents are
-  never rewritten. Changing an embedded model's shape still means a hand-written data
-  backfill — say so in the PR. Verify the exact behaviour before relying on it.
+  `INSTALLED_APPS`) and it does order embedded models correctly. Phase 1 measured the rest:
+  adding a field to an embedded model **is** detected and does generate an `AddField` that
+  applies cleanly — but **existing documents are not rewritten**. Reads of an old document
+  return `None` for the new field, and ordering on it runs without error and produces
+  silently meaningless results. Nothing warns you. Changing an embedded model's shape means
+  a hand-written backfill (a reseed counts) — say so in the PR. Updating an embedded
+  model's *indexes* after the collection exists is still unsupported outright.
 - **Aggregation is limited** and `QuerySet.raw()` is unsupported. Use `raw_aggregate()` when
   you truly need a pipeline — but prefer our denormalized summary fields (below).
 - **Denormalize rating averages.** `Course.rating_summary` and `Professor.rating_summary`
@@ -89,6 +92,16 @@ them — do not "fix" them by reaching for patterns that don't work here.
   Keep write paths simple rather than leaning on nested atomic blocks.
 - **Unique constraints and indexes are supported** — use `UniqueConstraint` freely (one
   rating per user+course, one vote per user+target).
+- **`.distinct()` needs an explicit `order_by()` on the same field.** A model's
+  `Meta.ordering` is folded into the DISTINCT grouping, so
+  `Course.objects.values_list("department").distinct()` dedupes on
+  (code, department) and returns one row per course — 66 "departments" instead of 8, with
+  no error. Always `.order_by(field)` first. This is the quietest bug we have hit: it
+  returns wrong data rather than failing.
+- **Rating sorts must pass `nulls_last=True`.** Unrated records hold null averages, and
+  ascending order puts them first — so "easiest courses" would lead with the ones nobody
+  has rated. `F("rating_summary__avg_difficulty").asc(nulls_last=True)` is supported and
+  is the fix.
 - **There is no `parse_uri()` any more.** It was removed in 6.1, but nearly every tutorial
   (and most LLM output) still calls it. Pass the whole Atlas connection string as the
   database `HOST` and set `NAME` separately. Read both from the environment.
