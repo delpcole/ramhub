@@ -184,8 +184,10 @@ def landing_snapshot() -> dict:
         .first()
     )
     department_count = len(course_departments())
+    course_count = Course.objects.count()
     return {
-        "course_count": Course.objects.count(),
+        "course_count": course_count,
+        "rambo_lines": rambo_lines(course_count, department_count, featured_course),
         "professor_count": Professor.objects.count(),
         "department_count": department_count,
         "featured_course": featured_course,
@@ -197,3 +199,26 @@ def landing_snapshot() -> dict:
             ][:90]
         ),
     }
+
+
+def rambo_lines(
+    course_count: int, department_count: int, featured_course: Course | None
+) -> list[str]:
+    """
+    What Rambo says when you nudge him. Every line is true of the live
+    database, so the mascot never makes a claim the site cannot back up.
+    Rambo's question-answering assistant is not built yet, and his lines say so
+    rather than implying it works.
+    """
+    lines = [
+        "Hi, I'm Rambo.",
+        f"There are {course_count:,} courses in here. Go on, look one up.",
+        f"{department_count} departments. I have read every one of them.",
+    ]
+    if featured_course:
+        lines.append(f"Heard about {featured_course.code}? Worth checking before you register.")
+    lines += [
+        "Advice from students who already took the class. That is the whole idea.",
+        "I will be answering your questions soon. For now, I mostly nod.",
+    ]
+    return lines

@@ -1,0 +1,74 @@
+{% comment %}
+Rambo, RamHub's mascot. ORIGINAL ARTWORK — deliberately not Farmingdale State
+College's official ram logo. The roadmap calls for an original character in the
+college's colours, labelled as a student project; ask before using real marks.
+
+Built as layered SVG so each part can move at its own depth:
+  horns  — drawn on as you scroll, tilt most toward the cursor
+  head   — tilts toward the cursor
+  pupils — track the cursor
+  lids   — blink occasionally
+
+The whole character is a <button>, so the "nudge" interaction works from the
+keyboard (Enter / Space) as well as a click, and screen readers get a label.
+{% endcomment %}
+<button type="button" class="rambo" data-rambo aria-label="Say hi to Rambo, the RamHub mascot">
+  <svg viewBox="20 70 360 275" class="rambo-svg" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="rambo-face" cx="50%" cy="38%" r="65%">
+        <stop offset="0%" stop-color="var(--color-neutral-800)" />
+        <stop offset="100%" stop-color="var(--color-neutral-950)" />
+      </radialGradient>
+      <linearGradient id="rambo-horn" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="var(--color-accent-200)" />
+        <stop offset="100%" stop-color="var(--color-accent-500)" />
+      </linearGradient>
+    </defs>
+
+    <g data-rambo-body>
+      {# Horns: the signature. Each is one continuous spiral so it can draw on. #}
+      <g data-rambo-horns>
+        <path class="rambo-horn" pathLength="1" data-rambo-horn
+              d="M168 138 C132 82 58 92 50 160 C43 222 106 256 138 214 C160 184 134 150 104 168 C86 180 94 208 116 206" />
+        <path class="rambo-horn" pathLength="1" data-rambo-horn
+              d="M232 138 C268 82 342 92 350 160 C357 222 294 256 262 214 C240 184 266 150 296 168 C314 180 306 208 284 206" />
+        {# Ridges along each horn, echoing the growth rings of a real horn. #}
+        <path class="rambo-ridge" pathLength="1" data-rambo-horn
+              d="M168 138 C132 82 58 92 50 160 C43 222 106 256 138 214" />
+        <path class="rambo-ridge" pathLength="1" data-rambo-horn
+              d="M232 138 C268 82 342 92 350 160 C357 222 294 256 262 214" />
+      </g>
+
+      <g data-rambo-head>
+        {# Ears, tucked beneath the horns. #}
+        <path class="rambo-ear" d="M150 176 C118 168 100 184 104 196 C120 204 142 196 156 188 Z" />
+        <path class="rambo-ear" d="M250 176 C282 168 300 184 296 196 C280 204 258 196 244 188 Z" />
+
+        {# A long, tapered face. #}
+        <path class="rambo-face"
+              d="M148 150 C150 114 250 114 252 150 L244 248 C240 290 222 314 200 318 C178 314 160 290 156 248 Z" />
+
+        {# Brow line, which lifts during the nudge. #}
+        <path class="rambo-brow" data-rambo-brow d="M166 176 Q182 168 196 176 M204 176 Q218 168 234 176" />
+
+        {# Eyes: white, a pupil that tracks, and a lid that blinks. #}
+        <g transform="translate(180 198)">
+          <circle class="rambo-eye" r="11" />
+          <circle class="rambo-pupil" r="5" data-rambo-pupil />
+          <rect class="rambo-lid" x="-12" y="-12" width="24" height="24" data-rambo-lid />
+        </g>
+        <g transform="translate(220 198)">
+          <circle class="rambo-eye" r="11" />
+          <circle class="rambo-pupil" r="5" data-rambo-pupil />
+          <rect class="rambo-lid" x="-12" y="-12" width="24" height="24" data-rambo-lid />
+        </g>
+
+        {# Snout. #}
+        <ellipse class="rambo-snout" cx="200" cy="284" rx="34" ry="24" />
+        <ellipse class="rambo-nostril" cx="188" cy="282" rx="4" ry="6" />
+        <ellipse class="rambo-nostril" cx="212" cy="282" rx="4" ry="6" />
+        <path class="rambo-mouth" d="M186 298 Q200 306 214 298" />
+      </g>
+    </g>
+  </svg>
+</button>

@@ -101,3 +101,76 @@ def test_landing_css_is_scoped_so_it_cannot_leak_into_directories():
     # every landing component is namespaced to landing-only class names
     generic = [s for s in selectors if s in {".card", ".row-link", ".btn-primary", ".badge"}]
     assert not generic, generic
+
+
+# -- Rambo -------------------------------------------------------------------
+@pytest.mark.django_db
+def test_rambo_section_renders_as_an_accessible_button(client):
+    body = client.get("/").content
+    assert b'data-rambo aria-label="Say hi to Rambo, the RamHub mascot"' in body
+    assert b"<button" in body
+    assert b"Meet" in body and b"Rambo." in body
+
+
+@pytest.mark.django_db
+def test_rambo_is_labelled_as_original_artwork(client):
+    """The roadmap: an original character, not the college's official mark."""
+    assert b"not an official college mark" in client.get("/").content
+
+
+@pytest.mark.django_db
+def test_rambo_lines_are_embedded_as_safe_json(client, make_course):
+    make_course(code="CSC 229", title="Data Structures & Algorithms I")
+
+    body = client.get("/").content.decode()
+
+    assert 'id="rambo-lines"' in body
+    assert (
+        "Hi, I&#x27;m Rambo." in body or "Hi, I\\u0027m Rambo." in body or "Hi, I'm Rambo." in body
+    )
+
+
+@pytest.mark.django_db
+def test_rambo_only_says_things_the_database_backs_up(make_course):
+    from apps.catalog.services import rambo_lines
+
+    course = make_course(code="CSC 229", title="Data Structures & Algorithms I")
+
+    lines = rambo_lines(course_count=1785, department_count=67, featured_course=course)
+
+    assert lines[0] == "Hi, I'm Rambo."
+    assert any("1,785 courses" in line for line in lines)
+    assert any("67 departments" in line for line in lines)
+    assert any("CSC 229" in line for line in lines)
+    # the assistant is not built, and Rambo must not imply that it is
+    assert any("soon" in line for line in lines)
+
+
+def test_rambo_lines_cope_with_an_empty_catalog():
+    from apps.catalog.services import rambo_lines
+
+    lines = rambo_lines(course_count=0, department_count=0, featured_course=None)
+
+    assert lines and not any("None" in line for line in lines)
+
+
+def test_the_old_mascot_name_is_gone_everywhere():
+    root = Path(__file__).resolve().parent.parent
+    offenders = [
+        str(path.relative_to(root))
+        for folder in ("templates", "apps", "static/js", "static/src", "config")
+        for path in (root / folder).rglob("*")
+        if path.is_file()
+        and path.suffix in {".html", ".py", ".js", ".css"}
+        and "rammy" in path.read_text(errors="ignore").lower()
+    ]
+    assert not offenders, offenders
+
+
+@pytest.mark.django_db
+def test_interactive_scripts_load_only_on_the_landing_page(client):
+    assert b"js/cursor.js" in client.get("/").content
+    assert b"js/rambo.js" in client.get("/").content
+    for url in ("/courses/", "/professors/", "/feed/"):
+        body = client.get(url).content
+        assert b"cursor.js" not in body and b"rambo.js" not in body, url

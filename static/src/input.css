@@ -446,8 +446,154 @@
      not created at all on touch devices or with reduced motion. */
   .cursor-follower {
     @apply pointer-events-none fixed left-0 top-0 z-50 h-8 w-8 rounded-full border
-           border-accent-300 opacity-0 mix-blend-difference;
+           border-accent-300 bg-accent-300/0 opacity-0 transition-colors duration-500;
     transform: translate3d(-100px, -100px, 0);
+  }
+
+  .cursor-follower.is-engaged {
+    @apply bg-accent-300/20;
+  }
+
+  /* --- Interactive background ------------------------------------------ */
+  /* Two gradient washes cross-fade as the cursor moves left to right, and a
+     glow trails the pointer. Only transform and opacity ever animate, so the
+     browser composites these layers rather than repainting the viewport. */
+  .spotlight {
+    @apply pointer-events-none fixed inset-0 z-0 overflow-hidden;
+  }
+
+  .spotlight-wash {
+    @apply absolute inset-0 transition-none;
+  }
+
+  .spotlight-wash-a {
+    background:
+      radial-gradient(ellipse at 18% 28%, var(--color-accent-900) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 90%, var(--color-neutral-900) 0%, transparent 60%);
+    opacity: 0.9;
+  }
+
+  .spotlight-wash-b {
+    background:
+      radial-gradient(ellipse at 82% 24%, var(--color-accent-800) 0%, transparent 55%),
+      radial-gradient(ellipse at 12% 88%, var(--color-accent-950) 0%, transparent 60%);
+    opacity: 0;
+  }
+
+  .spotlight-glow {
+    @apply absolute left-0 top-0 h-[70vmax] w-[70vmax] rounded-full opacity-35;
+    background: radial-gradient(circle, var(--color-accent-600) 0%, transparent 62%);
+    transform: translate(calc(50vw - 50%), calc(50vh - 50%));
+  }
+
+  /* The hero's wall of course codes, brightened under the cursor like a
+     flashlight. --fx/--fy/--fr are written by cursor.js; the defaults below
+     leave the wall evenly dim when there is no pointer to follow. */
+  [data-flashlight] {
+    --fx: 50%;
+    --fy: 50%;
+    --fr: 0px;
+    color: var(--color-neutral-600);
+    -webkit-mask-image: radial-gradient(circle var(--fr) at var(--fx) var(--fy), #000 0%, rgb(0 0 0 / 0.3) 100%);
+    mask-image: radial-gradient(circle var(--fr) at var(--fx) var(--fy), #000 0%, rgb(0 0 0 / 0.3) 100%);
+  }
+
+  /* --- Rambo -------------------------------------------------------------- */
+  .rambo-stage {
+    @apply relative flex flex-col items-center pt-20;
+  }
+
+  .rambo {
+    @apply relative block aspect-[360/275] w-[min(82vw,28rem)] cursor-pointer rounded-lg bg-transparent;
+  }
+
+  .rambo:focus-visible {
+    @apply outline-2 outline-offset-4 outline-accent-300;
+  }
+
+  .rambo-svg {
+    @apply h-full w-full overflow-visible;
+  }
+
+  /* Parts pivot around their own centres, not the SVG origin. */
+  .rambo-svg [data-rambo-body],
+  .rambo-svg [data-rambo-head],
+  .rambo-svg [data-rambo-horns],
+  .rambo-svg [data-rambo-lid],
+  .rambo-svg [data-rambo-brow] {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .rambo-horn {
+    fill: none;
+    stroke: url(#rambo-horn);
+    stroke-width: 17;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .rambo-ridge {
+    fill: none;
+    stroke: var(--color-neutral-950);
+    stroke-opacity: 0.35;
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+
+  .rambo-face {
+    fill: url(#rambo-face);
+    stroke: var(--color-accent-400);
+    stroke-width: 2.5;
+  }
+
+  .rambo-ear,
+  .rambo-snout {
+    fill: var(--color-neutral-800);
+    stroke: var(--color-accent-400);
+    stroke-width: 2.5;
+  }
+
+  .rambo-brow,
+  .rambo-mouth {
+    fill: none;
+    stroke: var(--color-accent-300);
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+
+  .rambo-eye {
+    fill: var(--color-neutral-50);
+  }
+
+  .rambo-pupil,
+  .rambo-nostril {
+    fill: var(--color-neutral-950);
+  }
+
+  .rambo-lid {
+    fill: var(--color-neutral-800);
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+
+  .rambo-bubble {
+    @apply absolute left-1/2 top-0 z-10 w-max max-w-[18rem] -translate-x-1/2 rounded-md bg-white
+           px-4 py-2 text-center text-body text-neutral-900 shadow-2xl;
+  }
+
+  .rambo-bubble::after {
+    @apply absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-x-8 border-t-8 border-x-transparent
+           border-t-white content-[''];
+  }
+
+  .rambo-credit {
+    @apply mt-4 text-center text-meta text-neutral-400;
+  }
+
+  html.motion-ready [data-rambo-horn] {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
   }
 
   /* Until landing.js takes over, nothing is hidden — so a failed script or

@@ -163,50 +163,8 @@
     );
   }
 
-  // ── Cursor and hover (precise pointers only) ─────────────────────────────
-  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-    var follower = document.createElement("div");
-    follower.className = "cursor-follower";
-    follower.setAttribute("aria-hidden", "true");
-    document.body.appendChild(follower);
-
-    var moveX = gsap.quickTo(follower, "x", { duration: 0.8, ease: "power3.out" });
-    var moveY = gsap.quickTo(follower, "y", { duration: 0.8, ease: "power3.out" });
-
-    window.addEventListener("pointermove", function (event) {
-      gsap.to(follower, { opacity: 0.9, duration: 0.6, overwrite: "auto" });
-      moveX(event.clientX - 16);
-      moveY(event.clientY - 16);
-    });
-    document.addEventListener("pointerleave", function () {
-      gsap.to(follower, { opacity: 0, duration: 0.6 });
-    });
-
-    document.querySelectorAll("a, button, .pillar").forEach(function (el) {
-      el.addEventListener("pointerenter", function () {
-        gsap.to(follower, { scale: 1.8, duration: 0.6, ease: "power3.out" });
-      });
-      el.addEventListener("pointerleave", function () {
-        gsap.to(follower, { scale: 1, duration: 0.6, ease: "power3.out" });
-      });
-    });
-
-    // Buttons lean gently toward the pointer.
-    document.querySelectorAll("[data-magnetic]").forEach(function (el) {
-      el.addEventListener("pointermove", function (event) {
-        var box = el.getBoundingClientRect();
-        gsap.to(el, {
-          x: (event.clientX - box.left - box.width / 2) * 0.18,
-          y: (event.clientY - box.top - box.height / 2) * 0.3,
-          duration: 0.8,
-          ease: "power3.out",
-        });
-      });
-      el.addEventListener("pointerleave", function () {
-        gsap.to(el, { x: 0, y: 0, duration: 1.2, ease: "elastic.out(1, 0.5)" });
-      });
-    });
-  }
+  // Cursor, background spotlight and magnetic buttons live in cursor.js;
+  // the mascot lives in rambo.js.
 
   window.__landingReady = true;
   window.addEventListener("load", function () {

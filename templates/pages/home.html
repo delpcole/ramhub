@@ -25,12 +25,24 @@
 {% block body_class %}landing{% endblock %}
 
 {% block main %}
-<main id="main" class="flex-1">
+{% comment %}
+The background the cursor paints. Fixed behind the whole page. Two gradient
+washes cross-fade with horizontal position, and a glow follows the pointer.
+Everything is moved with transform/opacity so it composites instead of
+repainting. Static (and centred) for touch devices and reduced motion.
+{% endcomment %}
+<div class="spotlight" aria-hidden="true" data-spotlight>
+  <div class="spotlight-wash spotlight-wash-a" data-spotlight-wash-a></div>
+  <div class="spotlight-wash spotlight-wash-b" data-spotlight-wash-b></div>
+  <div class="spotlight-glow" data-spotlight-glow></div>
+</div>
+
+<main id="main" class="relative z-10 flex-1">
 
   {# ── 1 · Hero ───────────────────────────────────────────────────────── #}
   <section class="landing-section" aria-labelledby="hero-heading" data-hero>
     {# Back layer: real course codes, drifting slowest. #}
-    <div class="hero-codewall" aria-hidden="true" data-parallax="-0.15">
+    <div class="hero-codewall" aria-hidden="true" data-parallax="-0.15" data-flashlight>
       {% for code in code_wall %}<span>{{ code }}</span>{% endfor %}
     </div>
     <div class="hero-glow" aria-hidden="true" data-parallax="0.25"></div>
@@ -165,7 +177,33 @@
     </div>
   </section>
 
-  {# ── 5 · Call to action ───────────────────────────────────────────── #}
+  {# ── 5 · Meet Rambo ───────────────────────────────────────────────── #}
+  <section class="landing-section py-24" aria-labelledby="rambo-heading" data-rambo-section>
+    <div class="landing-inner grid items-center gap-12 lg:grid-cols-2">
+      <div class="order-2 lg:order-1">
+        <p class="landing-eyebrow" data-reveal>Our mascot</p>
+        <h2 id="rambo-heading" class="landing-display mt-6">
+          <span class="reveal-line"><span data-line>Meet</span></span>
+          <span class="reveal-line"><span data-line>Rambo.</span></span>
+        </h2>
+        <p class="landing-lede mt-8 max-w-md" data-reveal>
+          Farmingdale&rsquo;s ram, and soon your study assistant: ask about a class and get an answer
+          that links back to the students who wrote it.
+        </p>
+        <p class="mt-6 text-meta text-neutral-400" data-reveal>
+          Move your cursor, then give him a nudge. The assistant arrives in a later sprint.
+        </p>
+      </div>
+
+      <div class="rambo-stage order-1 lg:order-2" data-reveal>
+        <div class="rambo-bubble" role="status" aria-live="polite" data-rambo-bubble>Hi, I&rsquo;m Rambo.</div>
+        {% include "partials/rambo.html" %}
+        <p class="rambo-credit">Original artwork &middot; a student project, not an official college mark</p>
+      </div>
+    </div>
+  </section>
+
+  {# ── 6 · Call to action ───────────────────────────────────────────── #}
   <section class="landing-section" aria-labelledby="cta-heading">
     <div class="hero-glow" aria-hidden="true" data-parallax="0.2"></div>
     <div class="landing-inner text-center">
@@ -188,4 +226,7 @@
   <script src="{% static 'vendor/ScrollTrigger.min.js' %}" defer></script>
   <script src="{% static 'vendor/lenis.min.js' %}" defer></script>
   <script src="{% static 'js/landing.js' %}" defer></script>
+  <script src="{% static 'js/cursor.js' %}" defer></script>
+  <script src="{% static 'js/rambo.js' %}" defer></script>
+  {{ rambo_lines|json_script:"rambo-lines" }}
 {% endblock %}
