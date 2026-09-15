@@ -4,6 +4,8 @@ A private, school-email-only community website for students of **Farmingdale Sta
 College**. Look up any course or professor, read honest advice from students who
 actually took it, and add your own.
 
+**Team 1, CSC 325:** Axel, Cole, Nick, Sara, Sinan, Shil. The original project proposal is in [docs/PROPOSAL.md](docs/PROPOSAL.md).
+
 Read [CLAUDE.md](CLAUDE.md) before contributing — it holds the architecture
 decisions, MongoDB constraints, and conventions this project is built on.
 
