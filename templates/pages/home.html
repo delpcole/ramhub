@@ -87,6 +87,54 @@ repainting. Static (and centred) for touch devices and reduced motion.
     </div>
   </section>
 
+  {% comment %}
+  The feature strip. Without JavaScript this is a native horizontal scroller
+  with scroll snapping — usable with a trackpad, a scrollbar, or the keyboard.
+  strip.js then pins the section and drives it from vertical scroll, and blurs
+  whatever is off-centre. The page is never scroll-hijacked: the section
+  releases as soon as the strip reaches its end.
+  {% endcomment %}
+  <section class="strip-stage" aria-labelledby="strip-heading" data-strip>
+    <div class="strip-sticky">
+      <div class="landing-inner">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="landing-eyebrow" data-reveal>What&rsquo;s inside</p>
+            <h2 id="strip-heading" class="mt-4 text-h1 font-medium text-white sm:text-[clamp(2rem,3.6vw,3rem)]" data-reveal>
+              Seven ways in.
+            </h2>
+          </div>
+          <p class="text-meta text-neutral-400" data-reveal data-strip-hint>Scroll to move through them</p>
+        </div>
+      </div>
+
+      <div class="strip-viewport" data-strip-viewport tabindex="0" role="group" aria-labelledby="strip-heading">
+        <ul class="strip-track" data-strip-track>
+          {% for feature in features %}
+            <li class="strip-item" data-strip-item>
+              <a href="{% url feature.url_name %}" class="strip-card">
+                <span class="strip-icon">{% include "partials/icons/"|add:feature.icon|add:".html" %}</span>
+                <span class="mt-auto block">
+                  <span class="flex items-center gap-2">
+                    <span class="text-h2 font-medium text-white">{{ feature.label }}</span>
+                    {% if feature.status == "live" %}
+                      <span class="strip-badge-live">Live</span>
+                    {% else %}
+                      <span class="strip-badge-building">In progress</span>
+                    {% endif %}
+                  </span>
+                  <span class="mt-2 block font-mono text-meta text-accent-300">{{ feature.detail }}</span>
+                  <span class="mt-3 block text-body text-neutral-400">{{ feature.blurb }}</span>
+                </span>
+                <span class="strip-go">Open {{ feature.label }} <span aria-hidden="true">&rarr;</span></span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+
   {# ── 2 · Statement with real numbers ──────────────────────────────── #}
   <section class="landing-section" aria-labelledby="scale-heading">
     <div class="landing-inner grid gap-16 lg:grid-cols-12">
@@ -228,5 +276,6 @@ repainting. Static (and centred) for touch devices and reduced motion.
   <script src="{% static 'js/landing.js' %}" defer></script>
   <script src="{% static 'js/cursor.js' %}" defer></script>
   <script src="{% static 'js/rambo.js' %}" defer></script>
+  <script src="{% static 'js/strip.js' %}" defer></script>
   {{ rambo_lines|json_script:"rambo-lines" }}
 {% endblock %}

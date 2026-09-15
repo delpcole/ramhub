@@ -97,6 +97,8 @@
   /* --- Motion (landing page) ------------------------------------------- */
   /* Slow and smooth on purpose. Reduced-motion users get none of it. */
   --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-premium: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ==========================================================================
@@ -452,6 +454,87 @@
 
   .cursor-follower.is-engaged {
     @apply bg-accent-300/20;
+  }
+
+  /* --- Feature strip ----------------------------------------------------- */
+  /* Tall stage + sticky inner = the section holds while the strip moves
+     sideways, then releases. With JS off the stage collapses to one screen and
+     the strip is an ordinary horizontal scroller. */
+  .strip-stage {
+    @apply relative;
+  }
+
+  html.strip-pinned .strip-stage {
+    height: 320svh;
+  }
+
+  .strip-sticky {
+    @apply flex min-h-svh w-full flex-col justify-center gap-10 overflow-hidden px-5 py-20 sm:px-10;
+  }
+
+  html.strip-pinned .strip-sticky {
+    @apply sticky top-0;
+  }
+
+  .strip-viewport {
+    @apply w-full overflow-x-auto overflow-y-hidden pb-4;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+
+  /* Once JS drives it from vertical scroll, the native scroller steps aside. */
+  html.strip-pinned .strip-viewport {
+    @apply overflow-hidden pb-0;
+    scroll-snap-type: none;
+  }
+
+  .strip-viewport:focus-visible {
+    @apply outline-2 outline-offset-4 outline-accent-300;
+  }
+
+  .strip-track {
+    @apply flex w-max items-stretch gap-5 px-1;
+  }
+
+  .strip-item {
+    @apply w-[min(78vw,22rem)] shrink-0;
+    scroll-snap-align: center;
+  }
+
+  .strip-card {
+    @apply flex h-full min-h-[22rem] flex-col rounded-lg border border-neutral-800 bg-neutral-900/70 p-6
+           transition-colors duration-500;
+    transition-timing-function: var(--ease-soft);
+  }
+
+  .strip-card:focus-visible {
+    @apply border-accent-300 outline-2 outline-offset-4 outline-accent-300;
+  }
+
+  .strip-card:hover {
+    @apply border-accent-600 bg-neutral-900;
+  }
+
+  .strip-icon {
+    @apply flex h-11 w-11 items-center justify-center rounded-md border border-neutral-800
+           bg-neutral-950 text-accent-300;
+  }
+
+  .strip-badge-live,
+  .strip-badge-building {
+    @apply rounded-full px-2 py-0.5 text-meta font-medium;
+  }
+
+  .strip-badge-live {
+    @apply bg-accent-900 text-accent-200;
+  }
+
+  .strip-badge-building {
+    @apply bg-neutral-800 text-neutral-300;
+  }
+
+  .strip-go {
+    @apply mt-6 inline-flex items-center gap-2 text-meta font-medium text-white;
   }
 
   /* --- Interactive background ------------------------------------------ */

@@ -132,7 +132,7 @@ def test_rambo_lines_are_embedded_as_safe_json(client, make_course):
 
 @pytest.mark.django_db
 def test_rambo_only_says_things_the_database_backs_up(make_course):
-    from apps.catalog.services import rambo_lines
+    from apps.catalog.landing import rambo_lines
 
     course = make_course(code="CSC 229", title="Data Structures & Algorithms I")
 
@@ -147,7 +147,7 @@ def test_rambo_only_says_things_the_database_backs_up(make_course):
 
 
 def test_rambo_lines_cope_with_an_empty_catalog():
-    from apps.catalog.services import rambo_lines
+    from apps.catalog.landing import rambo_lines
 
     lines = rambo_lines(course_count=0, department_count=0, featured_course=None)
 
@@ -174,3 +174,70 @@ def test_interactive_scripts_load_only_on_the_landing_page(client):
     for url in ("/courses/", "/professors/", "/feed/"):
         body = client.get(url).content
         assert b"cursor.js" not in body and b"rambo.js" not in body, url
+
+
+# -- feature strip -----------------------------------------------------------
+@pytest.mark.django_db
+def test_strip_links_to_every_section_of_the_site(client):
+    from config.context_processors import NAV_TABS
+
+    response = client.get("/")
+
+    features = response.context["features"]
+    assert len(features) == len(NAV_TABS)
+    assert {f["url_name"] for f in features} == {t["url_name"] for t in NAV_TABS}
+    for feature in features:
+        assert reverse(feature["url_name"]).encode() in response.content
+
+
+@pytest.mark.django_db
+def test_every_strip_link_resolves_to_a_real_page(client):
+    for feature in client.get("/").context["features"]:
+        assert client.get(reverse(feature["url_name"])).status_code == 200
+
+
+@pytest.mark.django_db
+def test_strip_counts_come_from_the_database(client, make_course, make_professor):
+    make_course(code="CSC 229")
+    make_course(code="MTH 150", department="Mathematics")
+    make_professor(first_name="Ada", last_name="Lovelace")
+
+    features = {f["label"]: f for f in client.get("/").context["features"]}
+
+    assert "2 courses" in features["Courses"]["detail"]
+    assert "2 departments" in features["Courses"]["detail"]
+    assert "1 instructors" in features["Professors"]["detail"]
+
+
+@pytest.mark.django_db
+def test_strip_does_not_claim_data_it_does_not_have(client):
+    """
+    Courses and Professors hold real college data; the campus tabs are still
+    empty. The card must not imply otherwise in either direction.
+    """
+    features = {f["label"]: f for f in client.get("/").context["features"]}
+
+    assert features["Courses"]["status"] == "live"
+    assert features["Professors"]["status"] == "live"
+    for label in ("Clubs", "Jobs", "Parking", "Facilities", "Feed"):
+        assert features[label]["status"] == "building"
+
+
+@pytest.mark.django_db
+def test_strip_is_usable_without_javascript(client):
+    """
+    The stage is only pinned once strip.js adds .strip-pinned. Until then the
+    markup is a plain list of links inside a scrollable viewport.
+    """
+    body = client.get("/").content
+
+    assert b"strip-viewport" in body
+    assert b"strip-pinned" not in body, "pinning must be added by JS, never rendered"
+    assert body.count(b"strip-card") >= 7
+
+
+@pytest.mark.django_db
+def test_strip_script_loads_only_on_the_landing_page(client):
+    assert b"js/strip.js" in client.get("/").content
+    for url in ("/courses/", "/professors/", "/feed/"):
+        assert b"strip.js" not in client.get(url).content, url

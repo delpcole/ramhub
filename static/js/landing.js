@@ -32,6 +32,8 @@
     lerp: 0.075, // lower = slower, silkier catch-up (library default is 0.1)
     smoothWheel: true,
   });
+  // strip.js scrolls the page when a card is focused by keyboard.
+  window.__ramhubLenis = lenis;
   lenis.on("scroll", ScrollTrigger.update);
   gsap.ticker.add(function (time) {
     lenis.raf(time * 1000);

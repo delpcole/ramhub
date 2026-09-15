@@ -211,6 +211,10 @@ This is a student-facing product that has to look good enough that people want t
 - **Mobile browser is a first-class target.** Test every screen at 375px.
 - **Accessibility:** keyboard navigable, visible focus rings, labeled form controls, AA
   contrast. Run axe before calling a feature done.
+- **The landing page's feature strip** (`static/js/strip.js`) pins and scrolls sideways on
+  tablet and up, and stays a native scroll-snap carousel on phones and with reduced motion.
+  Its cards must link to pages that exist and must describe each section honestly — "live"
+  only where real data is loaded. Never scroll-hijack: the section releases at the end.
 - **The landing page (`/`) is the deliberate exception** to density: fullscreen, cinematic,
   slow motion. That exception stops at the front door — it never extends to the directories,
   detail pages, or anything a student uses to look something up.

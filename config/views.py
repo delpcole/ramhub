@@ -9,12 +9,12 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
 
-from apps.catalog import services as catalog_services
+from apps.catalog import landing as catalog_landing
 
 
 def home(request: HttpRequest) -> HttpResponse:
     """The front door. Cinematic on purpose; the directories behind it stay dense."""
-    return render(request, "pages/home.html", catalog_services.landing_snapshot())
+    return render(request, "pages/home.html", catalog_landing.landing_snapshot())
 
 
 def styleguide(request: HttpRequest) -> HttpResponse:
