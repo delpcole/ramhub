@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}RamHub · Know the class before you take it{% endblock %}
+{% block description %}Course and professor advice for Farmingdale State College students — every course, every instructor, written by the students who took them.{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'vendor/lenis.css' %}">
+  <script>
+    // Hide reveal targets before first paint, so they animate in rather than
+    // flashing. Skipped entirely for reduced-motion users. If landing.js has
+    // not taken over within 3s (blocked, failed, offline) the class is removed
+    // and every element is simply shown.
+    (function () {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var root = document.documentElement;
+      root.classList.add("motion-ready");
+      setTimeout(function () {
+        if (!window.__landingReady) root.classList.remove("motion-ready");
+      }, 3000);
+    })();
+  </script>
+{% endblock %}
+
+{% block body_class %}landing{% endblock %}
+
+{% block main %}
+<main id="main" class="flex-1">
+
+  {# ── 1 · Hero ───────────────────────────────────────────────────────── #}
+  <section class="landing-section" aria-labelledby="hero-heading" data-hero>
+    {# Back layer: real course codes, drifting slowest. #}
+    <div class="hero-codewall" aria-hidden="true" data-parallax="-0.15">
+      {% for code in code_wall %}<span>{{ code }}</span>{% endfor %}
+    </div>
+    <div class="hero-glow" aria-hidden="true" data-parallax="0.25"></div>
+    <div class="hero-vignette" aria-hidden="true"></div>
+
+    {# Mid layer: two real records, floating at their own depth. #}
+    {% if featured_course %}
+      <div class="float-card absolute left-[6%] top-[22%] hidden w-64 lg:block" aria-hidden="true"
+           data-parallax="0.35" data-reveal>
+        <p class="font-mono text-meta text-accent-300">{{ featured_course.code }}</p>
+        <p class="mt-1 text-body font-medium text-neutral-100">{{ featured_course.title }}</p>
+        <p class="mt-2 text-meta text-neutral-400">{{ featured_course.department }}</p>
+      </div>
+    {% endif %}
+    {% if featured_professor %}
+      <div class="float-card absolute bottom-[18%] right-[6%] hidden w-64 lg:block" aria-hidden="true"
+           data-parallax="0.55" data-reveal>
+        <div class="flex items-baseline justify-between">
+          <p class="text-body font-medium text-neutral-100">{{ featured_professor.full_name }}</p>
+          <span class="font-mono text-h3 text-white">{{ featured_professor.rating_summary.avg_overall|floatformat:1 }}</span>
+        </div>
+        <p class="mt-1 text-meta text-neutral-400">{{ featured_professor.department }}</p>
+        <p class="mt-2 text-meta text-neutral-400">{{ featured_professor.rating_summary.count }} ratings on Rate My Professors</p>
+      </div>
+    {% endif %}
+
+    {# Front layer: the headline. #}
+    <div class="landing-inner text-center">
+      <p class="landing-eyebrow" data-reveal>Farmingdale State College</p>
+      <h1 id="hero-heading" class="landing-display mt-6">
+        <span class="reveal-line"><span data-line>Know the class</span></span>
+        <span class="reveal-line"><span data-line>before you take it.</span></span>
+      </h1>
+      <p class="landing-lede mx-auto mt-8 max-w-xl" data-reveal>
+        Honest advice on every course and every professor, from the students who already sat in the room.
+      </p>
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true" data-reveal>
+      <span>Scroll</span>
+      <span class="scroll-cue-line" data-cue-line></span>
+    </div>
+  </section>
+
+  {# ── 2 · Statement with real numbers ──────────────────────────────── #}
+  <section class="landing-section" aria-labelledby="scale-heading">
+    <div class="landing-inner grid gap-16 lg:grid-cols-12">
+      <div class="lg:col-span-7">
+        <p class="landing-eyebrow" data-reveal>The whole catalog</p>
+        <h2 id="scale-heading" class="mt-6 text-h1 font-medium leading-tight text-white sm:text-[clamp(2rem,4vw,3.25rem)]" data-reveal>
+          Knowledge that used to graduate with the people who had it. Now it stays.
+        </h2>
+      </div>
+      <dl class="grid grid-cols-1 gap-10 sm:grid-cols-3 lg:col-span-12">
+        <div class="border-t border-neutral-800 pt-6" data-reveal>
+          <dt class="text-meta text-neutral-400">Courses</dt>
+          <dd class="mt-2 font-mono text-[clamp(2.5rem,5vw,4rem)] leading-none text-white"
+              data-count="{{ course_count }}">{{ course_count }}</dd>
+        </div>
+        <div class="border-t border-neutral-800 pt-6" data-reveal>
+          <dt class="text-meta text-neutral-400">Professors</dt>
+          <dd class="mt-2 font-mono text-[clamp(2.5rem,5vw,4rem)] leading-none text-white"
+              data-count="{{ professor_count }}">{{ professor_count }}</dd>
+        </div>
+        <div class="border-t border-neutral-800 pt-6" data-reveal>
+          <dt class="text-meta text-neutral-400">Departments</dt>
+          <dd class="mt-2 font-mono text-[clamp(2.5rem,5vw,4rem)] leading-none text-white"
+              data-count="{{ department_count }}">{{ department_count }}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  {# ── 3 · Image expansion: a real course page grows to fill the screen ─ #}
+  {% if featured_course %}
+  <section class="expand-stage" aria-label="A course page on RamHub" data-expand>
+    <div class="expand-sticky">
+      <div class="expand-panel" data-expand-panel>
+        {% comment %}Dims the panel as it enters. Opacity on an overlay is composited on the
+           GPU; animating filter: brightness repainted the panel every frame.{% endcomment %}
+        <div class="expand-dim" aria-hidden="true" data-expand-dim></div>
+        <div class="flex h-full flex-col">
+          <div class="flex items-center gap-2 border-b border-neutral-200 bg-white px-4 py-2.5" aria-hidden="true">
+            <span class="h-2.5 w-2.5 rounded-full bg-neutral-300"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-neutral-300"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-neutral-300"></span>
+            <span class="ml-3 font-mono text-meta text-neutral-500">ramhub / courses / {{ featured_course.slug }}</span>
+          </div>
+          <div class="flex-1 overflow-hidden p-6 sm:p-10" data-expand-content>
+            <p class="font-mono text-meta font-semibold text-accent-700">{{ featured_course.code }}</p>
+            <p class="mt-2 text-h1 font-semibold text-neutral-900">{{ featured_course.title }}</p>
+            <p class="mt-1 text-meta text-neutral-500">
+              {{ featured_course.department }}{% if featured_course.credits %} &middot; {{ featured_course.credits }} credits{% endif %}
+            </p>
+            <p class="mt-6 max-w-2xl text-body text-neutral-700">{{ featured_course.description|truncatewords:60 }}</p>
+            {% if featured_course.prereq_text %}
+              <p class="mt-4 text-meta text-neutral-500">
+                <span class="font-medium text-neutral-700">Prerequisites:</span> {{ featured_course.prereq_text }}
+              </p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ── 4 · How it works, in layers ──────────────────────────────────── #}
+  <section class="landing-section py-32" aria-labelledby="how-heading">
+    <div class="landing-inner">
+      <p class="landing-eyebrow" data-reveal>How it works</p>
+      <h2 id="how-heading" class="mt-6 max-w-2xl text-h1 font-medium text-white sm:text-[clamp(2rem,4vw,3.25rem)] sm:leading-tight" data-reveal>
+        Look it up. Read what worked. Leave something for the next person.
+      </h2>
+      <ol class="mt-16 grid gap-6 md:grid-cols-3">
+        <li class="pillar" data-reveal data-parallax="0.08">
+          <span class="pillar-index">01</span>
+          <h3 class="mt-6 text-h3 text-white">Look it up</h3>
+          <p class="mt-2 text-body text-neutral-400">Every course in the published catalog and every instructor in the campus directory, searchable in one place.</p>
+        </li>
+        <li class="pillar" data-reveal data-parallax="0.16">
+          <span class="pillar-index">02</span>
+          <h3 class="mt-6 text-h3 text-white">Read what worked</h3>
+          <p class="mt-2 text-body text-neutral-400">How heavy the workload really is, which section to take, and how to prepare — from people who finished it.</p>
+        </li>
+        <li class="pillar" data-reveal data-parallax="0.24">
+          <span class="pillar-index">03</span>
+          <h3 class="mt-6 text-h3 text-white">Pass it on</h3>
+          <p class="mt-2 text-body text-neutral-400">Add your own advice once you&rsquo;re through, so it doesn&rsquo;t disappear when you graduate.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  {# ── 5 · Call to action ───────────────────────────────────────────── #}
+  <section class="landing-section" aria-labelledby="cta-heading">
+    <div class="hero-glow" aria-hidden="true" data-parallax="0.2"></div>
+    <div class="landing-inner text-center">
+      <h2 id="cta-heading" class="landing-display">
+        <span class="reveal-line"><span data-line>Start with</span></span>
+        <span class="reveal-line"><span data-line>your next class.</span></span>
+      </h2>
+      <div class="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row" data-reveal>
+        <a href="{% url 'catalog:courses' %}" class="btn-luxe" data-magnetic>Browse courses <span aria-hidden="true">&rarr;</span></a>
+        <a href="{% url 'catalog:professors' %}" class="btn-luxe-ghost" data-magnetic>Find a professor</a>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}
+
+{% block extra_scripts %}
+  {# Only this page loads the motion stack. #}
+  <script src="{% static 'vendor/gsap.min.js' %}" defer></script>
+  <script src="{% static 'vendor/ScrollTrigger.min.js' %}" defer></script>
+  <script src="{% static 'vendor/lenis.min.js' %}" defer></script>
+  <script src="{% static 'js/landing.js' %}" defer></script>
+{% endblock %}

@@ -6,10 +6,11 @@
   <title>{% block title %}RamHub{% endblock %}</title>
   <meta name="description" content="{% block description %}Course and professor advice from Farmingdale State College students.{% endblock %}">
   <link rel="stylesheet" href="{% static 'css/site.css' %}">
+  {% block extra_head %}{% endblock %}
   <script src="{% static 'vendor/htmx.min.js' %}" defer></script>
 </head>
 {# hx-headers puts Django's CSRF token on every htmx request, so POSTs work. #}
-<body class="flex min-h-full flex-col bg-neutral-50"
+<body class="flex min-h-full flex-col {% block body_class %}bg-neutral-50{% endblock %}"
       hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 
   <a href="#main"
@@ -21,6 +22,7 @@
 
   {% include "partials/nav.html" %}
 
+  {% block main %}
   <main id="main" class="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6">
     {% if messages %}
       <div class="mb-4 space-y-2">
@@ -31,9 +33,11 @@
     {% endif %}
     {% block content %}{% endblock %}
   </main>
+  {% endblock %}
 
   {% include "partials/footer.html" %}
 
   <script src="{% static 'js/ui.js' %}" defer></script>
+  {% block extra_scripts %}{% endblock %}
 </body>
 </html>

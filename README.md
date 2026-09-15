@@ -170,7 +170,9 @@ python manage.py runserver
 npm run tailwind:watch
 ```
 
-Then open <http://localhost:8000>. The design system lives at
+Then open <http://localhost:8000>. The front door is a cinematic landing page
+(GSAP + ScrollTrigger + Lenis, vendored, loaded on that page only); the feed moved
+to `/feed/`. The design system lives at
 <http://localhost:8000/styleguide>.
 
 If a class you added has no effect, the Tailwind watcher is not running.

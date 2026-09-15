@@ -6,7 +6,7 @@ decides which one is active. Below 768px the tabs move into #mobile-menu.
   <div class="mx-auto flex h-14 w-full max-w-6xl items-center gap-2 px-4 sm:px-6">
 
     {# Wordmark #}
-    <a href="{% url 'community:feed' %}"
+    <a href="{% url 'home' %}"
        class="flex shrink-0 items-center gap-2 rounded-md pr-2 text-h3 font-semibold tracking-tight text-neutral-900">
       <span class="flex h-7 w-7 items-center justify-center rounded-md bg-accent-600 text-white"
             aria-hidden="true">
@@ -26,8 +26,9 @@ decides which one is active. Below 768px the tabs move into #mobile-menu.
 
     <div class="flex flex-1 items-center justify-end gap-2">
 
-      {# Search — full input on large screens #}
-      <form action="#" method="get" role="search" class="hidden lg:block">
+      {% comment %}Search — full input only from 1280px. At 1024px the seven tabs plus a
+         288px input overflowed the header by 46px and pushed Sign in offscreen.{% endcomment %}
+      <form action="#" method="get" role="search" class="hidden xl:block">
         <label for="site-search" class="sr-only">Search RamHub</label>
         <div class="relative">
           <span class="pointer-events-none absolute inset-y-0 left-2 flex items-center text-neutral-500">
@@ -38,8 +39,8 @@ decides which one is active. Below 768px the tabs move into #mobile-menu.
         </div>
       </form>
 
-      {# Search — icon only between 768px and 1024px #}
-      <a href="#" class="btn-ghost hidden md:inline-flex lg:hidden" aria-label="Search RamHub">
+      {# Search — icon only between 768px and 1280px #}
+      <a href="#" class="btn-ghost hidden md:inline-flex xl:hidden" aria-label="Search RamHub">
         {% include "partials/icons/search.html" %}
       </a>
 

@@ -5,5 +5,5 @@ from . import views
 app_name = "community"
 
 urlpatterns = [
-    path("", views.feed, name="feed"),
+    path("feed/", views.feed, name="feed"),
 ]

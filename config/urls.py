@@ -8,6 +8,7 @@ from . import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     # The feed is the front page.
+    path("", views.home, name="home"),
     path("", include("apps.community.urls")),
     path("", include("apps.catalog.urls")),
     path("", include("apps.campus.urls")),

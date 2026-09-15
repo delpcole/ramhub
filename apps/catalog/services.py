@@ -164,3 +164,36 @@ def link_course_and_professor(course: Course, professor: Professor) -> None:
     if course.pk not in professor.course_ids:
         professor.course_ids = [*professor.course_ids, course.pk]
         professor.save(update_fields=["course_ids"])
+
+
+# --------------------------------------------------------------------------
+# Landing page
+# --------------------------------------------------------------------------
+def landing_snapshot() -> dict:
+    """
+    Real records for the landing page, so it shows the product rather than
+    stock imagery or placeholder copy.
+
+    The featured professor's rating is RateMyProfessors data. Anything that
+    renders it must say so (see CLAUDE.md), which the template does.
+    """
+    featured_course = Course.objects.filter(code="CSC 229").first() or Course.objects.first()
+    featured_professor = (
+        Professor.objects.exclude(rating_summary__count=0)
+        .order_by(F("rating_summary__rank_score").desc(nulls_last=True))
+        .first()
+    )
+    department_count = len(course_departments())
+    return {
+        "course_count": Course.objects.count(),
+        "professor_count": Professor.objects.count(),
+        "department_count": department_count,
+        "featured_course": featured_course,
+        "featured_professor": featured_professor,
+        # A slow-drifting backdrop of genuine course codes for the hero.
+        "code_wall": list(
+            Course.objects.order_by("code").values_list("code", flat=True)[
+                :: max(1, Course.objects.count() // 90)
+            ][:90]
+        ),
+    }
